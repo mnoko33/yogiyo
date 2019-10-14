@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/mainFoodFragment">
+
+    <fragment
+        android:id="@+id/mainFoodFragment"
+        android:name="com.nadarm.yogiyo.ui.fragment.MainFoodFragment"
+        android:label="fragment_food_main"
+        tools:layout="@layout/fragment_main_food" />
+    <fragment
+        android:id="@+id/mainSearchFragment"
+        android:name="com.nadarm.yogiyo.ui.fragment.MainSearchFragment"
+        android:label="fragment_main_search"
+        tools:layout="@layout/fragment_main_search" />
+    <fragment
+        android:id="@+id/mainOrderListFragment"
+        android:name="com.nadarm.yogiyo.ui.fragment.MainOrderListFragment"
+        android:label="fragment_main_order_list"
+        tools:layout="@layout/fragment_main_order_list" />
+    <fragment
+        android:id="@+id/mainMyInfoFragment"
+        android:name="com.nadarm.yogiyo.ui.fragment.MainMyInfoFragment"
+        android:label="fragment_main_my_info"
+        tools:layout="@layout/fragment_main_my_info" />
+    <action
+        android:id="@+id/action_global_mainFoodFragment"
+        app:destination="@id/mainFoodFragment" />
+    <action
+        android:id="@+id/action_global_mainSearchFragment"
+        app:destination="@id/mainSearchFragment" />
+    <action
+        android:id="@+id/action_global_mainMyInfoFragment"
+        app:destination="@id/mainMyInfoFragment" />
+    <action
+        android:id="@+id/action_global_mainOrderListFragment"
+        app:destination="@id/mainOrderListFragment" />
+
+
+</navigation>
