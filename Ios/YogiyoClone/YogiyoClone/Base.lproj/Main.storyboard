@@ -189,7 +189,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="srV-Lh-kVx"/>
                     <connections>
-                        <outlet property="OrderListTab" destination="xcc-po-nJR" id="L6m-mK-PIx"/>
+                        <outlet property="OrderListTab" destination="xcc-po-nJR" id="71C-G8-1op"/>
+                        <outlet property="OrderListTabItem" destination="kXH-FO-PM3" id="gcd-5L-ybS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="idp-hs-cKN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

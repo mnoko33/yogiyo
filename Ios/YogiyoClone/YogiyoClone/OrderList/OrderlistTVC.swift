@@ -9,7 +9,12 @@
 import UIKit
 
 class OrderlistTVC: UITableViewController {
+    
     @IBOutlet weak var OrderListTab: UITabBar!
+    @IBOutlet weak var OrderListTabItem: UITabBarItem!
+    
+    
+    private let menutitle = ["전체", "1인분 주문", "요기요플러스", "치킨", "중국집", "피자/양식", "한식", "분식", "카페/디저트", "족발/보쌈", "일식/돈까스", "야식", "프렌차이즈", "테이크아웃"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +28,8 @@ class OrderlistTVC: UITableViewController {
 
     // MARK: - Table view data source
     func setupTabBar() {
-        OrderListTab.items?.count = 
+        
+        self.OrderListTab.items =
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
