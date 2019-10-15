@@ -1,0 +1,96 @@
+<template>
+  <v-flex class="navigation">
+    <v-flex class="nav-top">
+      <router-link to="/main"><img class="logo" src="../../public/logo.jpg" alt="yogiyo"></router-link>
+      <v-flex class="cart">
+        <button type="button" class="btn-login">로그인 | 회원가입</button>
+        <button type="button" class="btn-cart">주문표(0)</button>
+      </v-flex>
+    </v-flex>
+  </v-flex>
+</template>
+
+<script>
+  export default {
+    name: "Header",
+    data() {
+      return {
+      }
+    },
+    method: {
+    }
+  }
+</script>
+
+<style scoped>
+  .navigation {
+    background-color: #f0001e;
+    height: 78px;
+    margin-top: 0;
+  }
+  .nav-top {
+    position: relative;
+    max-width: 1020px;
+    min-width: 320px;
+    margin: 0 auto;
+  }
+  .logo {
+    width: 90px;
+    height: 38px;
+    margin: 20px 10px;
+  }
+  .cart {
+    margin-top: 5px;
+    margin-right: 10px;
+    float: right !important;
+  }
+  .btn-login {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 15px 0 7px 0;
+    max-height: 40px;
+    padding: 7px 0;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    border-radius: 2px;
+    background: #f0001e;
+    border: 1px solid #ea7266;
+  }
+  .btn-cart {
+    margin: 15px 10px 7px 5px;
+    width: 130px;
+    max-height: 40px;
+    padding: 7px 0;
+    font-size: 18px;
+    border-radius: 2px;
+    color: white;
+    border-color: #ff8a00;
+    background: #ff8a00;
+  }
+  @media (max-width: 769px){
+    .navigation {
+      height: 60px;
+    }
+    .btn-cart {
+      display: none;
+    }
+    .btn-login {
+      position: absolute;
+      top: 21px;
+      left: 88px;
+      max-height: 18px;
+      padding: 0 2px;
+      font-size: 12px;
+      margin: 0;
+    }
+    .logo {
+      background-size: 72px;
+      width: 72px;
+      height: 30px;
+      margin: 15px 10px;
+    }
+  }
+
+</style>
