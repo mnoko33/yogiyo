@@ -1,7 +1,7 @@
 <template>
   <v-flex class="navigation">
     <v-flex class="nav-top">
-      <router-link to="/main"><img class="logo" src="../../public/logo.jpg" alt="yogiyo"></router-link>
+      <router-link to="/main"><img class="logo" src="../../public/yogiyologo.png" style="min-width: 80px; height: 30px;" alt="yogiyo"></router-link>
       <v-flex class="cart">
         <button type="button" class="btn-login">로그인 | 회원가입</button>
         <button type="button" class="btn-cart">주문표(0)</button>
