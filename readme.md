@@ -101,11 +101,14 @@
    }
    ```
 
-   
 
-3. 주소저장
 
-   `POST` : url/api/auth/address
+
+# routes/info.js
+
+1. 주소저장
+
+   `POST` : url/api/info/address
 
    ```json
    // Body
