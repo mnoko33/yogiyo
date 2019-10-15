@@ -1,7 +1,4 @@
 <template>
-<<<<<<< HEAD
-  
-=======
   <v-flex class="navigation">
     <v-flex class="nav-top">
       <router-link to="/main"><img class="logo" src="../../public/logo.jpg" alt="yogiyo"></router-link>
@@ -11,14 +8,10 @@
       </v-flex>
     </v-flex>
   </v-flex>
->>>>>>> feature/header
 </template>
 
 <script>
   export default {
-<<<<<<< HEAD
-    name: "Header"
-=======
     name: "Header",
     data() {
       return {
@@ -26,13 +19,10 @@
     },
     method: {
     }
->>>>>>> feature/header
   }
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-=======
   .navigation {
     background-color: #f0001e;
     height: 78px;
@@ -102,6 +92,5 @@
       margin: 15px 10px;
     }
   }
->>>>>>> feature/header
 
 </style>
