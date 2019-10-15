@@ -1,6 +1,7 @@
 const express = require('express');
 const models = require('../models');
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 // 회원가입
@@ -29,46 +30,33 @@ router.post('/signup', async function(req, res, next) {
     })
 });
 
-// 위치정보 저장
-router.post('/address', async function(req, res, next) {
-   // TODO: body 의 user_id => token(jwt) 으로 대체하기
-   const user_id = req.body.user_id;
-   const x = req.body.x;
-   const y = req.body.y;
-   const url = `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${x}&y=${y}`;
-   const kakaoAuthorization = "KakaoAK 158e55f2ac87b67c8641e613316155a5";
-   const response = await axios.get(url, {
-       headers: {
-           Authorization: kakaoAuthorization
-       }
-   });
-   const user = await models.Users.findOne({
-       where: {id:user_id}
-   });
-
-   if (user) {
-       user.update({
-           address: response.data.documents[0].region_3depth_name,
-           location: `${x}::${y}`
-       }).then((user) => {
-           res.json({
-               "status": true,
-               "address": user.address,
-               "location": user.location
-           })
-       }).catch((err) => {
-           res.json({
-               "status": false,
-               "message": "위치 저장에 실패했습니다.",
-               "err": err
-           })
-       })
-   } else {
-       res.json({
-           "status": false,
-           "message": "일치하는 유저가 없습니다."
-       })
-   }
+// 로그인
+router.post('/login', async function(req, res, next) {
+    const username = req.body.username;
+    const password = req.body.password;
+    const user = await models.Users.findOne({
+        where: {username: username, password: password}
+    });
+    if (!user) {
+        res.json({
+            "status": false,
+            "message": "로그인에 실패했습니다."
+        })
+    } else {
+        const secret_key = "ssaudy";
+        const payload = {
+            "sub": "ssaudy",
+            "id": user.id,
+            "username": user.username,
+            "address": user.address,
+            "location": user.location,
+            "phone_number": user.phone_num,
+        };
+        const token = jwt.sign(payload, secret_key);
+        res.json({
+            "jwt": token
+        })
+    }
 });
 
 module.exports = router;
