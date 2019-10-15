@@ -1,6 +1,7 @@
 <template>
   <v-app id="app">
     <v-content>
+      <Header></Header>
       <router-view />
       <Footer></Footer>
     </v-content>
@@ -9,13 +10,16 @@
 </template>
 
 <script>
+import Header from './components/Header'
 import Footer from './components/Footer'
 export default {
   name: 'app',
   components: {
-      Footer
+    Header,
+    Footer
   }
 }
+
 </script>
 
 <style>
