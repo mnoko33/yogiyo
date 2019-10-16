@@ -1,7 +1,6 @@
 <template>
   <v-footer
     padless
-    position: absolute
     color="white"
   >
     <v-card

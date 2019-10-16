@@ -16,7 +16,7 @@ const authMiddleware = (req, res, next) => {
                 resolve(decoded)
             })
         })
-    )
+    );
     const onError = (error) => {
         res.json({
             "status": false,
@@ -28,6 +28,6 @@ const authMiddleware = (req, res, next) => {
         req.decoded = decoded;
         next()
     }).catch(onError)
-}
+};
 
 module.exports = authMiddleware;
