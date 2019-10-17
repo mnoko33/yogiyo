@@ -1,9 +1,11 @@
 <template>
   <v-flex class="navigation">
     <v-flex class="nav-top">
-      <router-link to="/main"><img class="logo" src="../../public/yogiyologo.png" style="min-width: 80px; height: 30px;" alt="yogiyo"></router-link>
+      <router-link :to="{name:'MainPage'}"><img class="logo" src="../../public/yogiyologo.png" style="" alt="yogiyo"></router-link>
       <v-flex class="cart">
-        <button type="button" class="btn-login">로그인 | 회원가입</button>&nbsp;
+        <router-link :to="{name: 'LoginPage'}">
+          <button type="button" class="btn-login">로그인 | 회원가입</button>
+        </router-link>
         <button type="button" class="btn-cart">주문표(0)</button>
       </v-flex>
     </v-flex>
@@ -35,9 +37,9 @@
     margin: 0 auto;
   }
   .logo {
-    width: 90px;
-    height: 38px;
     margin: 20px 10px;
+    min-width: 80px;
+    height: 30px;
   }
   .cart {
     margin-top: 5px;

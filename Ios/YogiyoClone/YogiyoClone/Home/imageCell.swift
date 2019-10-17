@@ -15,6 +15,6 @@ class imageCell: UICollectionViewCell {
     var image : UIImage? {
         didSet {
             self.imageView.image = image ?? UIImage(named: "")
-        }
+        } 
     }
 }
