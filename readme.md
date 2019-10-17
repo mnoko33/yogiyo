@@ -13,7 +13,7 @@
 
 
 
-# routes/users.js
+# routes/user.js
 
 1. 유저 리스트
 
