@@ -19,6 +19,7 @@ const categories = [
 ];
 
 // 카테고리 별 식당보기
+// TODO: 장소와 카테고리에 따라 레스토랑 return 해주기
 router.get('/categories/:categoryIdx', async function (req, res, next) {
     const categoryIdx = req.params.categoryIdx * 1;
     let restaurants = await models.Restaurant.findAll();
