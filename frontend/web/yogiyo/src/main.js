@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 
+
 Vue.config.productionTip = false;
 
 new Vue({

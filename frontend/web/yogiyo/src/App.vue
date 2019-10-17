@@ -2,7 +2,7 @@
   <v-app id="app">
     <v-content>
       <Header></Header>
-      <Search></Search>
+      <!--<Search></Search>-->
       <router-view />
       <Footer></Footer>
     </v-content>
