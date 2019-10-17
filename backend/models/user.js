@@ -1,35 +1,41 @@
 module.exports = function(sequelize, DataTypes) {
-    let Users = sequelize.define("Users", {
+    let User = sequelize.define("User", {
         username: {
             field: "username",
-            type: DataTypes.STRING(20),
-            unique: true,
+            type: DataTypes.STRING,
             allowNull: false
+        },
+        email: {
+          field: "email",
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true
         },
         password: {
             field: "password",
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING,
             allowNull: false
         },
         address: {
             field: "address",
-            type: DataTypes.STRING(15),
+            type: DataTypes.STRING,
             allowNull: true
         },
         location: {
           field: "location",
-          type: DataTypes.STRING(40),
+          type: DataTypes.STRING,
           allowNull: true
         },
         phone_num: {
             field: "phone_num",
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING,
+            unique: true,
             allowNull: false
         }
     }, {
-        underscored: true,
+        underscored: false,
         freezeTableName: true,
-        tableName: "Users"
+        tableName: "User"
     });
-    return Users;
+    return User;
 };
