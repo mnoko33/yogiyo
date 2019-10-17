@@ -4,13 +4,13 @@ module.exports = function(sequelize, DataTypes) {
     let Restaurant = sequelize.define("Restaurant", {
         name: {
             field: "name",
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING,
             unique: true,
             allowNull: false
         },
         category: {
             field: "category",
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING,
             allowNull: false
         },
         thumbnailUrl: {
@@ -20,51 +20,51 @@ module.exports = function(sequelize, DataTypes) {
         },
         address: {
             field: "address",
-            type: DataTypes.STRING(15),
+            type: DataTypes.STRING,
             allowNull: false
         },
         lng: {
             field: "lng",
-            type: DataTypes.FLOAT(25),
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
         lat: {
             field: "lat",
-            type: DataTypes.FLOAT(25),
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
         openTime: {
             field: "openTime",
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING,
             allowNull: false
         },
         deliveryTime: {
             field: "deliveryTime",
-            type: DataTypes.INTEGER(10),
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         representativeMenus: {
             field: "representativeMenus",
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING,
             allowNull: false
         },
         deliveryFee: {
             field: "deliveryFee",
-            type: DataTypes.INTEGER(15),
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         minOrderAmount: {
             field: "minOrderAmount",
-            type: DataTypes.INTEGER(10),
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         paymentMethods: {
             field: "paymentMethods",
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING,
             allowNull: false
         }
     }, {
-        underscored: true,
+        underscored: false,
         freezeTableName: true,
         tableName: "Restaurant"
     });
