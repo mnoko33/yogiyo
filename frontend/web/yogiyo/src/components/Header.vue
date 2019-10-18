@@ -37,7 +37,7 @@
     margin: 0 auto;
   }
   .logo {
-    margin: 20px 10px;
+    margin: 25px 10px;
     min-width: 80px;
     height: 30px;
   }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout mt-1>
-      <img class="logo" src="../../../public/yogiyologo.png" style="min-width: 80px; height: 43px; margin: auto" alt="yogiyo">
+      <img class="logoimg" src="../../../public/yogiyologo.png" alt="yogiyo">
     </v-layout>
     <v-layout mt-5>
       <input
@@ -45,6 +45,11 @@
 </script>
 
 <style>
+  .logoimg {
+    min-width: 80px;
+    height: 43px;
+    margin: auto;
+  }
   .Login {
     box-sizing: border-box;
     background-color: #fff;
@@ -79,7 +84,7 @@
     text-decoration: none;
   }
   .join-button{
-    color: red;
+    color: #f0001e;
     font-weight: 700;
   }
 </style>
