@@ -62,9 +62,10 @@
    ```json
    // Body
    {
-       "username": username,
-       "password": password,
-       "phone_num": 010-1234-5678
+       "email": email,
+       "password": password,   // 특수문자, 숫자, 문자를 모두 포함한 8~15자리
+       "phone_num": 010-1234-5678,
+       "username": username // 없을 경우 이메일 @ 앞부분으로 대체
    }
    
    // res
@@ -88,7 +89,7 @@
    ```json
    // Body
    {
-       "username": username,
+       "email": email,
        "password": password
    }
    

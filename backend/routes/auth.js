@@ -20,41 +20,6 @@ async function createJWT(user) {
     return jwt.sign(payload, secret_key);
 }
 
-// 이메일, 휴대폰 번호 중복검사
-async function isDuplicated(target, value) {
-    models.User.findOne({
-        where: { target: value }
-            .then((user) => {
-                return !!user
-            })
-            .catch((err) => {
-                console.log(err);
-                return 'err'
-            })
-    })
-    // if (target === 'email') {
-    //    models.User.findOne({
-    //        where: { email: value }
-    //    })
-    //        .then((result) => {
-    //            return !!result
-    //        })
-    //        .catch(() => {
-    //            return 'err'
-    //        })
-    // } else if (target === 'phone_num') {
-    //     models.User.findOne({
-    //         where: { phone_num: value }
-    //     })
-    //         .then((result) => {
-    //             return !!result
-    //         })
-    //         .catch(() => {
-    //             return 'err'
-    //         })
-    // }
-}
-
 // 회원가입
 router.post('/signup', async function(req, res, next) {
     const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -66,18 +31,23 @@ router.post('/signup', async function(req, res, next) {
     const phone_num = req.body.phone_num;
 
     // 이메일 중복 체크
-    const isEmailDuplicated = await isDuplicated("email", email);
+    const isEmailDuplicated = await models.User.findOne({
+        where: {email: email}
+    });
     if (isEmailDuplicated) {
-        res.json({
+        return res.json({
             "status": false,
             "message": "이메일이 중복됐습니다."
-        })
+        });
     }
 
-    // 후대폰 중복 체크
-    const isPhoneDuplicated = await isDuplicated('phone_num', phone_num);
+    // 휴대폰 번호 중복 체크
+    const isPhoneDuplicated = await models.User.findOne({
+        where: {phone_num: phone_num}
+    });
+
     if (isPhoneDuplicated) {
-        res.json({
+        return res.json({
             "status": false,
             "message": "휴대폰 번호가 중복됐습니다."
         })
@@ -85,7 +55,10 @@ router.post('/signup', async function(req, res, next) {
 
     // 이메일, 비밀번호, 전화번호 정규표현식 검사
     if (!emailRegex.test(email) || !passwordRegex.test(password) || !phoneRegex.test(phone_num)) {
-        res.json({
+        console.log('email regex :', emailRegex.test(email));
+        console.log('password regex :', passwordRegex.test(email));
+        console.log('phone_num regex :', phoneRegex.test(email));
+        return res.json({
             "status": false,
             "message": "잘못된 형식입니다."
         })
@@ -131,7 +104,7 @@ router.post('/login', async function(req, res, next) {
     });
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = await createJWT(user);
-        res.json({
+        return res.json({
             "status": !!token,
             "jwt": token
         })
@@ -141,22 +114,5 @@ router.post('/login', async function(req, res, next) {
         "message": "아이디 또는 비밀번호가 일치하지 않습니다."
     });
 });
-
-//     const user = await models.User.findOne({
-//         where: {username: username, password: password}
-//     });
-//     if (!user) {
-//         res.json({
-//             "status": false,
-//             "message": "로그인에 실패했습니다."
-//         })
-//     } else {
-//         const token = await createJWT(user);
-//         res.json({
-//             "status": true,
-//             "jwt": token
-//         })
-//     }
-// });
 
 module.exports = router;
