@@ -12,7 +12,7 @@ Vue.use(VueRouter);
        path: '/main',
        component: MainPage,
        name: 'MainPage'
-     }
+     },
    ]
  });
  
