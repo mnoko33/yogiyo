@@ -106,7 +106,41 @@ async function getMenu(models) {
         console.log(menu.name);
     })
 }
+
+const categories = [
+    "전체보기",      // 0
+    "1인분주문",    // 1
+    "프랜차이즈",    // 2
+    "치킨",         // 3
+    "피자양식",     // 4
+    "중국집",       // 5
+    "한식",         // 6
+    "일식돈까스",   // 7
+    "족발보쌈",     // 8
+    "야식",        // 9
+    "분식",        // 10
+    "카페디저트",  // 11
+    "편의점"      // 12
+];
+
+
+function createCategories(models) {
+    for (let i = 0; i < 13; i++) {
+        (function(j, models) {
+            models.Category.create({
+                name: categories[j],
+                imgUrl: 'path'
+            })
+                .then((instance) => {
+                    console.log(instance.name);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        })(i, models, categories)
+    }
+}
 // getRestrauntList();
 // createMenu(models);
 // getMenu(models);
-
+// createCategories(models);

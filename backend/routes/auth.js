@@ -3,6 +3,7 @@ const models = require('../models');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 
 // token 발행 함수
 async function createJWT(user) {
@@ -10,6 +11,7 @@ async function createJWT(user) {
     const payload = {
         "sub": "ssaudy",
         "id": user.id,
+        "email": user.email,
         "username": user.username,
         "address": user.address,
         "location": user.location,
@@ -20,15 +22,52 @@ async function createJWT(user) {
 
 // 회원가입
 router.post('/signup', async function(req, res, next) {
-    const username = req.body.username;
+    const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    const passwordRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;  // 특수문자 / 문자 / 숫자 포함 형태의 8~15자리
+    const phoneRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+
+    const email = req.body.email;
     const password = req.body.password;
     const phone_num = req.body.phone_num;
-    // TODO: 중복검사 필요 - findOrCreate
-    // TODO: 적합성 검사 필요 username 과 password
-    // TODO: password 저장시 bcryptjs 사용
-    models.Users.create({
-        username: username,
-        password: password,
+
+    // 이메일 중복 체크
+    const isEmailDuplicated = await models.User.findOne({
+        where: {email: email}
+    });
+    if (isEmailDuplicated) {
+        return res.json({
+            "status": false,
+            "message": "이메일이 중복됐습니다."
+        });
+    }
+
+    // 휴대폰 번호 중복 체크
+    const isPhoneDuplicated = await models.User.findOne({
+        where: {phone_num: phone_num}
+    });
+
+    if (isPhoneDuplicated) {
+        return res.json({
+            "status": false,
+            "message": "휴대폰 번호가 중복됐습니다."
+        })
+    }
+
+    // 이메일, 비밀번호, 전화번호 정규표현식 검사
+    if (!emailRegex.test(email) || !passwordRegex.test(password) || !phoneRegex.test(phone_num)) {
+        console.log('email regex :', emailRegex.test(email));
+        console.log('password regex :', passwordRegex.test(email));
+        console.log('phone_num regex :', phoneRegex.test(email));
+        return res.json({
+            "status": false,
+            "message": "잘못된 형식입니다."
+        })
+    }
+
+    models.User.create({
+        username: req.body.username ? req.body.username : email.split('@')[0],
+        email: email,
+        password: bcrypt.hashSync(password, 8),
         phone_num: phone_num
     }).then((user) => {
         return createJWT(user)
@@ -58,23 +97,22 @@ router.post('/signup', async function(req, res, next) {
 
 // 로그인
 router.post('/login', async function(req, res, next) {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
-    const user = await models.Users.findOne({
-        where: {username: username, password: password}
+    const user = await models.User.findOne({
+        where: {email: email}
     });
-    if (!user) {
-        res.json({
-            "status": false,
-            "message": "로그인에 실패했습니다."
-        })
-    } else {
+    if (user && bcrypt.compareSync(password, user.password)) {
         const token = await createJWT(user);
-        res.json({
-            "status": true,
+        return res.json({
+            "status": !!token,
             "jwt": token
         })
     }
+    res.json({
+        "status": false,
+        "message": "아이디 또는 비밀번호가 일치하지 않습니다."
+    });
 });
 
 module.exports = router;
