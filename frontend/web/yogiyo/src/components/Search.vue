@@ -3,7 +3,7 @@
    <div class="input-group">
      <v-layout style="position: relative; top: 125px">
        <v-flex style="margin-right: 2%;">
-         <v-icon style="background: #fff; color:#e30000; background-size: 400px; width: 40px; height: 40px; border-radius: 4px; border: none;">mdi-crosshairs-gps</v-icon>
+         <v-icon class="gps-btn">mdi-crosshairs-gps</v-icon>
        </v-flex>
        <v-flex style="width: 310px;">
          <!--<v-text-field textarea clearable rows="2" outlined background-color="#ffffff" color="#ffffff" style="padding: 0 0"></v-text-field>-->
@@ -69,6 +69,15 @@
   }
   .clear-btn:focus {
     outline: none;
+  }
+  .gps-btn {
+    background: #fff;
+    color:#e30000;
+    background-size: 400px;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
   }
 
 </style>
