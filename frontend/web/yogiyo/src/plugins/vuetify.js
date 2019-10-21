@@ -3,9 +3,7 @@ import Vuetify from 'vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/dist/vuetify.min.css'
 
-import * as VueSpinnersCss from "vue-spinners-css";
 
-Vue.use(VueSpinnersCss)
 Vue.use(Vuetify, {
   iconfont: 'fa',
   theme: {
