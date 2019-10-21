@@ -8,7 +8,7 @@
 
 import UIKit
 
-class menuCell: UICollectionViewCell {
+class menuCell: UICollectionViewCell { 
     
     @IBOutlet weak var imageView: UIImageView!
 //    var image : UIImage? {
