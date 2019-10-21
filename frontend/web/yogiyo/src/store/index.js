@@ -9,6 +9,6 @@ export default new Vuex.Store({
     data,
   },
   state: {
-    currentUser: ''
+    currentUser: localStorage.getItem('currentUser')
   }
 })
