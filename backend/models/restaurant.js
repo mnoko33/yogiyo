@@ -71,7 +71,10 @@ module.exports = function(sequelize, DataTypes) {
     Restaurant.associate = function(models) {
         models.Restaurant.hasMany(models.Menu, {
             foreignKey: "restaurantId"
-        })
+        });
+        models.Restaurant.hasMany(models.Cart, {
+            foreignKey: "restaurantId"
+        });
     };
     return Restaurant;
 };

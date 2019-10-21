@@ -44,5 +44,10 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         tableName: "User"
     });
+    User.associate = function(models) {
+        models.User.hasOne(models.Cart, {
+            foreignKey: "userId"
+        })
+    };
     return User;
 };
