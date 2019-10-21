@@ -13,7 +13,7 @@
 
 
 
-[move](routes/auth.js)
+[move](signup)
 
 
 
@@ -233,3 +233,8 @@
    ```
 
    
+
+
+
+# signup
+
