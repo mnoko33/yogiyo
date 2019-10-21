@@ -1,6 +1,28 @@
-[TOC]
+**[user.js](#routes/user.js)**
 
-1. **[호출 스택](#1-호출-스택)**
+​	[`GET` url/api/users (모든 유저 리스트)](####`GET`-url/api/users-(모든-유저-리스트))
+
+​	[`GET` url/api/user/:username (특정 유저 정보)](####`GET`-url/api/user/:username-(특정-유저-정보))
+
+**[auth.js](#routes/auth.js)**
+
+​	[`POST` url/api/auth/signup (회원가입)](####`POST`-url/api/auth/signup-(회원가입))
+
+​	[`POST` url/api/auth/login (로그인)](`POST`-url/api/auth/login-(로그인))
+
+​	[`POST` url/api/auth/address (위치 정보 저장 및 수정)](`POST`-url/api/auth/address-(위치-정보-저장-및-수정))
+
+**[restaurants.js](#routes/restaurants.js)**
+
+​	[`GET` url/api/categories (카테고리 정보)](`GET`-url/api/categories-(카테고리-정보))
+
+​	[`GET` url/api/restaurants/categories/:categoryIdx (카테고리별 식당)](`GET`-url/api/restaurants/categories/:categoryIdx-(카테고리별-식당))
+
+​	[`GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기)](`GET`-url/api/restaurants/:restaurantId/menus-(매장별-메뉴-보기))
+
+​	
+
+
 
 **현재 url** = `http://70.12.247.65:3000`
 
@@ -19,9 +41,7 @@
 
 # routes/user.js
 
-
-
-### `GET` url/api/users (모든 유저 리스트)
+#### `GET` url/api/users (모든 유저 리스트)
 
 ```json
 // res
@@ -40,7 +60,7 @@
 
 
 
-### `GET` url/api/user/:username (특정 유저 정보)
+#### `GET` url/api/user/:username (특정 유저 정보)
 
 ```json
 // res
@@ -217,8 +237,4 @@ categoryIdx = [
     ]
 }
 ```
-
-## 1. 호출 스택
-
-과연 
 
