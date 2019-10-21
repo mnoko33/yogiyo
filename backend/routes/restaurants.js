@@ -19,6 +19,19 @@ const categories = [
     "편의점"      // 12
 ];
 
+function getDistance(userLng, userLat, restLng, restLat) {
+    function degreeToRadian(deg) {
+        return deg * (Math.PI / 180)
+    }
+    const r = 6371; // 지구 반지름
+    const radLng = degreeToRadian(Math.abs(userLng - restLng));
+    const radLat = degreeToRadian(Math.abs(userLat - restLat));
+    const a = Math.sin(radLat/2) * Math.sin(radLat/2) + Math.cos(degreeToRadian(userLat)) * Math.cos(degreeToRadian(restLat)) * Math.sin(radLng/2) * Math.sin(radLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = r * c;
+    return Math.round(distance * 1000);
+}
+
 // 카테고리 리스트 요청
 router.get('/categories', async function(req, res, next) {
     try {
@@ -56,7 +69,9 @@ router.get('/categories/:categoryIdx', async function (req, res, next) {
     const userLat = userLocation.lat;
 
     const categoryIdx = req.params.categoryIdx * 1;
-    let restaurants = await models.Restaurant.findAll();
+    let restaurants = await models.Restaurant.findAll({
+
+        });
     if (categoryIdx !== 0) {
         restaurants = restaurants.filter((restaurant) => {
             if (restaurant.category.includes(categories[categoryIdx])) {

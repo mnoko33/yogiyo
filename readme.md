@@ -90,8 +90,8 @@
 // Body
 {
        "data": {
-                      "email": email,
-                      "password": password
+                      "email": "admin@admin.com",
+                      "password": "password!1"
               }
     }   
 
