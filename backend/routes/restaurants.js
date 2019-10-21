@@ -20,7 +20,9 @@ const categories = [
 ];
 
 function getDistance(userLng, userLat, restLng, restLat) {
+    // console.log('0', userLng, userLat, restLng, restLat)
     function degreeToRadian(deg) {
+        // console.log(1, deg * (Math.PI / 180))
         return deg * (Math.PI / 180)
     }
     const r = 6371; // 지구 반지름
@@ -28,8 +30,7 @@ function getDistance(userLng, userLat, restLng, restLat) {
     const radLat = degreeToRadian(Math.abs(userLat - restLat));
     const a = Math.sin(radLat/2) * Math.sin(radLat/2) + Math.cos(degreeToRadian(userLat)) * Math.cos(degreeToRadian(restLat)) * Math.sin(radLng/2) * Math.sin(radLng/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    const distance = r * c;
-    return Math.round(distance * 1000);
+    return r * c // km
 }
 
 // 카테고리 리스트 요청
@@ -63,18 +64,38 @@ router.get('/categories/:categoryIdx', async function (req, res, next) {
             })
         })
     );
-    // TODO: 현재 위치와 가게들의 위치를 분석해서 return
-    const userLocation = await decodedToken;
-    const userLng = userLocation.lng;
-    const userLat = userLocation.lat;
-
-    const categoryIdx = req.params.categoryIdx * 1;
-    let restaurants = await models.Restaurant.findAll({
-
+    const decodedUser = await decodedToken
+        .then((user) => {
+            return user
+        })
+        .catch((err) => {
+            return false
         });
-    if (categoryIdx !== 0) {
+
+    const user = await models.User.findOne({
+        where: { id: decodedUser.id }
+    });
+
+    if (!user) {
+        res.json({
+            "status": false,
+            "message": "일치하는 유저가 없습니다."
+        })
+    }
+
+    // 유저 위치 정보
+    const userLng = user.lng;
+    const userLat = user.lat;
+
+    // 카테고리 이름
+    const categoryIdx = req.params.categoryIdx * 1;
+    const category = await models.Category.findOne({
+        where: { id: categoryIdx }
+    });
+    let restaurants = await models.Restaurant.findAll();
+    if (categoryIdx !== 1) {
         restaurants = restaurants.filter((restaurant) => {
-            if (restaurant.category.includes(categories[categoryIdx])) {
+            if (restaurant.category.includes(categories[categoryIdx]) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= 15) {
                 return restaurant
             }
         });
@@ -98,12 +119,12 @@ router.get('/:restaurantId/menus', async function (req, res, next) {
                 "status": true,
                 "menus": menus
             })
-        } else {
-           res.json({
-               "status": false,
-               "message": "일치하는 음식점이 존재하지 않습니다."
-           })
         }
+       res.json({
+           "status": false,
+           "message": "일치하는 음식점이 존재하지 않습니다."
+       })
+
     } catch (err) {
         res.json({
             "status": false,

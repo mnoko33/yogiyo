@@ -9,14 +9,9 @@ const bcrypt = require('bcryptjs');
 async function createJWT(user) {
     const secret_key = "ssaudy";
     const payload = {
-        "sub": "ssaudy",
         "id": user.id,
         "email": user.email,
         "username": user.username,
-        "address": user.address,
-        "lng": user.lng,
-        "lat": user.lat,
-        "phone_number": user.phone_num,
     };
     // return jwt.sign(payload, secret_key, { expiresIn: '15m' });
     return jwt.sign(payload, secret_key, { expiresIn: '1000h' });
@@ -113,6 +108,7 @@ router.post('/login', async function(req, res, next) {
     const email = req.body.data.email;
     const password = req.body.data.password;
 
+
     if (!email || !password) {
         res.json({
             "status": false,
@@ -139,6 +135,7 @@ router.post('/login', async function(req, res, next) {
 
 
 // 위치정보 저장
+// TODO: jwt 체크 필요
 router.post('/address', async function(req, res, next) {
     const token = req.headers['x-access-token'];
     const secret_key = "ssaudy";
