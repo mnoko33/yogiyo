@@ -5,12 +5,12 @@ const cookieParser = require('cookie-parser');
 const authMiddleware = require('./middlewares/auth');
 const jwt = require('jsonwebtoken');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
-const infoRouter = require('./routes/info');
-const restRouter = require('./routes/restaurant');
+const restRouter = require('./routes/restaurants');
 
 const app = express();
 
@@ -21,7 +21,7 @@ models.sequelize.sync().then(() => {
 }).catch(err => {
   console.log("DB is not connected because of below reason");
   console.log(err);
-})
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,12 +33,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// CORS 허용하기
+app.use(cors());
+
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/*', authMiddleware);
 app.use('/api/restaurants', restRouter);
-app.use('/api/info', infoRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

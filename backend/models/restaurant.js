@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
         deliveryTime: {
             field: "deliveryTime",
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         representativeMenus: {
             field: "representativeMenus",

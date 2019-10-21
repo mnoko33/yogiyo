@@ -3,7 +3,6 @@ module.exports = function(sequelize, DataTypes) {
         name: {
             field: "name",
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false
         },
         restaurantId: {
@@ -14,6 +13,11 @@ module.exports = function(sequelize, DataTypes) {
         label: {
           field: "label",
           type: DataTypes.STRING,
+          allowNull: true
+        },
+        description: {
+          field: "description",
+          type: DataTypes.TEXT,
           allowNull: true
         },
         price: {

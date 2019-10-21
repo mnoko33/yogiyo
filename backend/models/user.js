@@ -21,10 +21,17 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true
         },
-        location: {
-          field: "location",
-          type: DataTypes.STRING,
-          allowNull: true
+        lng: {
+            field: "lng",
+            type: DataTypes.DOUBLE,
+            allowNull: true
+
+        },
+        lat: {
+            field: "lat",
+            type: DataTypes.DOUBLE,
+            allowNull: true
+
         },
         phone_num: {
             field: "phone_num",

@@ -13,6 +13,10 @@
 
 
 
+[move](routes/auth.js)
+
+
+
 # routes/user.js
 
 1. 유저 리스트
@@ -62,11 +66,13 @@
    ```json
    // Body
    {
-       "email": email,
-       "password": password,   // 특수문자, 숫자, 문자를 모두 포함한 8~15자리
-       "phone_num": 010-1234-5678,
-       "username": username // 없을 경우 이메일 @ 앞부분으로 대체
-   }
+       "data": {
+                      "email": email,
+                      "password": password,   // 특수문자, 숫자, 문자를 모두 포함한 8~15자리
+                      "phone_num": 010-1234-5678,
+                      "username": username // 없을 경우 이메일 @ 앞부분으로 대체
+                  }
+    }   
    
    // res
    {
@@ -89,9 +95,11 @@
    ```json
    // Body
    {
-       "email": email,
-       "password": password
-   }
+          "data": {
+                         "email": email,
+                         "password": password
+                 }
+       }   
    
    // res
    {
@@ -99,38 +107,65 @@
    }
    ```
 
+   
 
+3. 위치 정보 저장
 
-
-# routes/info.js
-
-1. 주소저장
-
-   `POST` : url/api/info/address
+   `POST` : url/api/auth/address
 
    ```json
    // Body
    {
-       "user_id": 1,
-       "x": 127.1086228, // 위도
-       "y": 37.4012191, // 경도
+       "data": {
+                   "lng": 127.1086228, // 위도
+                   "lat": 37.4012191, // 경도
+       		}
    }
    
    // res
    {
        "status": true,
        "address": "구로동",
-       "location": "126.8778766::37.4951124"
+       "lng": "126.8778766",
+       "lat": "37.4951124"
    }
    ```
 
+   
 
+# routes/restaurants.js
 
-# routes/restaurant.js
+1. 카테고리 정보
 
-1. 카테고리 별 식당보기
+   `GET` : url/api/categories
 
-   `get` : url/api/restaurants/categories/:categoryIdx
+   ```json
+   // res
+   {
+       "status": true,
+       "categories": [
+           {
+               "id": 1,
+               "name": "전체보기",
+               "imgUrl": "path"
+           },
+           .
+           .
+           .
+           {
+               "id": 13,
+               "name": "편의점",
+               "imgUrl": "path"
+           }
+       ]
+   }
+   ```
+
+   
+
+2. 카테고리 별 식당보기
+
+   `GET` : url/api/restaurants/categories/:categoryIdx
 
    ```json
    categoryIdx = [
@@ -176,7 +211,7 @@
 
    
 
-2. 매장별 메뉴 보기
+3. 매장별 메뉴 보기
 
    `GET` : url/api/restaurants/:restaurantId/menus
 

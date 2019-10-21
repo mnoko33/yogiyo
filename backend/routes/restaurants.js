@@ -1,6 +1,7 @@
 const express = require('express');
 const models = require('../models');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 const categories = [
     "전체보기",      // 0
@@ -18,9 +19,42 @@ const categories = [
     "편의점"      // 12
 ];
 
-// 카테고리 별 식당보기
-// TODO: 장소와 카테고리에 따라 레스토랑 return 해주기
+// 카테고리 리스트 요청
+router.get('/categories', async function(req, res, next) {
+    try {
+        const categories = await models.Category.findAll();
+        res.json({
+            "status": true,
+            "categories": categories
+        })
+    }
+    catch (err) {
+        res.json({
+            "status": false,
+            "message": "카테고리 목록을 불러오는데 실패했습니다.",
+            "err": err
+        })
+    }
+});
+
+// 카테고리 별 식당보기 위치의 경우 token 정보에 기반
 router.get('/categories/:categoryIdx', async function (req, res, next) {
+    // jwt 를 통해 유저 location 알아오기
+    const token = req.headers['x-access-token'];
+    const secret_key = "ssaudy";
+    const decodedToken = new Promise(
+        ((resolve, reject) => {
+            jwt.verify(token, secret_key, (err, decoded) => {
+                if (err) reject(err);
+                resolve(decoded)
+            })
+        })
+    );
+    // TODO: 현재 위치와 가게들의 위치를 분석해서 return
+    const userLocation = await decodedToken;
+    const userLng = userLocation.lng;
+    const userLat = userLocation.lat;
+
     const categoryIdx = req.params.categoryIdx * 1;
     let restaurants = await models.Restaurant.findAll();
     if (categoryIdx !== 0) {
