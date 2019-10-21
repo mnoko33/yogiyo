@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet {
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController : UITableViewDelegate, UITableViewDataSource {
+extension HomeVC : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
