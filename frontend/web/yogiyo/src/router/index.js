@@ -14,7 +14,8 @@ Vue.use(VueRouter);
      {
        path: '/',
        component: MainPage,
-       name: 'MainPage'
+       name: 'MainPage',
+       props: true
      },
      {
        path:'/login',
@@ -27,9 +28,10 @@ Vue.use(VueRouter);
        name: 'JoinPage'
      },
      {
-       path:'/restaurant/:restID',
+       path:'/restaurant/:categoryIdx',
        component: RestaurantListPage,
-       name: 'RestaurantListPage'
+       name: 'RestaurantListPage',
+       props: true
      }
 
    ]
