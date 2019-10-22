@@ -74,8 +74,10 @@ import api from '@/api'
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
         this.user = jsonPayload
-         localStorage.setItem('currentUser', this.user)
-         this.$store.state.currentUser = localStorage.getItem('currentUser')
+         localStorage.setItem('currentUser', this.user);
+         localStorage.setItem('token', token);
+         this.$store.state.currentUser = localStorage.getItem('currentUser');
+         this.$store.state.token = localStorage.getItem('token');
       return JSON.parse(jsonPayload);
     },
 

@@ -3,12 +3,13 @@
    <div class="input-group">
      <v-layout style="position: relative; top: 125px">
        <v-flex style="margin-right: 2%;">
-         <v-icon class="gps-btn">mdi-crosshairs-gps</v-icon>
+         <v-icon @click="getLocation" class="gps-btn">mdi-crosshairs-gps</v-icon>
        </v-flex>
        <v-flex style="width: 310px;">
          <!--<v-text-field textarea clearable rows="2" outlined background-color="#ffffff" color="#ffffff" style="padding: 0 0"></v-text-field>-->
          <input
             type="text"
+            v-model="address"
             id="location-search"
             class="address-input"
           />
@@ -23,8 +24,53 @@
 </template>
 
 <script>
+  import api from '@/api'
   export default {
-    name: "Search"
+    name: "Search",
+    data: () => ({
+        latitude: 0,
+        longitude: 0,
+        address: '',
+    }),
+    mounted() {
+      this.address = this.$store.state.address
+    },
+    methods: {
+      getLocation: function() {
+        if (!navigator.geolocation) {
+          this.errorMsg = "Geolocation is not supported by your browser";
+          console.warn(this.errorMsg);
+          return;
+        }
+        // console.log('Getting current position..');
+        var options = {
+          timeout: 60000
+        };
+        navigator.geolocation.getCurrentPosition(this.success, this.error, options);
+      },
+      success: function(position) {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.setAddress(this.latitude, this.longitude);
+      },
+      error: function(err) {
+        this.errorMsg = "Unable to retrieve your location";
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+        console.warn(this.errorMsg);
+      },
+      async setAddress(lat, lng) {
+        const data = {
+          "lng": lng, // 위도
+          "lat": lat, // 경도
+        };
+        await api.setAddress(data).then(async res => {
+          this.address = res.data.address;
+          localStorage.setItem('address', this.address);
+        }).catch(e => {
+          console.log(e);
+        })
+      }
+    }
   }
 </script>
 
@@ -48,11 +94,13 @@
 
   .address-input {
     border-radius: 4px 0 0 4px;
-    margin-left: 8px;
+    margin-left: 4px;
     min-width: calc(100% - 110px);
     height: 40px;
-    font-size: 1.6rem;
+    font-size: 14px;
+    padding-left: 5px;
     background: #fff;
+    width: 86%;
   }
   .address-input:focus{
     outline: none;
@@ -61,7 +109,7 @@
     width: 40px;
     text-indent: -9999px;
     position: absolute;
-    right: 70px;
+    right: 64px;
     background: #fff url('../assets/sprite-icon.png') no-repeat -120px -239px;
     background-size: 400px;
     height: 40px;
