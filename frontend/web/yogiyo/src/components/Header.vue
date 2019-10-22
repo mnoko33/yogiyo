@@ -23,28 +23,18 @@
       }
     },
     mounted() {
-        // const userInfo = localStorage.getItem('currentUser')
-        // this.$store.state.data.currentUser = userInfo
+        this.isUser = this.$store.state.currentUser
     },
     watch: {
-        // userInfo() {
-        //     return this.$store.state.data.currentUser
-        // },
         currentUser() {
           this.isUser = this.$store.state.currentUser
         }
     },
     computed: {
         ... mapState(['currentUser'])
-        // userInfo() {
-        //     console.log(this.$store.state.data.currentUser)
-        //     return this.$store.state.data.currentUser
-        // }
+
     },
     methods: {
-      // getUser() {
-      //   this.isUser = this.$store.state.currentUser
-      // }
     }
   }
 </script>

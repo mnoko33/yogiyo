@@ -35,7 +35,9 @@
           // this.$session.remove("token")
           this.$session.destroy();
           this.$store.state.currentUser = '';
+          this.$store.state.token = '';
           localStorage.removeItem('currentUser');
+          localStorage.removeItem('token');
           return this.$router.push({name:'MainPage'});
       }
         }
