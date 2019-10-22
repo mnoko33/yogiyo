@@ -31,8 +31,7 @@ router.post('/certification', async function(req, res, next) {
         })();
 
         const number = req.body.data.phone_num;
-        const message = `[TEST] 인증번호는 [${code}]입니다. 해당 인증번호를 입력해주세요.`;
-        // const message = `[싸우디] 인증번호는 [${code}]입니다. 해당 인증번호를 입력해주세요.`;
+        const message = `[싸우디] 인증번호는 [${code}]입니다. 해당 인증번호를 입력해주세요.`;
 
         const msg = send({
             to: number,
