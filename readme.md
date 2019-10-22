@@ -1,24 +1,40 @@
-**[user.js](#routes/user.js)**
+:heavy_check_mark: : 현재 사용 가능 
 
-​	[`GET` url/api/users (모든 유저 리스트)](###`GET`-url/api/users-(모든-유저-리스트))
+:x: : 현재 사용 불가
 
-​	[`GET` url/api/user/:username (특정 유저 정보)](###`GET`-url/api/user/:username-(특정-유저-정보))
+**1. routes/auth.js**
 
-**[auth.js](#routes/auth.js)**
+​	:heavy_check_mark: ​`GET` url/api/user (특정 유저 정보)
 
-​	[`POST` url/api/auth/signup (회원가입)](###`POST`-url/api/auth/signup-(회원가입))
+​	:heavy_check_mark: ​`POST` url/api/auth/signup (회원가입)
 
-​	[`POST` url/api/auth/login (로그인)](###`POST`-url/api/auth/login-(로그인))
+​	:heavy_check_mark: ​`POST` url/api/auth/login (로그인)
 
-​	[`POST` url/api/auth/address (위치 정보 저장 및 수정)](###`POST`-url/api/auth/address-(위치-정보-저장-및-수정))
+​	:heavy_check_mark: ​`POST` url/api/auth/address (위치 정보 저장 및 수정)
 
-**[restaurants.js](#routes/restaurants.js)**
+​	:x: `GET` url/api/auth/history (유저 주문 기록 보기)
 
-​	[`GET` url/api/categories (카테고리 정보)](###`GET`-url/api/categories-(카테고리-정보))
+​	:x: `POST` url/api/auth/history (유저 주문 기록 추가)
 
-​	[`GET` url/api/restaurants/categories/:categoryIdx (카테고리별 식당)](###`GET`-url/api/restaurants/categories/:categoryIdx-(카테고리별-식당))
+​	:x: `GET` url/api/auth/tos (이용약관 보기)
 
-​	[`GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기)](###`GET`-url/api/restaurants/:restaurantId/menus-(매장별-메뉴-보기))
+**2. routes/restaurants.js**
+
+​	:heavy_check_mark: ​`GET` url/api/categories (카테고리 정보)
+
+​	:heavy_check_mark: `GET` url/api/restaurants/categories/:categoryId (카테고리별 식당)
+
+​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기) 
+
+​	:x: ​`POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) ​
+
+​	:x: `GET` url/api/restaurants/ad (광고 리스트)
+
+**3. routes/smsAuth.js**
+
+​	:heavy_check_mark: ​`POST` url/api/sms-auth/certification (인증코드 발급받기)
+
+​	:heavy_check_mark: ​`POST` url/api/sms-auth/verification (인증코드 검증하기)
 
 ​	
 
@@ -39,20 +55,31 @@
 
 
 
-## routes/user.js
+# 1. routes/auth.js
 
-#### `GET` url/api/users (모든 유저 리스트)
+##### `GET` url/api/user (특정 유저 정보)
 
 ```json
 // res
 {
     "status": true,
-    "users": [
+    "user": {
+        "username": "admin",
+        "email": "admin@admin.com",
+        "address": "서울특별시 종로구 동숭동",
+        "phone_num": "01012345678"
+    },
+    "numsOfCart": 1,
+    "cart": [
         {
-            "username": "mnoko",
-            "phone_num": "010-1234-5678",
-            "address": "구로동",
-            "location": "126.8778766::37.4951124"
+            "id": 1,
+            "name": "새우버거세트",
+            "restaurantId": 213,
+            "label": "인기메뉴",
+            "description": "새우살...",
+            "price": 6800,
+            "createdAt": "2019-10-21T22:59:29.000Z",
+            "updatedAt": "2019-10-21T22:59:29.000Z"
         }
     ]
 }
@@ -60,24 +87,7 @@
 
 
 
-#### `GET` url/api/user/:username (특정 유저 정보)
-
-```json
-// res
-{
-    "status": true,
-    "username": "mnoko",
-    "phone_num": "010-1234-5678",
-    "address": "구로동",
-    "location": "126.8778766::37.4951124"
-}
-```
-
-
-
-## routes/auth.js
-
-### `POST` url/api/auth/signup (회원가입)
+##### `POST` url/api/auth/signup (회원가입)
 
 ```json
 // Body
@@ -92,19 +102,15 @@
 
 // res
 {
-    "user": {
-        "id": 2,
-        "username": "lee",
-        "phone_num": "010-1234-5678",
-        "updatedAt": "2019-10-14T14:05:51.870Z",
-        "createdAt": "2019-10-14T14:05:51.870Z"
-    }
+    "status": true,
+    "message": "회원가입이 완료됐습니다.",
+    "token": token
 }
 ```
 
 
 
-### `POST` url/api/auth/login (로그인)
+##### `POST` url/api/auth/login (로그인)
 
 ```json
 // Body
@@ -117,37 +123,38 @@
 
 // res
 {
-    "jwt": jwt
+    "status": true,
+    "token": token
 }
 ```
 
 
 
-### `POST` url/api/auth/address (위치 정보 저장 및 수정)
+##### `POST` url/api/auth/address (위치 정보 저장 및 수정)
 
 ```json
 // Body
 {
     "data": {
-                "lng": 127.1086228, // 위도
-                "lat": 37.4012191, // 경도
+                "lng": 127.1086228, // 경도
+                "lat": 37.4012191,  // 위도
     		}
 }
 
 // res
 {
     "status": true,
-    "address": "구로동",
-    "lng": "126.8778766",
-    "lat": "37.4951124"
+    "address": "서울특별시 종로구 동숭동",
+    "lng": 127.001867,
+    "lat": 37.582302
 }
 ```
 
 
 
-## routes/restaurants.js
+# 2. routes/restaurants.js
 
-### `GET` url/api/categories (카테고리 정보)
+##### `GET` url/api/categories (카테고리 정보)
 
 ```json
 // res
@@ -173,28 +180,29 @@
 
 
 
-### `GET` url/api/restaurants/categories/:categoryIdx (카테고리별 식당)
+##### `GET` url/api/restaurants/categories/:categoryId (카테고리별 식당)
 
 ```json
-categoryIdx = [
-    "전체보기",      // 0
-    "1인분주문",    // 1
-    "프랜차이즈",    // 2
-    "치킨",         // 3
-    "피자양식",     // 4
-    "중국집",       // 5
-    "한식",         // 6
-    "일식돈까스",   // 7
-    "족발보쌈",     // 8
-    "야식",        // 9
-    "분식",        // 10
-    "카페디저트",  // 11
-    "편의점"      // 12
+categoryId = [
+    "전체보기",      // 1
+    "1인분주문",    // 2
+    "프랜차이즈",    // 3
+    "치킨",         // 4
+    "피자양식",     // 5
+    "중국집",       // 6
+    "한식",         // 7
+    "일식돈까스",   // 8
+    "족발보쌈",     // 9
+    "야식",        // 10
+    "분식",        // 11
+    "카페디저트",  // 12
+    "편의점"      // 13
 ];
 
 // res
 {
     "status": true,
+    "numsOfRestaurants": 570,
     "restaurants": [
         {
             "id": 2,
@@ -219,22 +227,62 @@ categoryIdx = [
 
 
 
-### `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기)
+##### `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기)
 
 ```json
 //res 
 {
     "status": true,
+     "numsOfMenus": 1,
     "menus": [
         {
-            "id": 1,
-            "name": "마라탕",
-            "price": 7000,
-            "restaurantId": 1,
-            "createdAt": "2019-10-15T13:57:49.000Z",
-            "updatedAt": "2019-10-15T13:57:49.000Z"
+            "id": 12224,
+            "name": "짜장",
+            "restaurantId": 20,
+            "label": "인기메뉴",
+            "description": "곱빼기 추가 가능",
+            "price": 6000,
+            "createdAt": "2019-10-21T23:48:51.000Z",
+            "updatedAt": "2019-10-21T23:48:51.000Z"
         }
     ]
 }
+```
+
+
+
+# 3. routes/smsAuth.js
+
+##### `POST` url/api/sms-auth/certification (인증코드 발급받기)
+
+```json
+//body
+{
+    "data": {
+        "phone_num": "01012345678"  // - 없이 11자리
+    }
+}
+
+//res
+{ "status": true }
+
+// 문자로 4자리의 숫자 코드가 발송된다.
+```
+
+
+
+##### `POST` url/api/sms-auth/verification (인증코드 검증하기)
+
+```json
+//body
+{
+    "data": {
+        "code": "1234"
+        "phone_num": "01012345678"  // - 없이 11자리
+    }
+}
+
+//res
+{ "status": true }
 ```
 
