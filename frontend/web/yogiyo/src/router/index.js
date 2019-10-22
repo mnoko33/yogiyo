@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import MainPage from '../components/pages/MainPage'
 import LoginPage from "../components/pages/LoginPage";
 import JoinPage from "../components/pages/JoinPage";
+import RestaurantListPage from "@/components/pages/RestaurantListPage";
 
 
 Vue.use(VueRouter);
@@ -15,16 +16,22 @@ Vue.use(VueRouter);
        component: MainPage,
        name: 'MainPage'
      },
-   {
+     {
        path:'/login',
        component: LoginPage,
        name: 'LoginPage'
-   },
-   {
+     },
+     {
        path:'/join',
        component: JoinPage,
        name: 'JoinPage'
-   }
+     },
+     {
+       path:'/restaurant/:restID',
+       component: RestaurantListPage,
+       name: 'RestaurantListPage'
+     }
+
    ]
  });
  

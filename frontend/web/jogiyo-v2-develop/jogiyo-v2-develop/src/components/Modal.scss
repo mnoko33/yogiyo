@@ -1,0 +1,177 @@
+@import '../_common.scss';
+// 모달 관련 CSS
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 9;
+}
+
+.Modal__main {
+  position: absolute;
+  background-color: #efefef;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  // transform: translate(-50%, -50%);
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.Modal__order {
+  &__title {
+    text-align: center;
+    font-size: 1.6rem;
+    background-color: #fff;
+    padding: 16px;
+  }
+  &__img {
+    width: 100%;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #fff;
+    background-position: center;
+    text-indent: -9999px;
+  }
+
+  &__price,
+  &__quantity {
+    background-color: #fff;
+  }
+
+  &__price,
+  &__quantity,
+  &__total_price {
+    border-bottom: 1px solid $border-color;
+    span {
+      display: inline-block;
+      width: 50%;
+      height: 56px;
+      line-height: 54px;
+      padding: 0 16px;
+      font-weight: 600;
+    }
+    span:last-child {
+      text-align: right;
+    }
+  }
+  &__quantity {
+    border-bottom: 1px solid $border-color;
+    &__btn {
+      display: inline-block;
+      width: 50%;
+      text-align: right;
+      padding: 0 16px;
+      &__num {
+        display: inline-block;
+        height: 30px;
+        border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
+        width: 40px;
+        text-align: center;
+      }
+      button {
+        border: 1px solid $border-color;
+        color: #4d4d4d;
+        height: 30px;
+        width: 30px;
+        text-indent: -9999px;
+        position: relative;
+      }
+      // 가상선택자를 이용해서 -, + 아이콘 설정
+      &__minus::before {
+        content: '';
+        background-color: $text-color;
+        width: 10px;
+        height: 1px;
+        position: absolute;
+        left: 9px;
+        top: 50%;
+      }
+      &__plus::before {
+        content: '';
+        background-color: $text-color;
+        width: 10px;
+        height: 1px;
+        position: absolute;
+        left: 9px;
+        top: 50%;
+      }
+      &__plus::after {
+        transform: rotate(90deg);
+        content: '';
+        background-color: $text-color;
+        width: 10px;
+        height: 1px;
+        position: absolute;
+        left: 9px;
+        top: 50%;
+      }
+    }
+  }
+  &__total_price {
+    border: none;
+    span:last-child {
+      font-size: 2.2rem;
+      color: $main-color;
+    }
+  }
+  &__min {
+    text-align: right;
+    font-size: 1.3rem;
+    padding-right: 16px;
+    margin-top: -10px;
+  }
+  &__close {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    text-indent: -9999px;
+    &::before,
+    &::after {
+      position: absolute;
+      left: 12px;
+      content: '';
+      height: 24px;
+      width: 1px;
+      background-color: $text-color;
+    }
+    &::before {
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+  &__btn {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    button {
+      width: 50%;
+      color: white;
+      font-size: 1.8rem;
+      height: 50px;
+      &:first-child {
+        background-color: #555;
+      }
+      &:last-child {
+        background-color: $main-color;
+      }
+    }
+  }
+}

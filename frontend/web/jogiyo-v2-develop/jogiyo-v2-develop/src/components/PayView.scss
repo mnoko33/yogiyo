@@ -1,0 +1,257 @@
+@import '../_common';
+
+.Pay {
+  padding: 16px;
+  &__title {
+    background-color: #333;
+    font-size: 1.6rem;
+    color: white;
+    line-height: 46px;
+    height: 48px;
+    padding: 0 16px;
+  }
+  .Menu {
+    padding: 0 15px;
+    border: 1px solid $border-color;
+    line-height: 40px;
+    height: 42px;
+  }
+  &__contents,
+  &__need,
+  &__payment {
+    padding: 0 16px 16px 16px;
+    background-color: #fff;
+    border: 1px solid $border-color;
+  }
+  &__contents {
+    input[type='text'] {
+      width: 100%;
+      border: 1px solid $border-color;
+      margin-top: 8px;
+      font-size: 1.5rem;
+    }
+    // button {
+    //   margin-top: 12px;
+    //   min-width: 100px;
+    //   color: #fff;
+    //   background-color: #dc1400;
+    //   border-color: #dc1400;
+    //   border-radius: 0;
+    //   display: block;
+    //   width: 100%;
+    //   padding: 10px 16px;
+    //   font-size: 18px;
+    //   line-height: 1.3333333;
+    // }
+  }
+  &__info {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-top: 16px;
+    &__side {
+      font-size: 1.3rem;
+      color: $text-sub-color;
+      margin-left: 8px;
+    }
+  }
+  // 기본 상태
+  &__check {
+    &__text {
+      display: none;
+    }
+  }
+  // 입력되지 않았을 때
+  &__check-required {
+    input[type='text'] {
+      border: 1px solid $border-active-color;
+    }
+    .Pay__check__text {
+      display: block;
+      font-size: 1.3rem;
+      color: $border-active-color;
+    }
+  }
+  &__safe_number {
+    margin-top: 10px;
+    input {
+      width: 100%;
+      border: none;
+      padding: 12px;
+      margin: 0;
+    }
+    input[type='checkbox'] {
+      display: none;
+    }
+    input[type='checkbox'] + label {
+      display: inline-block;
+      height: 24px;
+      vertical-align: middle;
+      background: url('../images/ico_check.png') no-repeat top 0px left 0;
+      background-size: 24px 48px;
+      padding-left: 36px;
+      line-height: 22px;
+    }
+    input[type='checkbox']:checked + label {
+      background: url('../images/ico_check.png') no-repeat top -24px left 0;
+      background-size: 24px 48px;
+    }
+    &__info {
+      display: inline-block;
+      margin-left: 5px;
+      height: 24px;
+      line-height: 22px;
+      position: relative;
+      top: 1px;
+      &__text {
+        position: absolute;
+        font-size: 1.3rem;
+        line-height: 1.4;
+        width: 240px;
+        z-index: 9999;
+        background-color: #fff;
+        padding: 16px;
+        border: 1px solid $border-active-color;
+        top: calc(100% + 5px);
+        left: 50%;
+        margin-left: -120px;
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: 100%;
+          width: 0;
+          height: 0;
+          border: 7px solid transparent;
+          border-bottom-color: $border-active-color;
+          left: 50%;
+          margin-left: -7px;
+        }
+      }
+    }
+  }
+  &__need {
+    padding: 16px;
+    textarea {
+      resize: none;
+      width: 100%;
+      border: 1px solid $border-color;
+      padding: 8px;
+    }
+    &__text_count {
+      text-align: right;
+      color: $text-sub-color;
+      font-size: 1.3rem;
+    }
+  }
+  &__payment {
+    &__radio {
+      margin-top: 8px;
+      input[type='radio'] {
+        display: none;
+      }
+      input[type='radio'] + label {
+        display: inline-block;
+        height: 52px;
+        background-color: gold;
+        vertical-align: middle;
+        line-height: 50px;
+        border: 1px solid $border-color;
+        text-align: center;
+        width: calc(50% - 5px);
+        margin-right: 10px;
+        background-color: #fff;
+        svg {
+          margin-right: 5px;
+        }
+      }
+      input[type='radio']:checked + label {
+        border: 1px solid $main-color;
+        svg {
+          color: $main-color;
+        }
+      }
+      & label:last-child {
+        margin: 0 !important;
+      }
+    }
+  }
+  &__list {
+    margin-top: 16px;
+    &__store {
+      background-color: #fff;
+      border: 1px solid $border-color;
+      padding: 8px 16px;
+    }
+    &__menu {
+      li {
+        font-size: 1.4rem;
+        padding: 10px 16px;
+        border-left: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+        background-color: #fff8eb;
+      }
+      li:last-child {
+        border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
+      }
+      span {
+        display: inline-block;
+      }
+      &__orderName {
+        float: left;
+        width: 70%;
+        text-align: left;
+        &__title {
+          &:first-child::after {
+            padding-left: 5px;
+            content: 'x';
+          }
+          padding-right: 5px;
+          text-align: left;
+          // width: 70%;
+        }
+
+        &__amount {
+          text-align: left;
+        }
+      }
+      &__price {
+        text-align: right;
+        width: 30%;
+      }
+
+      &__all {
+        padding: 16px;
+        border-top: 1px dotted #d9d9d9;
+
+        &__title {
+          width: 70%;
+          text-align: left;
+          float: left;
+        }
+        &__price {
+          text-align: right;
+          padding-left: 5px;
+          width: 30%;
+        }
+        span {
+          font-weight: 600;
+          color: $main-color;
+          &:first-child::after {
+            content: '';
+          }
+        }
+      }
+    }
+  }
+  &__order_btn {
+    background-color: $main-color;
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    height: 50px;
+    width: 100%;
+    line-height: 48px;
+    margin-top: 8px;
+  }
+}

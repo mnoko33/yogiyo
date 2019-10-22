@@ -1,0 +1,36 @@
+$main-color: #dc1400;
+$bg-color: #fafafa;
+$text-color: #333;
+$text-sub-color: #999;
+$border-color: #d9d9d9;
+$star-color: #ffa800;
+$border-active-color: #a94442;
+$btn-gray: #ccc;
+
+// 사용법
+//  @include breakpoint("mobile") {
+//     justify-content: center;
+//     align-items: center;
+//     max-width: 350px;
+//     margin-bottom: 25px;
+//   }
+
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == 'mobile' {
+    @media (min-width: 0px) and (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint == 'tablet' {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == 'laptop' {
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if $breakpoint == 'desktop' {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+}

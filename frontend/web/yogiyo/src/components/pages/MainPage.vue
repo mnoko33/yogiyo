@@ -1,8 +1,8 @@
 <template>
   <v-container style="overflow: scroll;">
     <v-layout row style="width: 90%; margin: auto">
-      <v-flex xs6 sm4 md3 v-for="category in categoryList">
-        <v-card
+      <v-flex xs6 sm4 md3 v-for="(category,  index) in categoryList" :key="index">
+        <router-link :to="{name: 'RestaurantListPage', params: {restID: index}}"><v-card
             outlined
             flat
             height="218px"
@@ -16,7 +16,7 @@
             style="margin-right: 0; position: absolute; bottom: 0; right: 0"
             :src="category.background"
           />
-        </v-card>
+        </v-card></router-link>
       </v-flex>
     </v-layout>
   </v-container>

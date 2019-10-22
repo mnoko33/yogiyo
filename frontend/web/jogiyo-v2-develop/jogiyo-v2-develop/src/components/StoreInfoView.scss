@@ -1,0 +1,33 @@
+@import '../_common.scss';
+.StoreInfo {
+  background-color: white;
+  padding: 24px 16px;
+  &__payment,
+  &__info,
+  &__origin {
+    margin-top: 30px;
+  }
+  h3 {
+    border-bottom: 1px solid $text-sub-color;
+    font-size: 1.7rem;
+    font-weight: 500;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    svg {
+      color: #555;
+      font-size: 1.5rem;
+      margin-right: 5px;
+    }
+  }
+  p {
+    font-size: 1.4rem;
+    margin: 5px 0;
+  }
+  p > span {
+    display: inline-block;
+  }
+  p > span:first-child {
+    color: $text-sub-color;
+    width: 120px;
+  }
+}
