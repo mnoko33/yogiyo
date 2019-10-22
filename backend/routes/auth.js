@@ -1,31 +1,61 @@
 const express = require('express');
 const models = require('../models');
 const axios = require('axios');
-const jwt = require('jsonwebtoken');
+const kakaoConfig = require('../config/kakaoConfig');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('../functions/jwt');
 
-// token 발행 함수
-async function createJWT(user) {
-    const secret_key = "ssaudy";
-    const payload = {
-        "id": user.id,
-        "email": user.email,
-        "username": user.username,
-    };
-    // return jwt.sign(payload, secret_key, { expiresIn: '15m' });
-    return jwt.sign(payload, secret_key, { expiresIn: '1000h' });
-}
+// 유저정보
+
+router.get('/user', async function(req, res, next) {
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+    const userId = userInfo.id;
+    const user = await models.User.findOne({
+        where: { id: userId }
+    })
+        .then((user) => {
+            return user
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "유저 정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+    const cart = await user.getCart();
+    const idList = cart.menus.split('::');
+
+    const menus = await models.Menu.findAll({
+        where: {id: idList}
+    });
+
+    res.json({
+        "status": true,
+        "user": {
+            "username": user.username,
+            "email": user.email,
+            "address": user.address,
+            "phone_num": user.phone_num,
+        },
+        "numsOfCart": menus.length,
+        "cart": menus
+    })
+});
 
 // 회원가입
 router.post('/signup', async function(req, res, next) {
     const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     const passwordRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;  // 특수문자 / 문자 / 숫자 포함 형태의 8~15자리
-    const phoneRegex = /^\d{3}-\d{4}-\d{4}$/;
+    const phoneRegex = /^\d{11}$/;
 
     const email = req.body.data.email;
     const password = req.body.data.password;
     const phone_num = req.body.data.phone_num;
+    const username = req.body.data.username ? req.body.data.username : email.split('@')[0];
+    console.log('############',username);
 
     // 없는 정보 확인
     if (!email || !password || !phone_num) {
@@ -63,8 +93,8 @@ router.post('/signup', async function(req, res, next) {
     // 이메일, 비밀번호, 전화번호 정규표현식 검사
     if (!emailRegex.test(email) || !passwordRegex.test(password) || !phoneRegex.test(phone_num)) {
         console.log('email regex :', emailRegex.test(email));
-        console.log('password regex :', passwordRegex.test(email));
-        console.log('phone_num regex :', phoneRegex.test(email));
+        console.log('password regex :', passwordRegex.test(password));
+        console.log('phone_num regex :', phoneRegex.test(phone_num));
         return res.json({
             "status": false,
             "message": "잘못된 형식입니다."
@@ -72,12 +102,12 @@ router.post('/signup', async function(req, res, next) {
     }
 
     models.User.create({
-        username: req.body.username ? req.body.username : email.split('@')[0],
+        username: username,
         email: email,
         password: bcrypt.hashSync(password, 8),
         phone_num: phone_num
     }).then((user) => {
-        return createJWT(user)
+        return jwt.createJWT(user)
             .then((token) => {
                 res.json({
                     "status": true,
@@ -108,7 +138,6 @@ router.post('/login', async function(req, res, next) {
     const email = req.body.data.email;
     const password = req.body.data.password;
 
-
     if (!email || !password) {
         res.json({
             "status": false,
@@ -120,8 +149,9 @@ router.post('/login', async function(req, res, next) {
     const user = await models.User.findOne({
         where: {email: email}
     });
+
     if (user && bcrypt.compareSync(password, user.password)) {
-        const token = await createJWT(user);
+        const token = await jwt.createJWT(user);
         return res.json({
             "status": !!token,
             "jwt": token
@@ -138,32 +168,20 @@ router.post('/login', async function(req, res, next) {
 // TODO: jwt 체크 필요
 router.post('/address', async function(req, res, next) {
     const token = req.headers['x-access-token'];
-    const secret_key = "ssaudy";
-    const decodedToken = new Promise(
-        ((resolve, reject) => {
-            jwt.verify(token, secret_key, (err, decoded) => {
-                if (err) reject(err);
-                resolve(decoded)
-            })
-        })
-    )
-
-
-    const userInfo = await decodedToken;
+    const userInfo = await jwt.decodeJWT(token);
     const userId = userInfo.id;
 
     // TODO: 변경된 위치 정보를 기반으로 jwt 재발급
     const newLng = req.body.data.lng;
     const newLat = req.body.data.lat;
     const url = `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${newLng}&y=${newLat}`;
-    const kakaoAuthorization = "KakaoAK 158e55f2ac87b67c8641e613316155a5";
 
     // kakao api 로부터 주소값 받아오기
     async function getResponse() {
         try {
             return await axios.get(url, {
                 headers: {
-                    Authorization: kakaoAuthorization
+                    Authorization: kakaoConfig.kakaoAuthorization
                 }
             })
         } catch (err) {
@@ -178,7 +196,8 @@ router.post('/address', async function(req, res, next) {
             "message": "kakao로부터 주소값을 가져오는데 오류가 발생했습니다."
         })
     }
-    const newAddress = response.data.documents[0].region_3depth_name
+
+    const newAddress = response.data.documents[0].address_name;
 
     // user update
     async function updateUser(userId, newLng, newLat, newAddress) {
