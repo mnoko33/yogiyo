@@ -23,8 +23,8 @@ const restList = async function() {
         const res =  await axios.get('https://www.yogiyo.co.kr/api/v1/restaurants-geo/', {
             params: {
                 "items": 1000,
-                "lat": loc[1].lat,
-                "lng": loc[1].lng,
+                "lat": loc[0].lat,
+                "lng": loc[0].lng,
                 "order": "rank",
                 "page": 0,
             },
@@ -36,6 +36,7 @@ const restList = async function() {
         });
         const restaurantList = res.data["restaurants"];
         const limit = restaurantList.length > 200 ? 200 : restaurantList.length;
+        let container = [];
         for (let i = 0; i <= limit; i++) {
             sleep(10000);
             (async function(j) {
@@ -59,10 +60,15 @@ const restList = async function() {
                         "paymentMethods": restaurant.payment_methods.join('::')
                     }
                 }); // return (instance, isCreated)
-                if (!result[1]) {
-                    console.log('already created!')
+                // create only menus
+                if (container.includes(result[0].id)) {
                     return true
                 }
+                container.push(result[0].id);
+                // if (!result[1]) {
+                //     console.log('already created!')
+                //     return true
+                // }
                 const rest = result[0];
                 let id = rest.id;
                 let name = rest.name;
