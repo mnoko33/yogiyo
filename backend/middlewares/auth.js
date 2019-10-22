@@ -18,6 +18,12 @@ const authMiddleware = (req, res, next) => {
         })
     );
     const onError = (error) => {
+        if (error.name === "TokenExpiredError") {
+            res.json({
+                "status": false,
+                "message": "토큰이 만료됐습니다."
+            })
+        }
         res.json({
             "status": false,
             "message": error.message

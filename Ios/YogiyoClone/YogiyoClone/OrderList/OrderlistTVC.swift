@@ -18,7 +18,7 @@ class OrderlistTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+//        setupTabBar()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,7 +29,7 @@ class OrderlistTVC: UITableViewController {
     // MARK: - Table view data source
     func setupTabBar() {
         
-        self.OrderListTab.items =
+//        self.OrderListTab.items =
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

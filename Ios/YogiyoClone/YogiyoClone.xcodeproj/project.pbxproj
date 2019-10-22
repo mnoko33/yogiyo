@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		D104FCA32339B22200645C56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA22339B22200645C56 /* AppDelegate.swift */; };
 		D104FCA52339B22200645C56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA42339B22200645C56 /* SceneDelegate.swift */; };
-		D104FCA72339B22200645C56 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA62339B22200645C56 /* ViewController.swift */; };
+		D104FCA72339B22200645C56 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA62339B22200645C56 /* HomeVC.swift */; };
 		D104FCAA2339B22200645C56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D104FCA82339B22200645C56 /* Main.storyboard */; };
 		D104FCAD2339B22200645C56 /* YogiyoClone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D104FCAB2339B22200645C56 /* YogiyoClone.xcdatamodeld */; };
 		D104FCAF2339B22400645C56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D104FCAE2339B22400645C56 /* Assets.xcassets */; };
@@ -18,7 +18,9 @@
 		D104FCC82339B22400645C56 /* YogiyoCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCC72339B22400645C56 /* YogiyoCloneUITests.swift */; };
 		D104FCDC2339DD2700645C56 /* imageSlideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCDB2339DD2700645C56 /* imageSlideCell.swift */; };
 		D104FCDE2339E06600645C56 /* imageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCDD2339E06600645C56 /* imageCell.swift */; };
-		D1D3C2B923541EFC00FFA90E /* OrderlistTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3C2B823541EFC00FFA90E /* OrderlistTVC.swift */; };
+		D15C7263235D70D6000DC1D4 /* OrderListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C7262235D70D6000DC1D4 /* OrderListVC.swift */; };
+		D15C7265235D70E3000DC1D4 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C7264235D70E3000DC1D4 /* SearchVC.swift */; };
+		D15C726B235D9902000DC1D4 /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C726A235D9902000DC1D4 /* MyPageVC.swift */; };
 		D1DB5066233A1ECF00CF5761 /* menupanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5065233A1ECF00CF5761 /* menupanCell.swift */; };
 		D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5067233A1EDE00CF5761 /* menuCell.swift */; };
 /* End PBXBuildFile section */
@@ -44,7 +46,7 @@
 		D104FC9F2339B22200645C56 /* YogiyoClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogiyoClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D104FCA22339B22200645C56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D104FCA42339B22200645C56 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D104FCA62339B22200645C56 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D104FCA62339B22200645C56 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		D104FCA92339B22200645C56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D104FCAC2339B22200645C56 /* YogiyoClone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YogiyoClone.xcdatamodel; sourceTree = "<group>"; };
 		D104FCAE2339B22400645C56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,7 +60,9 @@
 		D104FCC92339B22400645C56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D104FCDB2339DD2700645C56 /* imageSlideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageSlideCell.swift; sourceTree = "<group>"; };
 		D104FCDD2339E06600645C56 /* imageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageCell.swift; sourceTree = "<group>"; };
-		D1D3C2B823541EFC00FFA90E /* OrderlistTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderlistTVC.swift; sourceTree = "<group>"; };
+		D15C7262235D70D6000DC1D4 /* OrderListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListVC.swift; sourceTree = "<group>"; };
+		D15C7264235D70E3000DC1D4 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		D15C726A235D9902000DC1D4 /* MyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
 		D1DB5065233A1ECF00CF5761 /* menupanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menupanCell.swift; sourceTree = "<group>"; };
 		D1DB5067233A1EDE00CF5761 /* menuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,7 +151,7 @@
 		D1DB5069233B09E700CF5761 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D104FCA62339B22200645C56 /* ViewController.swift */,
+				D104FCA62339B22200645C56 /* HomeVC.swift */,
 				D104FCDB2339DD2700645C56 /* imageSlideCell.swift */,
 				D104FCDD2339E06600645C56 /* imageCell.swift */,
 				D1DB5065233A1ECF00CF5761 /* menupanCell.swift */,
@@ -159,6 +163,7 @@
 		D1DB506A233B09FA00CF5761 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				D15C7264235D70E3000DC1D4 /* SearchVC.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -166,7 +171,7 @@
 		D1DB506B233B0A0B00CF5761 /* OrderList */ = {
 			isa = PBXGroup;
 			children = (
-				D1D3C2B823541EFC00FFA90E /* OrderlistTVC.swift */,
+				D15C7262235D70D6000DC1D4 /* OrderListVC.swift */,
 			);
 			path = OrderList;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 		D1DB506C233B0A1B00CF5761 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				D15C726A235D9902000DC1D4 /* MyPageVC.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -310,10 +316,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D104FCDC2339DD2700645C56 /* imageSlideCell.swift in Sources */,
-				D104FCA72339B22200645C56 /* ViewController.swift in Sources */,
+				D15C7265235D70E3000DC1D4 /* SearchVC.swift in Sources */,
+				D15C7263235D70D6000DC1D4 /* OrderListVC.swift in Sources */,
+				D104FCA72339B22200645C56 /* HomeVC.swift in Sources */,
+				D15C726B235D9902000DC1D4 /* MyPageVC.swift in Sources */,
 				D1DB5066233A1ECF00CF5761 /* menupanCell.swift in Sources */,
 				D104FCAD2339B22200645C56 /* YogiyoClone.xcdatamodeld in Sources */,
-				D1D3C2B923541EFC00FFA90E /* OrderlistTVC.swift in Sources */,
 				D104FCA32339B22200645C56 /* AppDelegate.swift in Sources */,
 				D104FCA52339B22200645C56 /* SceneDelegate.swift in Sources */,
 				D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */,

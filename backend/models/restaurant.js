@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
         deliveryTime: {
             field: "deliveryTime",
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         representativeMenus: {
             field: "representativeMenus",
@@ -71,7 +71,10 @@ module.exports = function(sequelize, DataTypes) {
     Restaurant.associate = function(models) {
         models.Restaurant.hasMany(models.Menu, {
             foreignKey: "restaurantId"
-        })
+        });
+        models.Restaurant.hasMany(models.Cart, {
+            foreignKey: "restaurantId"
+        });
     };
     return Restaurant;
 };

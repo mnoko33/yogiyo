@@ -4,22 +4,47 @@
       <router-link :to="{name:'MainPage'}"><img class="logo" src="../../public/yogiyologo.png" style="" alt="yogiyo"></router-link>
       <v-flex class="cart">
         <router-link :to="{name: 'LoginPage'}">
-          <button type="button" class="btn-login">로그인 | 회원가입</button>
+          <button v-if="!isUser" type="button" class="btn-login">로그인 | 회원가입</button>
+          <button v-else type="button" class="btn-login">로그아웃</button>
         </router-link>
-        <button type="button" class="btn-cart">주문표(0)</button>
+        <button v-if="isUser" type="button" class="btn-cart">주문표(0)</button>
       </v-flex>
     </v-flex>
   </v-flex>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   export default {
     name: "Header",
     data() {
       return {
+        isUser: false,
       }
     },
-    method: {
+    mounted() {
+        // const userInfo = localStorage.getItem('currentUser')
+        // this.$store.state.data.currentUser = userInfo
+    },
+    watch: {
+        // userInfo() {
+        //     return this.$store.state.data.currentUser
+        // },
+        currentUser() {
+          this.isUser = this.$store.state.currentUser
+        }
+    },
+    computed: {
+        ... mapState(['currentUser'])
+        // userInfo() {
+        //     console.log(this.$store.state.data.currentUser)
+        //     return this.$store.state.data.currentUser
+        // }
+    },
+    methods: {
+      // getUser() {
+      //   this.isUser = this.$store.state.currentUser
+      // }
     }
   }
 </script>

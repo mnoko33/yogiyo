@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 const apiUrl = 'url = http://70.12.247.65:3000';
 const headers = {
     "headers": {
@@ -9,9 +8,9 @@ const headers = {
 }
 
 export default {
-    login(params) {
+    login(data) {
         return axios.post(`${apiUrl}/api/auth/login/`, {
-        params,
+        data,
     })
     },
     getCategoryList(idx) {

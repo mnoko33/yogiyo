@@ -1,50 +1,30 @@
-// const webdriver = require('selenium-webdriver');
-// const chrome = require('selenium-webdriver/chrome');
-// let driver = new webdriver.Builder()
-//     .forBrowser('chrome')
-//     .build();
-//
-// const categoryList = [
-//     "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C/135011/%EC%B9%98%ED%82%A8/",
-//     "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C/135011/%ED%94%BC%EC%9E%90%EC%96%91%EC%8B%9D/",
-//     "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C/135011/%EC%A4%91%EC%8B%9D/",
-//     "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C/135011/%ED%95%9C%EC%8B%9D/",
-//     "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C/135011/%EC%9D%BC%EC%8B%9D%EB%8F%88%EA%B9%8C%EC%8A%A4/",
-// ];
-//
-// // async function crawling (driver) {
-// //     const url = "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/";
-// //     const By = webdriver.By;
-// //     driver.get(url);
-// //     const elList = await driver.findElements(By.className('category-title'));
-// //     console.log(elList[0]);
-// //     driver.click(elList[0]);
-// // }
-// //
-// // crawling(driver);
-//
-//
-// const url = "https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/";
-// const By = webdriver.By;
-// driver.get(url);
-// driver.findElements(By.className('category-title'))
-//     .then((elList) => {
-//         driver.click(elList[0])
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     });
-
 const axios = require('axios');
 const models = require('../models');
+const sleep = require('system-sleep');
 
-async function getRestrauntList() {
+
+const webdriver = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const By = webdriver.By;
+
+const loc = [
+    {   // 역삼
+        "lat": 37.4951124,
+        "lng": 127.0404704
+    },
+    {   // 혜화
+        "lat": 37.582302,
+        "lng": 127.001867
+    }
+];
+
+const restList = async function() {
     try {
         const res =  await axios.get('https://www.yogiyo.co.kr/api/v1/restaurants-geo/', {
             params: {
                 "items": 1000,
-                "lat": 37.4951124,
-                "lng": 127.0404704,
+                "lat": loc[1].lat,
+                "lng": loc[1].lng,
                 "order": "rank",
                 "page": 0,
             },
@@ -55,57 +35,142 @@ async function getRestrauntList() {
             }
         });
         const restaurantList = res.data["restaurants"];
-        restaurantList.forEach((Restaurant) => {
-            models.Restaurant.findOrCreate({
-                    where: { name: Restaurant.name },
+        const limit = restaurantList.length > 200 ? 200 : restaurantList.length;
+        for (let i = 0; i <= limit; i++) {
+            sleep(10000);
+            (async function(j) {
+                const restaurant = restaurantList[j];
+                const urlId = restaurant.id;
+                // console.log('urlId: ', restaurant.id)
+                const result = await models.Restaurant.findOrCreate({
+                    where: { name: restaurant.name },
                     defaults: {
-                        "name": Restaurant.name,
-                        "category": Restaurant.categories.join('::'),
-                        "thumbnailUrl": Restaurant.thumbnail_url,
-                        "address": Restaurant.address.split(' ')[2],
-                        "lng": Restaurant.lng,
-                        "lat": Restaurant.lat,
-                        "openTime": Restaurant.open_time_description,
-                        "deliveryTime": Restaurant.estimated_delivery_time_key,
-                        "representativeMenus": Restaurant.representative_menus,
-                        "deliveryFee": Restaurant.delivery_fee,
-                        "minOrderAmount": Restaurant.min_order_amount,
-                        "paymentMethods": Restaurant.payment_methods.join('::')
+                        "name": restaurant.name,
+                        "category": restaurant.categories.join('::'),
+                        "thumbnailUrl": restaurant.thumbnail_url,
+                        "address": restaurant.address.split(' ')[2],
+                        "lng": restaurant.lng,
+                        "lat": restaurant.lat,
+                        "openTime": restaurant.open_time_description,
+                        "deliveryTime": restaurant.estimated_delivery_time_key,
+                        "representativeMenus": restaurant.representative_menus,
+                        "deliveryFee": restaurant.delivery_fee,
+                        "minOrderAmount": restaurant.min_order_amount,
+                        "paymentMethods": restaurant.payment_methods.join('::')
                     }
-                })
-        })
-    } catch (err) {
-        console.log(err)
+                }); // return (instance, isCreated)
+                if (!result[1]) {
+                    console.log('already created!')
+                    return true
+                }
+                const rest = result[0];
+                let id = rest.id;
+                let name = rest.name;
+                // console.log('--------------------------------------');
+                // console.log(`restaurant : ${name}, // ${restaurant.name}`);
+                console.log(await crawlingMenus(urlId, id, name))
+            })(i)
+
+        }
     }
+    catch(e) {
+        console.log(e);
+    }
+};
+
+restList()
+    .then(() => {
+        console.log('###################success')
+    })
+    .catch(() => {
+        console.log('###################failed')
+    });
+
+// 메뉴 크롤링 and 만들기
+async function crawlingMenus (urlId, id, name) {
+    let driver = new webdriver.Builder()
+        .forBrowser('chrome')
+        .build();
+    // console.log('func crawlingMenus is started');
+    const url = `https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/${urlId}/`;
+    await driver.get(url);
+
+    let i = 2;
+    while (true) {
+        try {
+            const labelXpath = `//*[@id="menu"]/div/div[${i}]/div[1]/h4/a/span`;
+            // 라벨
+            const label = await driver.findElement(By.xpath(labelXpath));
+            const labelName = await label.getAttribute('innerText');
+            // 메뉴 크롤링
+            let j = 1;
+            while (true) {
+                try {
+                    const menuXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[2]`;
+                    const priceXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[4]/span[1]`;
+                    const descriptionXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[3]`;
+
+                    // 메뉴 이름
+                    const menu = await driver.findElement(By.xpath(menuXpath));
+                    const menuName = await menu.getAttribute('innerText');
+
+                    // 메뉴 상세 설명
+                    const getDescription = async function() {
+                        try {
+                            return await driver.findElement(By.xpath(descriptionXpath))
+                        }
+                        catch {
+                            return null
+                        }
+                    };
+                    const description = await getDescription();
+                    const descriptionContent = description ? await description.getAttribute('innerText') : null;
+
+                    // 메뉴 가격
+                    const price = await driver.findElement(By.xpath(priceXpath));
+                    let priceValue = await price.getAttribute('innerText');
+                    priceValue = priceValue.slice(0, -1);
+                    const idx = priceValue.indexOf(',');
+                    priceValue = (priceValue.slice(0, idx) + priceValue.slice(idx+1)) * 1;
+
+                    // console.log(`${j}.  name: ${menuName}, restaurantId: ${id}, label: ${labelName}, description: ${descriptionContent}, price: ${priceValue}`)
+                    // console.log(' ')
+                    // 메뉴 instance 저장
+                    try {
+                        const result = models.Menu.create({
+                            name: menuName,
+                            restaurantId: id,
+                            label: labelName,
+                            description: descriptionContent,
+                            price: priceValue
+                        })
+                            .then((result) => {
+                                console.log(result.name)
+                            })
+                            .catch((err) => {
+                                console.log('err is occurred')
+                                console.log(err)
+                            })
+                    }
+                    catch {
+                        console.log('failed')
+                    }
+                    j += 1
+                }
+                catch (e) {
+                    break
+                }
+            }
+            i += 1
+        }
+        catch {
+            break
+        }
+    }
+    driver.close();
+    return 'fun crawlingMenus is end'
 }
 
-async function createMenu(models) {
-    const restaurant = await models.Restaurant.findOne({
-        where: { id: 1 }
-    });
-    models.Menu.create({
-        name: "마라탕",
-        price: 7000,
-        restaurantId: restaurant.id
-    })
-        .then((menu) => {
-            console.log(menu);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-}
-
-async function getMenu(models) {
-    const restaurant = await models.Restaurant.findOne({
-        where: { id:1 }
-    });
-    console.log(restaurant.id)
-    const menus = await restaurant.getMenus();
-    menus.forEach((menu) => {
-        console.log(menu.name);
-    })
-}
 
 const categories = [
     "전체보기",      // 0
@@ -140,7 +205,5 @@ function createCategories(models) {
         })(i, models, categories)
     }
 }
-// getRestrauntList();
-// createMenu(models);
-// getMenu(models);
+
 // createCategories(models);
