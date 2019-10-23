@@ -42,7 +42,7 @@
 
 ​	:heavy_check_mark: ​`POST` url/api/sms-auth/verification (인증코드 검증하기)
 
-​	
+
 
 ##### 5. routes/info.js
 
