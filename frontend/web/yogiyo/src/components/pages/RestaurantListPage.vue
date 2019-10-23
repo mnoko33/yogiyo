@@ -2,7 +2,7 @@
   <v-content>
     <Category></Category>
     <div style="font-size: 13px">
-      <p style="margin-left: 180px; margin-top: 15px">요기요 등록 음식점 <v-icon size="15" class="mb-1">mdi-help-circle-outline</v-icon>
+      <p style="margin-left: 15%; margin-top: 15px">요기요 등록 음식점 <v-icon size="15" class="mb-1">mdi-help-circle-outline</v-icon>
         <span style="color: red"> {{restaurants.length}}곳</span>을 찾았습니다.</p>
     </div>
     <v-layout row class="restaurant-list">
@@ -35,7 +35,8 @@
   export default {
     name: "RestaurantListPage",
     props: {
-      categoryIdx: {type: String}
+      categoryIdx: {type: String},
+      category: {type: String}
     },
     components: {
       Category,
@@ -56,6 +57,11 @@
         this.restaurantList = await api.getCategoryList(this.categoryIdx);
         this.restaurants = this.restaurantList.data.restaurants;
         this.restaurantsNumber = this.restaurants.length;
+      }
+    },
+    watch: {
+      categoryIdx() {
+        this.getRestaurantList(); 
       }
     }
   }

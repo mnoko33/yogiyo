@@ -45,4 +45,7 @@ export default {
         }
     )
     },
+    async getDetailRestaurant(id) {
+        return await axios.get(`${apiUrl}/api/restaurants/${id}/menus`, {headers: headers})
+    }
 }

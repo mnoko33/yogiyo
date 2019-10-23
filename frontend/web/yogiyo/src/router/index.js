@@ -4,6 +4,7 @@ import MainPage from '../components/pages/MainPage'
 import LoginPage from "../components/pages/LoginPage";
 import JoinPage from "../components/pages/JoinPage";
 import RestaurantListPage from "@/components/pages/RestaurantListPage";
+import DetailRestaurantPage from "@/components/pages/DetailRestaurantPage";
 
 
 Vue.use(VueRouter);
@@ -31,6 +32,12 @@ Vue.use(VueRouter);
        path:'/restaurant/:categoryIdx',
        component: RestaurantListPage,
        name: 'RestaurantListPage',
+       props: true
+     },
+     {
+       path: '/restaurant/detail/:restaurantId',
+       component: DetailRestaurantPage,
+       name: 'DetailRestaurantPage',
        props: true
      }
 
