@@ -58,6 +58,11 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        isPlus: {
+            field: "isPlus",
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
         paymentMethods: {
             field: "paymentMethods",
             type: DataTypes.STRING,
