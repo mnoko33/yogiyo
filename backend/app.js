@@ -11,7 +11,9 @@ const indexRouter = require('./routes/index');
 // const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const restRouter = require('./routes/restaurants');
-const smsAuthRouter = require('./routes/smsAuth')
+const smsAuthRouter = require('./routes/smsAuth');
+const infoRouter = require('./routes/info');
+const userInfoRouter = require('./routes/userInfo');
 
 const app = express();
 
@@ -40,8 +42,10 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/sms-auth', smsAuthRouter);
+app.use('/api/info', infoRouter);
 app.use('/api/*', authMiddleware);
 // app.use('/api/users', usersRouter);
+app.use('/api/user-info', userInfoRouter);
 app.use('/api/restaurants', restRouter);
 
 

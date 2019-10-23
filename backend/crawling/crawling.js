@@ -84,13 +84,13 @@ const restList = async function() {
     }
 };
 
-restList()
-    .then(() => {
-        console.log('###################success')
-    })
-    .catch(() => {
-        console.log('###################failed')
-    });
+// restList()
+//     .then(() => {
+//         console.log('###################success')
+//     })
+//     .catch(() => {
+//         console.log('###################failed')
+//     });
 
 // 메뉴 크롤링 and 만들기
 async function crawlingMenus (urlId, id, name) {
@@ -213,3 +213,18 @@ function createCategories(models) {
 }
 
 // createCategories(models);
+
+
+async function createAd(models) {
+    for (let i = 2; i<8; i++) {
+        await models.Ad.create({
+            name: `ad${i}`,
+            imgUrl: `/images/ad${i}.jpg`,
+            type: "mainAd",
+            startDate: "2019-10-22T01:30:18.000Z",
+            endDate: "2019-10-22T01:30:18.000Z"
+        })
+    }
+}
+
+createAd(models);

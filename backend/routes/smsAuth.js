@@ -5,6 +5,7 @@ const conf = require('../config/smsconfig');
 const models = require('../models');
 const jwt = require('../functions/jwt');
 
+// 인증코드 발급받기
 router.post('/certification', async function(req, res, next) {
     // sms api 설정
     config.init({
@@ -71,6 +72,7 @@ router.post('/certification', async function(req, res, next) {
     }
 });
 
+// 인증코드 검증하기
 router.post('/verification', async function(req, res, next) {
     const code = req.body.data.code;
     const phone_num = req.body.data.phone_num;
