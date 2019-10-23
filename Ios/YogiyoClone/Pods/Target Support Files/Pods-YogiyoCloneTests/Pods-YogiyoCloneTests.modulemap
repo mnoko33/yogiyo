@@ -1,0 +1,6 @@
+framework module Pods_YogiyoCloneTests {
+  umbrella header "Pods-YogiyoCloneTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

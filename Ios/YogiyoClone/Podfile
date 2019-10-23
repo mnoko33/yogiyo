@@ -1,0 +1,22 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'YogiyoClone' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for YogiyoClone
+	pod 'MaterialComponents', '~> 92.5'
+	pod "SDWebImage"
+	
+
+  target 'YogiyoCloneTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'YogiyoCloneUITests' do
+    # Pods for testing
+  end
+
+end

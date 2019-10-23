@@ -10,23 +10,10 @@ import UIKit
 
 class MyPageVC: UIViewController {
     
-    @IBOutlet weak var loginTitle: UILabel!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpLogin()
         // Do any additional setup after loading the view.
-    }
-    
-    func setUpLogin() {
-        loginTitle.text = "로그인하고 다양한 혜택을 받아보세요!"
-        loginTitle.translatesAutoresizingMaskIntoConstraints = true
-        loginTitle.tintColor = .black
-        loginTitle.textAlignment = .center
-        
-        
-        
     }
 
     /*

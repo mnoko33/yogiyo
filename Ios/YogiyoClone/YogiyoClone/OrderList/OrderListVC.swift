@@ -16,6 +16,11 @@ class OrderListVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    func didSelectRowAt(indexPath: Int) {
+        print("선택된 행은 \(indexPath)")
+        navigationController?.present(self, animated: true)
+    }
+    
 
     /*
     // MARK: - Navigation

@@ -10,16 +10,20 @@ import UIKit
 
 class imageSlideCell: UITableViewCell {
     var timer: Timer?
-    private let images = ["ad1", "ad2", "ad3", "ad4", "ad5", "ad6", "ad1"]
     var pageControl = UIPageControl()
     @IBOutlet weak var imageCollectionView: UICollectionView!{
         didSet {
             self.imageCollectionView.delegate = self
             self.imageCollectionView.dataSource = self
+            images = imagedata.callAdImages()
             pageControl.numberOfPages = images.count
             startTimer(time: 1.5)
         }
     }
+    
+    private let imagedata: Images = Images()
+
+    var images: [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()

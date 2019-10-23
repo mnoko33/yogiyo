@@ -9,15 +9,21 @@
 import UIKit
 
 class menupanCell: UITableViewCell {
-
+    var sendData: HomeVC?
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @IBOutlet weak var menuCollectionView: UICollectionView! {
         didSet {
             self.menuCollectionView.delegate = self
             self.menuCollectionView.dataSource = self
+            images = imagedata.callmenupanImages()
         }
     }
     
-    private let images = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
+    private let imagedata: Images = Images()
+    var images: [String] = []
+    
+//    var appDelegate: AppDelegate = AppDelegate()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,13 +31,12 @@ class menupanCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 
 }
 
-extension menupanCell : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension menupanCell : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
@@ -41,6 +46,12 @@ extension menupanCell : UICollectionViewDelegateFlowLayout, UICollectionViewData
         let yourHeight = yourWidth
 
         return CGSize(width: yourWidth, height: yourHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.sendData?.previousView = indexPath.item
+//        self.sendData?.getRestNumber(i: indexPath.item)
+        self.appDelegate.selectedMenu = indexPath.item
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
