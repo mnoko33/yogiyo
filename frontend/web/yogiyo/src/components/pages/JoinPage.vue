@@ -56,17 +56,18 @@
         placeholder="(필수)휴대폰 전화번호 입력(-제외)"
         required
       />
-      <button>인증</button>
+      <button @click="certification">인증</button>
     </v-layout>
     <v-layout>
       <input
         type="text"
         name="verification"
         class="Login"
+        v-model="code"
         placeholder="인증번호 입력"
         required
       />
-      <button>확인</button>
+      <button @click="verification">확인</button>
     </v-layout>
     <v-layout>
       <p class="info-text">약관동의</p>
@@ -86,6 +87,7 @@
       password:'',
       username: '',
       phone_num:'',
+      code:'',
     }),
     methods: {
         async join() {
@@ -124,8 +126,21 @@
         async certification() {
           const data = {
              "phone_num": this.phone_num,
-          }
-          await api.certificationPhoneNum(data)
+          };
+          await api.certificationPhoneNum(data).then(res => {
+              // if(res.status == 'true') {
+              // }
+
+          })
+        },
+        async verification() {
+            const data = {
+                "code": this.code,
+                "phone_num": this.phone_num
+            }
+            await api.verificationPhoneNum(data).then(res => {
+                console.log(res)
+            })
         }
     },
   }

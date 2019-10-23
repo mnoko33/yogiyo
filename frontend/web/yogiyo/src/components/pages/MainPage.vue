@@ -1,6 +1,8 @@
 <template>
   <v-container style="overflow: scroll;">
     <v-layout row style="width: 90%; margin: auto">
+      <v-btn @click="hello">time</v-btn>
+      <v-btn @click="test">input</v-btn>
       <v-flex xs6 sm4 md3 v-for="category in categoryList" :key="category.categoryIdx">
         <router-link :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx}}"><v-card
             outlined
@@ -23,6 +25,8 @@
 </template>
 
 <script>
+  import Swal from 'sweetalert2'
+  import api from '@/api'
   export default {
     name: "main",
     data: () => ({
@@ -42,7 +46,73 @@
             {background: require("../../assets/menulist/category-convenience-store.png"), category: '편의점', categoryIdx: 13},
         ]
     }),
-
+  methods: {
+        hello() {
+            let timerInterval
+              Swal.fire({
+                title: '인증번호를 입력해주세요',
+                html: '<b>5분 00초</b> 안에 인증을 완료해주세요',
+                input: 'text',
+                showCancelButton: true,
+                timer: 1000*60*5 + 1000,
+                onBeforeOpen: () => {
+                  timerInterval = setInterval(() => {
+                      let second = String(Math.floor((Swal.getTimerLeft()/1000) % 60));
+                    Swal.getContent().querySelector('b')
+                      .textContent = `${Math.floor((Swal.getTimerLeft()/1000/60) << 0)}분 ${(second).length < 2 ? '0'+second : second}초`
+                  },1000)
+                },
+                onClose: () => {
+                  clearInterval(timerInterval)
+                }
+              }).then((result) => {
+                if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.timer
+                ) {
+                  Swal.fire({
+                  text: '인증시간이 만료되었습니다',
+                })
+                }
+              })
+        },
+      test() {
+            Swal.fire({
+              title: '인증번호를 입력해주세요',
+              input: 'text',
+              showCancelButton: true,
+              confirmButtonText: '인증하기',
+              showLoaderOnConfirm: true,
+              preConfirm: async (code) => {
+                  let data = {
+                      "code": code,
+                      "phone_num": '01050242683'
+                  };
+                return await api.verificationPhoneNum(data)
+                  .then(async res => {
+                      await Swal.fire({
+                        text: res.data.message,
+                })
+                      console.log(res)
+                  })
+                  .catch(error => {
+                    Swal.showValidationMessage(
+                      `Request failed: ${error}`
+                    )
+                  })
+              },
+              allowOutsideClick: () => !Swal.isLoading()
+            })
+            //     .then((result) => {
+            //   if (result.value) {
+            //     Swal.fire({
+            //       title: `${result.value.login}'s avatar`,
+            //       imageUrl: result.value.avatar_url
+            //     })
+            //   }
+            // })
+      }
+  }
   }
 </script>
 

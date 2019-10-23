@@ -30,19 +30,12 @@ export default {
     )
     },
     certificationPhoneNum(data) {
-        return axios.post(`${apiUrl}/api/auth/address`,{data}, {
-            headers: {
-                "x-access-token": localStorage.getItem('token')
-            }
-        }
-    )
+        return axios.post(`${apiUrl}/api/sms-auth/certification`,{data}
+        )
     },
     verificationPhoneNum(data) {
-        return axios.post(`${apiUrl}/api/auth/address`,{data}, {
-            headers: {
-                "x-access-token": localStorage.getItem('token')
-            }
-        }
+        return axios.post(`${apiUrl}/api/sms-auth/verification`,{data}
+
     )
     },
 }
