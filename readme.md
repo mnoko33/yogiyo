@@ -46,7 +46,7 @@
 
 ##### 5. routes/info.js
 
-​	:x: `GET` url/api/info/ad (광고 리스트)
+​	:heavy_check_mark: `GET` url/api/info/ad (광고 리스트)
 
 
 
@@ -374,7 +374,16 @@ categoryId = [
 {
 	"status": true,
     "ads": [
-        
+        {
+            "id": 1,
+            "name": "ad1",
+            "imgUrl": "/images/ad1.jpg",
+            "type": "mainAd",
+            "startDate": "2019-10-22T01:30:18.000Z",
+            "endDate": "2019-10-22T01:30:18.000Z",
+            "createdAt": "2019-10-22T01:30:18.000Z",
+            "updatedAt": "2019-10-22T01:30:18.000Z"
+        }
     ]
 }
 ```
