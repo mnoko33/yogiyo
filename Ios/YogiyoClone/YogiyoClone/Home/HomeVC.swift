@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
+class HomeVC: UIViewController { 
 
     @IBOutlet weak var tableView: UITableView!{
         didSet {
