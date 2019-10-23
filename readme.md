@@ -4,39 +4,49 @@
 
 **1. routes/auth.js**
 
-​	:heavy_check_mark: ​`GET` url/api/user (특정 유저 정보)
-
-​	:heavy_check_mark: ​`POST` url/api/auth/signup (회원가입)
-
 ​	:heavy_check_mark: ​`POST` url/api/auth/login (로그인)
 
 ​	:heavy_check_mark: ​`POST` url/api/auth/address (위치 정보 저장 및 수정)
 
-​	:x: `GET` url/api/auth/history (유저 주문 기록 보기)
 
-​	:x: `POST` url/api/auth/history (유저 주문 기록 추가)
 
-​	:x: `GET` url/api/auth/tos (이용약관 보기)
+##### **2. routes/user-info/js**
 
-**2. routes/restaurants.js**
+​	:heavy_check_mark: `GET` url/api/user-info/user (특정 유저 정보)
 
-​	:heavy_check_mark: ​`GET` url/api/categories (카테고리 정보)
+​	:heavy_check_mark: `POST` url/api/user-info/address (유저 위치 정보)
+
+​	:x: `GET` url/api/user-info/history (유저 주문 기록 보기)
+
+​	:x: `POST` url/api/user-info/history (유저 주문 기록 추가)
+
+
+
+**3. routes/restaurants.js**
+
+​	:heavy_check_mark: ​`GET` url/api/restaurants/categories (카테고리 정보)
 
 ​	:heavy_check_mark: `GET` url/api/restaurants/categories/:categoryId (카테고리별 식당)
+
+​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId (매장 정보 보기)
 
 ​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기) 
 
 ​	:x: ​`POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) ​
 
-​	:x: `GET` url/api/restaurants/ad (광고 리스트)
 
-**3. routes/smsAuth.js**
+
+**4. routes/smsAuth.js**
 
 ​	:heavy_check_mark: ​`POST` url/api/sms-auth/certification (인증코드 발급받기)
 
 ​	:heavy_check_mark: ​`POST` url/api/sms-auth/verification (인증코드 검증하기)
 
 ​	
+
+##### 5. routes/info.js
+
+​	:x: `GET` url/api/info/ad (광고 리스트)
 
 
 
@@ -56,36 +66,6 @@
 
 
 # 1. routes/auth.js
-
-##### `GET` url/api/user (특정 유저 정보)
-
-```json
-// res
-{
-    "status": true,
-    "user": {
-        "username": "admin",
-        "email": "admin@admin.com",
-        "address": "서울특별시 종로구 동숭동",
-        "phone_num": "01012345678"
-    },
-    "numsOfCart": 1,
-    "cart": [
-        {
-            "id": 1,
-            "name": "새우버거세트",
-            "restaurantId": 213,
-            "label": "인기메뉴",
-            "description": "새우살...",
-            "price": 6800,
-            "createdAt": "2019-10-21T22:59:29.000Z",
-            "updatedAt": "2019-10-21T22:59:29.000Z"
-        }
-    ]
-}
-```
-
-
 
 ##### `POST` url/api/auth/signup (회원가입)
 
@@ -130,9 +110,41 @@
 
 
 
-##### `POST` url/api/auth/address (위치 정보 저장 및 수정)
+# 2. routes/userInfo.js
 
-```json
+##### `GET` url/api/user-info/user (특정 유저 정보)
+
+```
+// res
+{
+    "status": true,
+    "user": {
+        "username": "admin",
+        "email": "admin@admin.com",
+        "address": "서울특별시 종로구 동숭동",
+        "phone_num": "01012345678"
+    },
+    "numsOfCart": 1,
+    "cart": [
+        {
+            "id": 1,
+            "name": "새우버거세트",
+            "restaurantId": 213,
+            "label": "인기메뉴",
+            "description": "새우살...",
+            "price": 6800,
+            "createdAt": "2019-10-21T22:59:29.000Z",
+            "updatedAt": "2019-10-21T22:59:29.000Z"
+        }
+    ]
+}
+```
+
+
+
+##### `POST` url/api/user-info/address (위치 정보 저장 및 수정)
+
+```js
 // Body
 {
     "data": {
@@ -152,7 +164,25 @@
 
 
 
-# 2. routes/restaurants.js
+##### `GET` url/api/user-info/history
+
+```
+
+```
+
+
+
+##### `POST` url/api/user-info/history
+
+```
+
+```
+
+
+
+
+
+# 3. routes/restaurants.js
 
 ##### `GET` url/api/categories (카테고리 정보)
 
@@ -227,13 +257,58 @@ categoryId = [
 
 
 
+##### `GET` url/api/restaurants/:restaurantId (매장 정보 보기)
+
+```json
+//res
+{
+    "status": true,
+    "restaurant": {
+            "id": 2,
+            "name": "쫄면주는 삼겹본능-강남점",
+            "category": "야식::프랜차이즈::한식",
+            "thumbnailUrl": "",
+            "address": "역삼동",
+            "lng": 127.029799209808,
+            "lat": 37.4970170754811,
+            "openTime": "11:00 - 01:00",
+            "deliveryTime": 60,
+            "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
+            "deliveryFee": 2000,
+            "minOrderAmount": 12000,
+            "paymentMethods": "creditcard::online",
+            "createdAt": "2019-10-15T13:48:47.000Z",
+            "updatedAt": "2019-10-15T13:48:47.000Z"
+    }
+}
+```
+
+
+
 ##### `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기)
 
 ```json
 //res 
 {
     "status": true,
-     "numsOfMenus": 1,
+    "restaurant": {
+            "id": 2,
+            "name": "쫄면주는 삼겹본능-강남점",
+            "category": "야식::프랜차이즈::한식",
+            "thumbnailUrl": "",
+            "address": "역삼동",
+            "lng": 127.029799209808,
+            "lat": 37.4970170754811,
+            "openTime": "11:00 - 01:00",
+            "deliveryTime": 60,
+            "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
+            "deliveryFee": 2000,
+            "minOrderAmount": 12000,
+            "paymentMethods": "creditcard::online",
+            "createdAt": "2019-10-15T13:48:47.000Z",
+            "updatedAt": "2019-10-15T13:48:47.000Z"
+        },
+    "numsOfMenus": 1,
     "menus": [
         {
             "id": 12224,
@@ -251,7 +326,7 @@ categoryId = [
 
 
 
-# 3. routes/smsAuth.js
+# 4. routes/smsAuth.js
 
 ##### `POST` url/api/sms-auth/certification (인증코드 발급받기)
 
@@ -284,5 +359,21 @@ categoryId = [
 
 //res
 { "status": true }
+```
+
+
+
+# 5. routes/info.js
+
+##### `GET` url/api/info/ad (광고 정보)
+
+```json
+//res
+{
+	"status": true,
+    "ads": [
+        
+    ]
+}
 ```
 
