@@ -48,6 +48,8 @@
 
 ​	:heavy_check_mark: `GET` url/api/info/ad (광고 리스트)
 
+​	:heavy_check_mark: `GET` url/api/info/ad/:adId (광고 페이지 html)
+
 
 
 ------
@@ -386,5 +388,25 @@ categoryId = [
         }
     ]
 }
+```
+
+
+
+`GET` url/api/info/ad/:adId (광고 페이지 html)
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>임시 광고 페이지입니다.</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+	<h1>임시 광고 페이지입니다.</h1>
+</body>
+
+</html>
 ```
 
