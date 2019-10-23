@@ -11,10 +11,16 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+<<<<<<< HEAD
     var selectedMenu: Int?
     
     var window: UIWindow?
     
+=======
+ 
+
+
+>>>>>>> 845e5a93efd3f9382d42b2a0a79925fb3e9a9c9b
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Appearance.configure()
         // Override point for customization after application launch.

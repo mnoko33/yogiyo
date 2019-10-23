@@ -1,28 +1,10 @@
 const express = require('express');
 const models = require('../models');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-
-const categories = [
-    "전체보기",      // 0
-    "1인분주문",    // 1
-    "프랜차이즈",    // 2
-    "치킨",         // 3
-    "피자양식",     // 4
-    "중국집",       // 5
-    "한식",         // 6
-    "일식돈까스",   // 7
-    "족발보쌈",     // 8
-    "야식",        // 9
-    "분식",        // 10
-    "카페디저트",  // 11
-    "편의점"      // 12
-];
+const jwt = require('../functions/jwt');
 
 function getDistance(userLng, userLat, restLng, restLat) {
-    // console.log('0', userLng, userLat, restLng, restLat)
     function degreeToRadian(deg) {
-        // console.log(1, deg * (Math.PI / 180))
         return deg * (Math.PI / 180)
     }
     const r = 6371; // 지구 반지름
@@ -52,28 +34,12 @@ router.get('/categories', async function(req, res, next) {
 });
 
 // 카테고리 별 식당보기 위치의 경우 token 정보에 기반
-router.get('/categories/:categoryIdx', async function (req, res, next) {
-    // jwt 를 통해 유저 location 알아오기
+router.get('/categories/:categoryId', async function (req, res, next) {
     const token = req.headers['x-access-token'];
-    const secret_key = "ssaudy";
-    const decodedToken = new Promise(
-        ((resolve, reject) => {
-            jwt.verify(token, secret_key, (err, decoded) => {
-                if (err) reject(err);
-                resolve(decoded)
-            })
-        })
-    );
-    const decodedUser = await decodedToken
-        .then((user) => {
-            return user
-        })
-        .catch((err) => {
-            return false
-        });
+    const userInfo = await jwt.decodeJWT(token);
 
     const user = await models.User.findOne({
-        where: { id: decodedUser.id }
+        where: { id: userInfo.id }
     });
 
     if (!user) {
@@ -88,48 +54,140 @@ router.get('/categories/:categoryIdx', async function (req, res, next) {
     const userLat = user.lat;
 
     // 카테고리 이름
-    const categoryIdx = req.params.categoryIdx * 1;
+    const categoryId = req.params.categoryId * 1;
     const category = await models.Category.findOne({
-        where: { id: categoryIdx }
+        where: { id: categoryId }
     });
+    if (!category) {
+        res.json({
+            "status": false,
+            "message": `${categoryId}번에 해당하는 카테고리가 존재하지 않습니다.`
+        })
+    }
     let restaurants = await models.Restaurant.findAll();
-    if (categoryIdx !== 1) {
+    if (categoryId !== 1) {
         restaurants = restaurants.filter((restaurant) => {
-            if (restaurant.category.includes(categories[categoryIdx]) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= 15) {
+            if (restaurant.category.includes(category.name) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= 15) {
                 return restaurant
             }
         });
     }
     res.json({
         "status": true,
+        "numsOfRestaurants": restaurants.length,
         "restaurants": restaurants
     })
 });
 
-// 해당 가게 메뉴 보기
-router.get('/:restaurantId/menus', async function (req, res, next) {
-    const restaurantId = req.params.restaurantId * 1;
-    try {
-        const restaurant = await models.Restaurant.findOne({
-            where: {id: restaurantId}
-        });
-        if (restaurant) {
-            const menus = await restaurant.getMenus();
-            res.json({
-                "status": true,
-                "menus": menus
-            })
-        }
-       res.json({
-           "status": false,
-           "message": "일치하는 음식점이 존재하지 않습니다."
+// 가게 정보 보기
+router.get('/:restaurantId', async function (req, res, next) {
+   const restaurantId = req.params.restaurantId * 1;
+   const restaurant = await models.Restaurant.findOne({
+       where: { id: restaurantId }
+   })
+       .then((result) => {
+           return result
        })
-
-    } catch (err) {
+       .catch((err) => {
+           return res.json({
+               "status": false,
+               "message": "다음과 같은 이유로 음식점 정보를 불러오는데 실패했습니다.",
+               "err": err
+           })
+       });
+    if (restaurant) {
+        res.json({
+            "status": true,
+            "restaurant": restaurant
+        })
+    } else {
         res.json({
             "status": false,
-            "message": "메뉴 정보를 불러오는데 실패했습니다.",
-            "err": err
+            "message": "일치하는 음식점이 존재하지 않습니다."
+        })
+    }
+});
+
+// 매장별 메뉴 보기
+router.get('/:restaurantId/menus', async function (req, res, next) {
+    const restaurantId = req.params.restaurantId * 1;
+    const restaurant = await models.Restaurant.findOne({
+        where: {id: restaurantId}
+    })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "메뉴 정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+    if (restaurant) {
+        const menus = await restaurant.getMenus()
+            .then((result) => {
+                return result
+            })
+            .catch((err) => {
+                return res.json({
+                    "status": false,
+                    "err": err
+                })
+            });
+        res.json({
+            "status": true,
+            "restaurant": restaurant,
+            "numsOfMenus": menus.length,
+            "menus": menus
+        })
+    } else {
+        res.json({
+            "status": false,
+            "message": "일치하는 음식점이 존재하지 않습니다."
+        })
+    }
+});
+
+router.post('/:restaurantId/cart', async function(req, res, next) {
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+    const userId = userInfo.id;
+    const menus = req.body.data.menus;
+    const restaurantId =  req.params.restaurantId * 1;
+    const cart = await models.Cart.findOne({
+        where: { userId: userId }
+    })
+        .then((cartInstance) => {
+            return cartInstance
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "다음과 같은 이유로 장바구니를 생성하는데 실패했습니다.",
+                "err": err
+            })
+        });
+    if (cart) {
+        // 이미 있는 장바구니에 메뉴를 추가할 때
+        if (cart.restaurantId === restaurantId) {
+            // 새로운 카트에 메뉴를 추가 또는 제거
+            await cart.update({
+                menus: menus
+            })
+        } else {
+            // 새로운 장바구니에 메뉴를 추가
+            await cart.update({
+                restaurantId: restaurantId,
+                menus: menus
+            })
+        }
+    } else {
+        // 새로운 장바구니 생성
+        await models.Cart.create({
+            userId: userId,
+            restaurantId: restaurantId,
+            menus: menus
         })
     }
 });

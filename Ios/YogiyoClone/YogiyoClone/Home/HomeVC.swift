@@ -8,11 +8,16 @@
 
 import UIKit
 
+<<<<<<< HEAD
 class HomeVC: UIViewController {
 //    var menu = menupanCell()
 //    var sendClickedMenu: RestaurantList?
 //    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+=======
+class HomeVC: UIViewController { 
+
+>>>>>>> 845e5a93efd3f9382d42b2a0a79925fb3e9a9c9b
     @IBOutlet weak var tableView: UITableView!{
         didSet {
             self.tableView.delegate = self
