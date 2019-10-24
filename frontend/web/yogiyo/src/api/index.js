@@ -22,7 +22,7 @@ export default {
     })
     },
     setAddress(data) {
-        return axios.post(`${apiUrl}/api/auth/address`,{data}, {
+        return axios.post(`${apiUrl}/api/user-info/address`,{data}, {
             headers: {
                 "x-access-token": localStorage.getItem('token')
             }
@@ -37,5 +37,8 @@ export default {
         return axios.post(`${apiUrl}/api/sms-auth/verification`,{data}
 
     )
+    },
+    async getCategory() {
+        return await axios.get(`${apiUrl}/api/restaurants/categories/`)
     },
 }

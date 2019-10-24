@@ -4,7 +4,7 @@ import MainPage from '../components/pages/MainPage'
 import LoginPage from "../components/pages/LoginPage";
 import JoinPage from "../components/pages/JoinPage";
 import RestaurantListPage from "@/components/pages/RestaurantListPage";
-
+import Test from '../components/pages/Test'
 
 Vue.use(VueRouter);
 
@@ -32,6 +32,11 @@ Vue.use(VueRouter);
        component: RestaurantListPage,
        name: 'RestaurantListPage',
        props: true
+     },
+     {
+       path:'/test',
+       component: Test,
+       name: 'Test',
      }
 
    ]

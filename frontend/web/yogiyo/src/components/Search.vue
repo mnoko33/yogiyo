@@ -13,7 +13,7 @@
             id="location-search"
             class="address-input"
           />
-         <button class="clear-btn">지우기</button>
+         <button @click="clearAddress" class="clear-btn">지우기</button>
        </v-flex>
        <v-flex>
          <v-btn color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
@@ -33,7 +33,9 @@
         address: '',
     }),
     mounted() {
-      this.address = this.$store.state.address
+        if(this.$store.state.address == 'undefined') {
+            this.address = ''
+        }
     },
     methods: {
       getLocation: function() {
@@ -69,6 +71,9 @@
         }).catch(e => {
           console.log(e);
         })
+      },
+      clearAddress() {
+          this.address = ''
       }
     }
   }
@@ -126,6 +131,9 @@
     height: 40px;
     border-radius: 4px;
     border: none;
+  }
+  .gps-btn::before {
+    color:#e30000;
   }
 
 </style>
