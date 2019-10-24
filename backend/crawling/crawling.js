@@ -1,6 +1,10 @@
 const axios = require('axios');
 const models = require('../models');
 const sleep = require('system-sleep');
+const createAds = require('../functions/createAd');
+const createCategories = require('../functions/createCategories');
+const webCrawling = require('../functions/webCrawling');
+const editPrice = require('../functions/editPrice');
 
 
 const webdriver = require('selenium-webdriver');
@@ -132,13 +136,6 @@ async function addMissing() {
     }
 
     // 메뉴가 없는 식당 리스트
-    // const noMenuRests = await restaurants.filter(async rest => {
-    //     const menus = await rest.getMenus();
-    //     if (!menus.length) {
-    //         console.log(rest.name)
-    //         return rest
-    //     }
-    // });
     const noMenuRest = [];
     for (let i = 0; i < restaurants.length; i++) {
         (async (j) => {
@@ -161,6 +158,7 @@ async function addMissing() {
     sleep(3000);
     console.log('############# 메뉴가 없는 음식점의 숫자');
     console.log(noMenuRest.length);
+    console.log(noMenuRest)
     // api restaurants
     let apiRest = [];
     for (let i = 0; i < 2; i++) {
@@ -191,7 +189,7 @@ async function addMissing() {
     sleep(3000);
     console.log('################# 음식점 갯수')
     console.log(apiRest.length);
-    // { urlId: urlID, instanceId: instanceId, instanceName: instanceName,  }
+    //{ urlId: urlID, instanceId: instanceId, instanceName: instanceName,  }
     let target = [];
     for (let i = 0; i < apiRest.length; i++) {
         const rest = apiRest[i];
@@ -209,7 +207,7 @@ async function addMissing() {
     console.log(target.length);
     console.log(target);
 
-    // start crawling
+    //start crawling
     for (let i = 0; i < target.length; i++) {
         sleep(15000);
         (async (j) => {
@@ -218,7 +216,7 @@ async function addMissing() {
     }
 }
 
-addMissing();
+// addMissing();
 
 // startCrawling()
 //     .then(() => {
@@ -295,15 +293,6 @@ async function crawlingMenus (urlId, id, name) {
                             })
                         });
 
-                    // 메뉴 상세 설명
-                    // const getDescription = async function() {
-                    //     try {
-                    //         return await driver.findElement(By.xpath(descriptionXpath))
-                    //     }
-                    //     catch {
-                    //         return null
-                    //     }
-                    // };
                     const description = await driver.findElement(By.xpath(descriptionXpath))
                         .then(result => {
                             return result
@@ -315,7 +304,7 @@ async function crawlingMenus (urlId, id, name) {
                             });
                             return null
                         });
-                    // const description = await getDescription();
+
                     const descriptionContent = description ? await description.getAttribute('innerText') : null;
 
                     // 메뉴 가격
@@ -325,8 +314,6 @@ async function crawlingMenus (urlId, id, name) {
                     const idx = priceValue.indexOf(',');
                     priceValue = (priceValue.slice(0, idx) + priceValue.slice(idx+1)) * 1;
 
-                    // console.log(`${j}.  name: ${menuName}, restaurantId: ${id}, label: ${labelName}, description: ${descriptionContent}, price: ${priceValue}`)
-                    // console.log(' ')
                     // 메뉴 instance 저장
                     try {
                         await models.Menu.create({
@@ -358,55 +345,28 @@ async function crawlingMenus (urlId, id, name) {
     driver.close();
 }
 
+async function main() {
+    // create Category instance
+    const startCategoryIdx = 0;
+    const endCategoryIdx = 0;
+    // await createCategories(startCategoryIdx, endCategoryIdx);
 
-const categories = [
-    "전체보기",      // 0
-    "1인분주문",    // 1
-    "프랜차이즈",    // 2
-    "치킨",         // 3
-    "피자양식",     // 4
-    "중국집",       // 5
-    "한식",         // 6
-    "일식돈까스",   // 7
-    "족발보쌈",     // 8
-    "야식",        // 9
-    "분식",        // 10
-    "카페디저트",  // 11
-    "편의점"      // 12
-];
+    // create Ad instance
+    const startAdIdx = 0;
+    const endAdIdx = 0;
+    const adTypes = ["mainAd", "subAd"];
+    const adType = adTypes[0];
+    // await createAds(startAdIdx, endAdIdx, adType);
 
-
-function createCategories(models) {
-    for (let i = 0; i < 13; i++) {
-        (function(j, models) {
-            models.Category.create({
-                name: categories[j],
-                imgUrl: 'path'
-            })
-                .then((instance) => {
-                    console.log(instance.name);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        })(i, models, categories)
-    }
+    // edit price error
+    await editPrice();
 }
 
-// createCategories(models);
-
-// 광고 인스턴스 생성
-async function createAd(models) {
-    for (let i = 2; i<8; i++) {
-        await models.Ad.create({
-            name: `ad${i}`,
-            imgUrl: `/images/ad${i}.jpg`,
-            type: "mainAd",
-            startDate: "2019-10-22T01:30:18.000Z",
-            endDate: "2019-10-22T01:30:18.000Z"
-        })
-    }
-}
-
-// createAd(models);
-
+main()
+    .then(() => {
+        console.log('main function is closed');
+    })
+    .catch(err => {
+        console.log('error is occurred');
+        console.log(err);
+    });

@@ -15,7 +15,6 @@ router.post('/signup', async function(req, res, next) {
     const password = req.body.data.password;
     const phone_num = req.body.data.phone_num;
     const username = req.body.data.username ? req.body.data.username : email.split('@')[0];
-    console.log('############',username);
 
     // 없는 정보 확인
     if (!email || !password || !phone_num) {

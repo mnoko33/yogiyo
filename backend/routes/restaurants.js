@@ -64,7 +64,16 @@ router.get('/categories/:categoryId', async function (req, res, next) {
             "message": `${categoryId}번에 해당하는 카테고리가 존재하지 않습니다.`
         })
     }
-    let restaurants = await models.Restaurant.findAll();
+    // 요기요 플러스
+    let restaurants = [];
+    if (categoryId === 14) {
+        restaurants = await models.Restaurant.findAll({
+            where: { isPlus: true }
+        })
+    } else {
+        restaurants = await models.Restaurant.findAll();
+    }
+
     if (categoryId !== 1) {
         restaurants = restaurants.filter((restaurant) => {
             if (restaurant.category.includes(category.name) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= 15) {
@@ -166,7 +175,7 @@ router.post('/:restaurantId/cart', async function(req, res, next) {
     const token = req.headers['x-access-token'];
     const userInfo = await jwt.decodeJWT(token);
     const userId = userInfo.id;
-    const menus = req.body.data.menus;
+    let menus = req.body.data.menus;
     const restaurantId =  req.params.restaurantId * 1;
     const cart = await models.Cart.findOne({
         where: { userId: userId }
@@ -203,6 +212,31 @@ router.post('/:restaurantId/cart', async function(req, res, next) {
             menus: menus
         })
     }
+    menus = menus.split('::');
+    let totalPrice = 0;
+    const promisesMenus = menus.map(async (menu) => {
+        return new Promise((resolve, reject) => {
+            const menuInstance = models.Menu.findOne({
+                where: { id: menu * 1 }
+            })
+                .then(result => {
+                    totalPrice += result.price;
+                    return {
+                        "name": result.name,
+                        "price": result.price
+                    }
+                })
+                .catch(() => false);
+            resolve(menuInstance)
+        })
+    });
+    menus = await Promise.all(promisesMenus);
+
+    res.json({
+        "status": true,
+        "menus": menus,
+        "totalPrice": totalPrice
+    })
 });
 
 module.exports = router;

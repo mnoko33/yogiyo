@@ -4,10 +4,17 @@ const authMiddleware = (req, res, next) => {
     const token = req.headers['x-access-token'];
     const secret_key = "ssaudy";
     if (!token) {
-        return res.json({
-            "status": false,
-            "message": "토큰이 존재하지 않습니다."
-        })
+        const exceptionPathList = [
+            '/api/restaurants/categories/'
+        ];
+        if (exceptionPathList.includes(req.originalUrl)) {
+            return next()
+        } else {
+            return res.json({
+                "status": false,
+                "message": "토큰이 존재하지 않습니다."
+            })
+        }
     }
     const p = new Promise(
         ((resolve, reject) => {
