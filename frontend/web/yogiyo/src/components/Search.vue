@@ -27,7 +27,6 @@
 <script>
   import api from '@/api'
   import { mapState } from 'vuex';
-  import router from '../router'
   export default {
     name: "Search",
     data: () => ({
