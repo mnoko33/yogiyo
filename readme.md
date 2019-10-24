@@ -1,4 +1,4 @@
-
+[TOC]
 
 :heavy_check_mark: : 현재 사용 가능 
 
@@ -6,17 +6,13 @@
 
 **1. routes/auth.js**
 
-[링크 테스트](# 1.-routes/auth.js)
-
-[test](#1.-routes/auth.js)
-
 ​	:heavy_check_mark: ​`POST` url/api/auth/login (로그인)
 
 ​	:heavy_check_mark: ​`POST` url/api/auth/address (위치 정보 저장 및 수정)
 
 
 
-##### **2. routes/user-info/js**
+**2. routes/user-info/js**
 
 ​	:heavy_check_mark: `GET` url/api/user-info/user (특정 유저 정보)
 
@@ -50,7 +46,7 @@
 
 
 
-##### 5. routes/info.js
+**5. routes/info.js**
 
 ​	:heavy_check_mark: `GET` url/api/info/ad (광고 리스트)
 
