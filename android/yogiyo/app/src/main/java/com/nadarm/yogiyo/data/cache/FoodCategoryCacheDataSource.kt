@@ -15,17 +15,17 @@ class FoodCategoryCacheDataSource @Inject constructor() : FoodCategoryDataSource
         //TODO 카테고리 캐시 데이터
         categories.addAll(
             listOf(
-                FoodCategory(1, "https://i.imgur.com/Kut64BP.png"),
-                FoodCategory(2, "https://i.imgur.com/Q76LlXx.png"),
-                FoodCategory(3, "https://i.imgur.com/TKuUeDn.png"),
-                FoodCategory(4, "https://i.imgur.com/mA5Rco5.png"),
-                FoodCategory(1, "https://i.imgur.com/Kut64BP.png"),
-                FoodCategory(2, "https://i.imgur.com/Q76LlXx.png"),
-                FoodCategory(3, "https://i.imgur.com/TKuUeDn.png"),
-                FoodCategory(1, "https://i.imgur.com/Kut64BP.png"),
-                FoodCategory(2, "https://i.imgur.com/Q76LlXx.png"),
-                FoodCategory(3, "https://i.imgur.com/TKuUeDn.png"),
-                FoodCategory(4, "https://i.imgur.com/mA5Rco5.png")
+                FoodCategory(1, "전체보기", "https://i.imgur.com/Kut64BP.png"),
+                FoodCategory(2, "요기요플러스", "https://i.imgur.com/Q76LlXx.png"),
+                FoodCategory(3, "1인분", "https://i.imgur.com/TKuUeDn.png"),
+                FoodCategory(4, "치킨", "https://i.imgur.com/mA5Rco5.png"),
+                FoodCategory(1, "전체보기", "https://i.imgur.com/Kut64BP.png"),
+                FoodCategory(2, "요기요플러스", "https://i.imgur.com/Q76LlXx.png"),
+                FoodCategory(3, "1인분", "https://i.imgur.com/TKuUeDn.png"),
+                FoodCategory(1, "전체보기", "https://i.imgur.com/Kut64BP.png"),
+                FoodCategory(2, "요기요플러스", "https://i.imgur.com/Q76LlXx.png"),
+                FoodCategory(3, "1인분", "https://i.imgur.com/TKuUeDn.png"),
+                FoodCategory(4, "치킨", "https://i.imgur.com/mA5Rco5.png")
             )
         )
     }

@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+  <v-content>
+    <div class="category">
+      <Category></Category>
+    </div>
+    <v-container>
     <v-row no-gutters>
       <v-col cols="12" md="8" class="pa-4 detail-restaurant">
         <v-card outlined class="mr-5 restaurant-info">
@@ -17,14 +21,32 @@
             </div>
           </div>
         </v-card>
-        <v-btn-toggle class="mt-3">
-          <v-btn @click="clickMenu()" style="background-color: white">메뉴</v-btn>
-          <v-btn @click="clickInfo()" style="background-color: white">정보</v-btn>
-        </v-btn-toggle>
 
-        <v-card outlined class="mr-5 restaurant-info" v-if="menu">
-         {{menuList}}
-        </v-card>
+        <v-list class="mt-5 mr-8" style="padding: 0 0">
+          <v-row class="ml-0">
+            <v-col style="padding: 0;">
+              <v-btn big outlined @click="clickMenu()" style="height: 48px"><span style="color: black">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span></v-btn>
+            </v-col>
+            <v-col style="padding: 0;">
+              <v-btn big outlined @click="clickInfo()" style="height: 48px"><span style="color: black">정보</span></v-btn>
+            </v-col>
+          </v-row>
+        </v-list>
+
+        <v-list no-action class="mr-5" v-if="menu" style="padding: 0;">
+          <v-list-group active-class="black--text" v-for="(label, index) in labels" :key="index">
+            <template v-slot:activator>
+              <v-list-item-title><v-icon color="yellow" class="mr-2" v-show="label === '인기메뉴'">mdi-trophy</v-icon>{{label}}</v-list-item-title>
+            </template>
+            <v-list-item v-for="(menu, index) in menuList[label]" :key="index">
+              <v-list-item-content style="border-bottom: 0.5px solid rgba(0,0,0,.3)">
+                <v-list-item-title><strong>{{menu.name}}</strong></v-list-item-title>
+                <v-list-item-subtitle style="font-size: 13px">{{menu.description}}</v-list-item-subtitle>
+                <v-list-item-title class="mt-1">{{menu.price}}원</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
 
         <v-card v-if="info" outlined class="mr-5 restaurant-info">
           <div class="mx-4">
@@ -36,7 +58,7 @@
             <v-divider class="mt-1" color="black"></v-divider>
             <p class="mt-3 font14"><span class="grey-font">최소주문금액</span> <span class="ml-5">{{minOrderAmount}}원</span></p>
             <p class="mt-3 font14"><span class="grey-font">배달금액</span> <span class="ml-12">{{deliveryFee}}원</span></p>
-            <p class="mt-3 font14"><span class="grey-font">결제수단</span> <span class="ml-12">{{creditCard}} {{online}}</span></p>
+            <p class="mt-3 font14"><span class="grey-font">결제수단</span> <span class="ml-12"><span v-if="creditCard">{{creditCard}} </span><span v-if="online">{{online}}</span></span></p>
 
             <p class="mt-12"><v-icon class="mb-1" size="18">mdi-card-text-outline</v-icon><strong> 사업자정보</strong></p>
             <v-divider color="black"></v-divider>
@@ -45,7 +67,7 @@
         </v-card>
       </v-col>
       <v-col cols="6" md="4" class="pa-4 cart">
-        <v-card outlined dark style="background-color: black">
+        <v-card outlined dark style="background-color: black;">
           <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
         </v-card>
         <v-card outlined class="restaurant-info" style="min-height: 122px">
@@ -60,23 +82,29 @@
 
       </v-col>
     </v-row>
-  </v-container>
+      </v-container>
+  </v-content>
 </template>
 
 <script>
   import api from '../../api';
+  import Category from "@/components/Category";
 
   export default {
     name: "DetailRestaurantPage",
+    components: {
+      Category
+    },
     props: {
-      restaurantId: {type: String}
+      restaurantId: {type: String},
+      categoryIdx: {type: String},
+      category: {type: String}
     },
     data() {
       return {
         restaurantData: [],
         restaurantInformation: [],
         name: '',
-        category: '',
         thumbnail: '',
         address: '',
         openTime: '',
@@ -88,8 +116,10 @@
         menuList: [],
         creditCard: '',
         online: '',
+        labels: [],
         menu: true,
-        info: false
+        info: false,
+        model: 1,
       }
     },
     mounted() {
@@ -103,7 +133,6 @@
         this.restaurantData = await api.getDetailRestaurant(this.restaurantId);
         this.restaurantInformation = this.restaurantData.data.restaurant;
         this.name = this.restaurantInformation.name;
-        this.category = this.restaurantInformation.category;
         this.thumbnail = this.restaurantInformation.thumbnailUrl;
         this.address = this.restaurantInformation.address;
         this.openTime = this.restaurantInformation.openTime;
@@ -111,7 +140,8 @@
         this.deliveryFee = this.restaurantInformation.deliveryFee;
         this.minOrderAmount = this.restaurantInformation.minOrderAmount;
         this.paymentMethods = this.restaurantInformation.paymentMethods;
-        this.numsOfMenus = this.restaurantInformation.numsOfMenus;
+        this.numsOfMenus = this.restaurantData.data.numsOfMenus;
+        this.labels = this.restaurantData.data.labels;
         this.menuList = this.restaurantData.data.menus;
       },
       getPaymentMethods() {
@@ -170,8 +200,29 @@
 .font14 {
   font-size: 14px;
 }
-@media(max-width: 768px){
+.v-card:not(.v-sheet--tile) {
+  border-radius: 0;
+}
+.v-list-group {
+  border: 0.5px solid rgba(0,0,0,.12);
+  background-color: #e3e2e1;
+}
+.v-list-item {
+   background-color: white;
+}
+.v-btn {
+  border-radius: 0;
+  border: 1px solid #d9d9d9;
+  width: 100%;
+  background-color: white;
+}
+@media(max-width: 960px){
   .cart {
+    display: none;
+  }
+}
+@media(max-width: 1130px) {
+  .category {
     display: none;
   }
 }

@@ -14,7 +14,8 @@ class HeroHeaderView: UIView {
   struct Constants {
     static let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
     static let tabBarHeight: CGFloat = 48.0
-    static let minHeight: CGFloat = 44 + statusBarHeight + tabBarHeight
+//    static let minHeight: CGFloat = 44 + statusBarHeight + tabBarHeight
+    static let minHeight: CGFloat = 44
     static let maxHeight: CGFloat = 400.0
   }
 
@@ -55,8 +56,8 @@ class HeroHeaderView: UIView {
 
   func configureView() {
     backgroundColor = Appearance.palette.tint900
-    addSubview(imageView)
-    addSubview(titleLabel)
+//    addSubview(imageView)
+//    addSubview(titleLabel)
   }
 
   override func layoutSubviews() {

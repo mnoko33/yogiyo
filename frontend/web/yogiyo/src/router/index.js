@@ -6,6 +6,7 @@ import JoinPage from "../components/pages/JoinPage";
 import RestaurantListPage from "@/components/pages/RestaurantListPage";
 import DetailRestaurantPage from "@/components/pages/DetailRestaurantPage";
 
+import Test from '../components/pages/Test'
 
 Vue.use(VueRouter);
 
@@ -38,7 +39,11 @@ Vue.use(VueRouter);
        path: '/restaurant/detail/:restaurantId',
        component: DetailRestaurantPage,
        name: 'DetailRestaurantPage',
-       props: true
+       props: true},
+     {
+       path:'/test',
+       component: Test,
+       name: 'Test',
      }
 
    ]

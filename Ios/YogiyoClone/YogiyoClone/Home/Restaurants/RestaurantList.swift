@@ -9,6 +9,7 @@
 import UIKit
 import MaterialComponents
 import SafariServices
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
 class RestaurantList: UICollectionViewController {
     
@@ -39,31 +40,38 @@ extension RestaurantList {
   func configureAppBar() {
     self.addChild(appBar)
 
-    appBar.navigationBar.backgroundColor = .clear
-    appBar.layoutDelegate = self as? MDCFlexibleHeaderViewLayoutDelegate
-    appBar.navigationBar.tintColor = .white
-    appBar.navigationBar.title = nil
-
+//    appBar.navigationBar.backgroundColor = .clear
+//    appBar.layoutDelegate = self
+//    appBar.navigationBar.tintColor = .white
+//    appBar.navigationBar.title = nil
+//
     let headerView = appBar.headerView
-    headerView.backgroundColor = .clear
-    headerView.maximumHeight = HeroHeaderView.Constants.maxHeight
+//    headerView.backgroundColor = .clear
+//    headerView.maximumHeight = HeroHeaderView.Constants.maxHeight
     headerView.minimumHeight = HeroHeaderView.Constants.minHeight
 
-    heroHeaderView.frame = headerView.bounds
-    headerView.insertSubview(heroHeaderView, at: 0)
-
+//    headerView.insertSubview(heroHeaderView, at: 0)
     tabBar.itemAppearance = .titles
-    tabBar.tintColor = Appearance.palette.accent100
-    tabBar.inkColor = Appearance.palette.tint200.withAlphaComponent(0.2)
     tabBar.items = NewsSource.allValues.enumerated().map({ (index, source) -> UITabBarItem in
-      return UITabBarItem(title: source.title, image: nil, tag: index)
+        let a = UITabBarItem()
+        a.title = source.title
+        a.image = nil
+        a.tag = index
+        a.setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.black], for: .disabled)
+        a.setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.gray], for: .selected)
+      return a
     })
-    tabBar.selectedItem = tabBar.items[0]
+    tabBar.selectedItem = tabBar.items[appDelegate.selectedMenu!]
+    tabBar.tintColor = .gray
+    tabBar.inkColor = Appearance.palette.tint200.withAlphaComponent(0.2)
     tabBar.delegate = self
+    
+//    view.addSubview(tabBar)
     headerView.trackingScrollView = self.collectionView
-
     appBar.headerStackView.bottomBar = tabBar
+    appBar.headerStackView.backgroundColor = .lightGray
 
+    view.addSubview(appBar.view)
     appBar.didMove(toParent: self)
   }
 
@@ -75,33 +83,33 @@ extension RestaurantList {
 
   // MARK: UIScrollViewDelegate
 
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    let headerView = appBar.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidScroll()
-    }
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    let headerView = appBar.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidEndDecelerating()
-    }
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    let headerView = appBar.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-    }
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let headerView = appBar.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-    }
-  }
+//  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//    let headerView = appBar.headerView
+//    if scrollView == headerView.trackingScrollView {
+//      headerView.trackingScrollDidScroll()
+//    }
+//  }
+//
+//  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//    let headerView = appBar.headerView
+//    if scrollView == headerView.trackingScrollView {
+//      headerView.trackingScrollDidEndDecelerating()
+//    }
+//  }
+//
+//  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//    let headerView = appBar.headerView
+//    if scrollView == headerView.trackingScrollView {
+//      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+//    }
+//  }
+//
+//  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//    let headerView = appBar.headerView
+//    if scrollView == headerView.trackingScrollView {
+//      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+//    }
+//  }
 
 
 }
@@ -149,8 +157,8 @@ extension RestaurantList {
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.cellID, for: indexPath) as? RestaurantCell {
-      cell.article = articles[indexPath.row]
-      return cell
+        cell.article = articles[indexPath.row]
+        return cell
     } else {
       fatalError("Missing cell for indexPath: \(indexPath)")
     }

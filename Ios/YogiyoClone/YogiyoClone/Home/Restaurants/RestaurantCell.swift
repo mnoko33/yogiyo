@@ -12,16 +12,15 @@ import MaterialComponents
 
 class RestaurantCell: UICollectionViewCell {
     static let cellID = "RestaurantCellID"
-    static let cellHeight: CGFloat = 70
-    static let cellPadding: CGFloat = 8.0
+    static let cellHeight: CGFloat = 100
+    static let cellPadding: CGFloat = 1
     var inkTouchController: MDCInkTouchController?
 
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var orderTime: UILabel!
-    
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     var article: Article? {
       didSet {
@@ -29,12 +28,17 @@ class RestaurantCell: UICollectionViewCell {
           return
         }
 
-        imageView.sd_setImage(with: article.imageURL)
-        titleLabel.text = article.title
-        subtitleLabel.text = article.description
+//        imageView.sd_setImage(with: article.imageURL)
+//        titleLabel.text = article.title
+//        subtitleLabel.text = article.description
+        
+        titleLabel.text = "비비큐"
+        subtitleLabel.text = "치킨"
+        imageView.image = UIImage(named: "food7")
         if let date = article.publishedAt {
           orderTime.isHidden = false
-          orderTime.text = date
+//          orderTime.text = date
+            orderTime.text = "40분"
         } else {
           orderTime.isHidden = true
         }

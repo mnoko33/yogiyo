@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.nadarm.yogiyo.ui.viewModel.AutoScrollAdViewModel
 import com.nadarm.yogiyo.ui.viewModel.FoodCategoryViewModel
 import com.nadarm.yogiyo.ui.viewModel.RestaurantViewModel
+import com.nadarm.yogiyo.ui.viewModel.TopScrollVIewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -18,6 +19,7 @@ import kotlin.reflect.KClass
 class ViewModelFactory @Inject constructor(
     private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return viewModels[modelClass]?.get() as T
     }
@@ -49,4 +51,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RestaurantViewModel.ViewModelImpl::class)
     internal abstract fun bindRestaurantViewModel(viewModel: RestaurantViewModel.ViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TopScrollVIewModel.ViewModelImpl::class)
+    internal abstract fun bindTopScrollViewModel(viewModel: TopScrollVIewModel.ViewModelImpl): ViewModel
 }

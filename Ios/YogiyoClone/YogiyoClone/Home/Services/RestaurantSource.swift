@@ -20,13 +20,13 @@ enum NewsSource: String {
 
   var title: String {
     switch self {
-    case .associatedPress: return "Associated Press"
-    case .bbcNews: return "BBC News"
-    case .buzzfeed: return "Buzzfeed"
-    case .cnbc: return "CNBC"
-    case .cnn: return "CNN"
-    case .googleNews: return "Google News"
-    case .reuters: return "Reuters"
+    case .associatedPress: return "전체"
+    case .bbcNews: return "한식"
+    case .buzzfeed: return "야식"
+    case .cnbc: return "치킨"
+    case .cnn: return "중식"
+    case .googleNews: return "디저트/카페"
+    case .reuters: return "일식/돈까스"
     }
   }
 

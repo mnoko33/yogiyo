@@ -8,13 +8,11 @@ const headers = {
 
 
 export default {
+    // user 관련
     login(data) {
         return axios.post(`${apiUrl}/api/auth/login/`, {
         data,
     })
-    },
-    async getCategoryList(idx) {
-        return await axios.get(`${apiUrl}/api/restaurants/categories/${idx}`, {headers: headers})
     },
     join(data) {
         return axios.post(`${apiUrl}/api/auth/signup/`, {
@@ -22,7 +20,7 @@ export default {
     })
     },
     setAddress(data) {
-        return axios.post(`${apiUrl}/api/auth/address`,{data}, {
+        return axios.post(`${apiUrl}/api/user-info/address`,{data}, {
             headers: {
                 "x-access-token": localStorage.getItem('token')
             }
@@ -30,22 +28,22 @@ export default {
     )
     },
     certificationPhoneNum(data) {
-        return axios.post(`${apiUrl}/api/auth/address`,{data}, {
-            headers: {
-                "x-access-token": localStorage.getItem('token')
-            }
-        }
-    )
+        return axios.post(`${apiUrl}/api/sms-auth/certification`,{data}
+        )
     },
     verificationPhoneNum(data) {
-        return axios.post(`${apiUrl}/api/auth/address`,{data}, {
-            headers: {
-                "x-access-token": localStorage.getItem('token')
-            }
-        }
+        return axios.post(`${apiUrl}/api/sms-auth/verification`,{data}
     )
+    },
+    
+    // restaurant
+    async getCategoryList(idx) {
+        return await axios.get(`${apiUrl}/api/restaurants/categories/${idx}`, {headers: headers})
     },
     async getDetailRestaurant(id) {
         return await axios.get(`${apiUrl}/api/restaurants/${id}/menus`, {headers: headers})
-    }
+    },
+    async getCategory() {
+        return await axios.get(`${apiUrl}/api/restaurants/categories/`)
+    },
 }

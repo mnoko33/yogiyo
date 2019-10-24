@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class companyInfoCell: UITableViewCell {
     
@@ -151,18 +152,27 @@ class companyInfoCell: UITableViewCell {
     @objc
     func tapFunction2(sender:UITapGestureRecognizer) {
         print("이용약관")
+        movePage(inputURL: "https://www.yogiyo.co.kr/mobile/#/policy/")
     }
     @objc
     func tapFunction3(sender:UITapGestureRecognizer) {
         print("개인정보처리정책")
+        movePage(inputURL: "https://www.yogiyo.co.kr/mobile/#/privacy/")
     }
     @objc
     func tapFunction4(sender:UITapGestureRecognizer) {
         print("유저등급")
+        movePage(inputURL: "https://www.yogiyo.co.kr/mobile/#/point_policy/")
     }
     @objc
     func tapFunction5(sender:UITapGestureRecognizer) {
         print("회사정보")
+        movePage(inputURL: "https://www.deliveryhero.co.kr/")
+    }
+    
+    func movePage(inputURL: String?) {
+        
+        
     }
 
     
