@@ -1,20 +1,20 @@
 <template>
   <v-container>
-    <v-layout row style="width: 90%; margin: auto">
-      <v-flex xs6 sm4 md3 v-for="category in categoryList" :key="category.categoryIdx">
-        <router-link :to="{name: 'RestaurantListPage', params: {category: category.category, categoryIdx: category.categoryIdx}}"><v-card
+    <v-layout v-if="categories" row style="width: 90%; margin: auto">
+      <v-flex xs6 sm4 md3 v-for="category in categories" :key="category.categoryIdx">
+        <router-link :to="{name: 'RestaurantListPage', params: {categoryIdx: category.id+1}}"><v-card
             outlined
             flat
             height="218px"
             style="margin: 2% 2%; z-index: 2; position: relative;"
         >
-          <p style="position: absolute; top: 7%; left: 7%; color: #333; font-size: 100%; font-weight: bold; z-index: 1">{{category.category}}</p>
+          <p style="position: absolute; top: 7%; left: 7%; color: #333; font-size: 100%; font-weight: bold; z-index: 1">{{category.name}}</p>
           <v-img
             class="white--text align-end"
             width="216px"
             height="216px"
             style="margin-right: 0; position: absolute; bottom: 0; right: 0"
-            :src="category.background"
+            :src="category.imgUrl"
           />
         </v-card></router-link>
       </v-flex>
@@ -23,9 +23,11 @@
 </template>
 
 <script>
+  import api from '@/api'
   export default {
     name: "main",
     data: () => ({
+<<<<<<< HEAD
         categoryList: [
             {background: require("../../assets/menulist/category-01.png" ), category: '전체보기', categoryIdx: '1'},
             {background: require("../../assets/menulist/category-onedish.png"), category: '1인분 주문', categoryIdx: '2'},
@@ -41,8 +43,25 @@
             {background: require("../../assets/menulist/category-11.png"), category: '카페/디저트', categoryIdx: '12'},
             {background: require("../../assets/menulist/category-convenience-store.png"), category: '편의점', categoryIdx: '13'},
         ]
+=======
+        categories: []
+>>>>>>> feature/phone
     }),
-
+  mounted() {
+        this.getCategory()
+  },
+  methods: {
+        async getCategory() {
+            const apiurl = 'http://70.12.247.65:3000';
+            api.getCategory().then(res => {
+                this.categories = res.data.categories
+                this.categories.pop()
+                for (var i in this.categories) {
+                    this.categories[i].imgUrl = apiurl+ this.categories[i].imgUrl
+                }
+            })
+        }
+  }
   }
 </script>
 

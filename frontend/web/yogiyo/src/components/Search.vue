@@ -3,20 +3,21 @@
    <div class="input-group">
      <v-layout style="position: relative; top: 125px">
        <v-flex style="margin-right: 2%;">
-         <v-icon @click="getLocation" class="gps-btn">mdi-crosshairs-gps</v-icon>
+         <v-icon v-if="isUser" @click="getLocation" class="gps-btn">mdi-crosshairs-gps</v-icon>
+         <router-link v-else style="text-decoration: none" :to="{name: 'LoginPage'}"><v-icon  class="gps-btn">mdi-crosshairs-gps</v-icon></router-link>
        </v-flex>
        <v-flex style="width: 310px;">
-         <!--<v-text-field textarea clearable rows="2" outlined background-color="#ffffff" color="#ffffff" style="padding: 0 0"></v-text-field>-->
          <input
             type="text"
             v-model="address"
             id="location-search"
             class="address-input"
           />
-         <button class="clear-btn">지우기</button>
+         <button @click="clearAddress" class="clear-btn">지우기</button>
        </v-flex>
        <v-flex>
-         <v-btn color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
+         <v-btn v-if="isUser" color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
+         <v-btn v-else color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><router-link style="text-decoration: none" :to="{name: 'LoginPage'}"><span style="color:#ffffff; font-weight: bold">검색</span></router-link></v-btn>
        </v-flex>
      </v-layout>
    </div>
@@ -25,15 +26,29 @@
 
 <script>
   import api from '@/api'
+  import { mapState } from 'vuex';
   export default {
     name: "Search",
     data: () => ({
         latitude: 0,
         longitude: 0,
         address: '',
+        isUser: false,
     }),
     mounted() {
-      this.address = this.$store.state.address
+        if(this.$store.state.address == 'undefined') {
+            this.address = ''
+        }
+        this.isUser = this.$store.state.currentUser
+    },
+    watch: {
+        currentUser() {
+          this.isUser = this.$store.state.currentUser
+        }
+    },
+    computed: {
+        ... mapState(['currentUser'])
+
     },
     methods: {
       getLocation: function() {
@@ -69,7 +84,10 @@
         }).catch(e => {
           console.log(e);
         })
-      }
+      },
+      clearAddress() {
+          this.address = ''
+      },
     }
   }
 </script>
@@ -126,6 +144,9 @@
     height: 40px;
     border-radius: 4px;
     border: none;
+  }
+  .gps-btn::before {
+    color:#e30000;
   }
 
 </style>
