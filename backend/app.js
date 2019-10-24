@@ -1,13 +1,30 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const authMiddleware = require('./middlewares/auth');
+const jwt = require('jsonwebtoken');
+const logger = require('morgan');
+const cors = require('cors');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
+const restRouter = require('./routes/restaurants');
+const smsAuthRouter = require('./routes/smsAuth');
+const infoRouter = require('./routes/info');
+const userInfoRouter = require('./routes/userInfo');
 
-var app = express();
+const app = express();
+
+const models = require("./models/index");
+
+models.sequelize.sync().then(() => {
+  console.log("DB is connected successfully");
+}).catch(err => {
+  console.log("DB is not connected because of below reason");
+  console.log(err);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,8 +36,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// CORS 허용하기
+app.use(cors());
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/sms-auth', smsAuthRouter);
+app.use('/api/info', infoRouter);
+app.use('/api/*', authMiddleware);
+// app.use('/api/users', usersRouter);
+app.use('/api/user-info', userInfoRouter);
+app.use('/api/restaurants', restRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C7391A106E9E81358CDBA14 /* Pods_YogiyoClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C88CC30D1F3E959FBB87B9D /* Pods_YogiyoClone.framework */; };
+		B457AFE88C2F02C78A6A4017 /* Pods_YogiyoCloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B76BD89EF4B10716EC0DB6FD /* Pods_YogiyoCloneTests.framework */; };
 		D104FCA32339B22200645C56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA22339B22200645C56 /* AppDelegate.swift */; };
 		D104FCA52339B22200645C56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA42339B22200645C56 /* SceneDelegate.swift */; };
-		D104FCA72339B22200645C56 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA62339B22200645C56 /* ViewController.swift */; };
+		D104FCA72339B22200645C56 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCA62339B22200645C56 /* HomeVC.swift */; };
 		D104FCAA2339B22200645C56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D104FCA82339B22200645C56 /* Main.storyboard */; };
 		D104FCAD2339B22200645C56 /* YogiyoClone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D104FCAB2339B22200645C56 /* YogiyoClone.xcdatamodeld */; };
 		D104FCAF2339B22400645C56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D104FCAE2339B22400645C56 /* Assets.xcassets */; };
@@ -18,9 +20,24 @@
 		D104FCC82339B22400645C56 /* YogiyoCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCC72339B22400645C56 /* YogiyoCloneUITests.swift */; };
 		D104FCDC2339DD2700645C56 /* imageSlideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCDB2339DD2700645C56 /* imageSlideCell.swift */; };
 		D104FCDE2339E06600645C56 /* imageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D104FCDD2339E06600645C56 /* imageCell.swift */; };
-		D1D3C2B923541EFC00FFA90E /* OrderlistTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3C2B823541EFC00FFA90E /* OrderlistTVC.swift */; };
+		D15C7263235D70D6000DC1D4 /* OrderListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C7262235D70D6000DC1D4 /* OrderListVC.swift */; };
+		D15C7265235D70E3000DC1D4 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C7264235D70E3000DC1D4 /* SearchVC.swift */; };
+		D15C726B235D9902000DC1D4 /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C726A235D9902000DC1D4 /* MyPageVC.swift */; };
+		D168A0CA2360473F00BE6181 /* RestaurantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D168A0C92360473F00BE6181 /* RestaurantCell.xib */; };
+		D17E10D6235E824F00E94BE6 /* emptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E10D5235E824F00E94BE6 /* emptyCell.swift */; };
+		D17E10D8235E8F3C00E94BE6 /* companyInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E10D7235E8F3C00E94BE6 /* companyInfoCell.swift */; };
+		D17E10DB235E9CB000E94BE6 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E10DA235E9CB000E94BE6 /* ImageData.swift */; };
+		D17E10DF235F5F1B00E94BE6 /* RestaurantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E10DE235F5F1B00E94BE6 /* RestaurantList.swift */; };
+		D191249823602AB900B8E5EB /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D191249623602AB900B8E5EB /* RestaurantCell.swift */; };
+		D191249B23602C8F00B8E5EB /* HeroHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D191249A23602C8F00B8E5EB /* HeroHeaderView.swift */; };
+		D191249E23602CE900B8E5EB /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = D191249D23602CE900B8E5EB /* Article.swift */; };
+		D19124A023602D0600B8E5EB /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D191249F23602D0600B8E5EB /* Cancellable.swift */; };
+		D19124A223602D1F00B8E5EB /* NewsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A123602D1F00B8E5EB /* NewsClient.swift */; };
+		D19124A423602D3900B8E5EB /* NewsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A323602D3900B8E5EB /* NewsSource.swift */; };
+		D19124A623602D6200B8E5EB /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A523602D6200B8E5EB /* Appearance.swift */; };
 		D1DB5066233A1ECF00CF5761 /* menupanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5065233A1ECF00CF5761 /* menupanCell.swift */; };
 		D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5067233A1EDE00CF5761 /* menuCell.swift */; };
+		E1AB204027F6B8CF6FA364CF /* Pods_YogiyoClone_YogiyoCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D66B7E612E04D76A4C8D91 /* Pods_YogiyoClone_YogiyoCloneUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +58,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14D66B7E612E04D76A4C8D91 /* Pods_YogiyoClone_YogiyoCloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogiyoClone_YogiyoCloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		19707815D47E5BA1C2791793 /* Pods-YogiyoCloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoCloneTests.debug.xcconfig"; path = "Target Support Files/Pods-YogiyoCloneTests/Pods-YogiyoCloneTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1C88CC30D1F3E959FBB87B9D /* Pods_YogiyoClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogiyoClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F5BEAAB5CD0E5B70119166C /* Pods-YogiyoCloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoCloneTests.release.xcconfig"; path = "Target Support Files/Pods-YogiyoCloneTests/Pods-YogiyoCloneTests.release.xcconfig"; sourceTree = "<group>"; };
+		5C401A5D22EA9AC8982A6CDD /* Pods-YogiyoClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoClone.debug.xcconfig"; path = "Target Support Files/Pods-YogiyoClone/Pods-YogiyoClone.debug.xcconfig"; sourceTree = "<group>"; };
+		5DFAE03BBC000540F0B279FA /* Pods-YogiyoClone-YogiyoCloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoClone-YogiyoCloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8248E5D02A22AB488A31B247 /* Pods-YogiyoClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoClone.release.xcconfig"; path = "Target Support Files/Pods-YogiyoClone/Pods-YogiyoClone.release.xcconfig"; sourceTree = "<group>"; };
+		B76BD89EF4B10716EC0DB6FD /* Pods_YogiyoCloneTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogiyoCloneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D104FC9F2339B22200645C56 /* YogiyoClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogiyoClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D104FCA22339B22200645C56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D104FCA42339B22200645C56 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D104FCA62339B22200645C56 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D104FCA62339B22200645C56 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		D104FCA92339B22200645C56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D104FCAC2339B22200645C56 /* YogiyoClone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YogiyoClone.xcdatamodel; sourceTree = "<group>"; };
 		D104FCAE2339B22400645C56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,9 +83,24 @@
 		D104FCC92339B22400645C56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D104FCDB2339DD2700645C56 /* imageSlideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageSlideCell.swift; sourceTree = "<group>"; };
 		D104FCDD2339E06600645C56 /* imageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageCell.swift; sourceTree = "<group>"; };
-		D1D3C2B823541EFC00FFA90E /* OrderlistTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderlistTVC.swift; sourceTree = "<group>"; };
+		D15C7262235D70D6000DC1D4 /* OrderListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListVC.swift; sourceTree = "<group>"; };
+		D15C7264235D70E3000DC1D4 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		D15C726A235D9902000DC1D4 /* MyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
+		D168A0C92360473F00BE6181 /* RestaurantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantCell.xib; sourceTree = "<group>"; };
+		D17E10D5235E824F00E94BE6 /* emptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyCell.swift; sourceTree = "<group>"; };
+		D17E10D7235E8F3C00E94BE6 /* companyInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = companyInfoCell.swift; sourceTree = "<group>"; };
+		D17E10DA235E9CB000E94BE6 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
+		D17E10DE235F5F1B00E94BE6 /* RestaurantList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantList.swift; sourceTree = "<group>"; };
+		D191249623602AB900B8E5EB /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
+		D191249A23602C8F00B8E5EB /* HeroHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderView.swift; sourceTree = "<group>"; };
+		D191249D23602CE900B8E5EB /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		D191249F23602D0600B8E5EB /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
+		D19124A123602D1F00B8E5EB /* NewsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsClient.swift; sourceTree = "<group>"; };
+		D19124A323602D3900B8E5EB /* NewsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsSource.swift; sourceTree = "<group>"; };
+		D19124A523602D6200B8E5EB /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		D1DB5065233A1ECF00CF5761 /* menupanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menupanCell.swift; sourceTree = "<group>"; };
 		D1DB5067233A1EDE00CF5761 /* menuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuCell.swift; sourceTree = "<group>"; };
+		F01BE132B4A2D225B9DC3A99 /* Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C7391A106E9E81358CDBA14 /* Pods_YogiyoClone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B457AFE88C2F02C78A6A4017 /* Pods_YogiyoCloneTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,12 +124,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1AB204027F6B8CF6FA364CF /* Pods_YogiyoClone_YogiyoCloneUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20E7A40871A667854EA2D45C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C401A5D22EA9AC8982A6CDD /* Pods-YogiyoClone.debug.xcconfig */,
+				8248E5D02A22AB488A31B247 /* Pods-YogiyoClone.release.xcconfig */,
+				5DFAE03BBC000540F0B279FA /* Pods-YogiyoClone-YogiyoCloneUITests.debug.xcconfig */,
+				F01BE132B4A2D225B9DC3A99 /* Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig */,
+				19707815D47E5BA1C2791793 /* Pods-YogiyoCloneTests.debug.xcconfig */,
+				2F5BEAAB5CD0E5B70119166C /* Pods-YogiyoCloneTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8EAFDAC9AA116D326A00D1E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C88CC30D1F3E959FBB87B9D /* Pods_YogiyoClone.framework */,
+				14D66B7E612E04D76A4C8D91 /* Pods_YogiyoClone_YogiyoCloneUITests.framework */,
+				B76BD89EF4B10716EC0DB6FD /* Pods_YogiyoCloneTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D104FC962339B22200645C56 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +161,8 @@
 				D104FCBB2339B22400645C56 /* YogiyoCloneTests */,
 				D104FCC62339B22400645C56 /* YogiyoCloneUITests */,
 				D104FCA02339B22200645C56 /* Products */,
+				20E7A40871A667854EA2D45C /* Pods */,
+				8EAFDAC9AA116D326A00D1E8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +179,7 @@
 		D104FCA12339B22200645C56 /* YogiyoClone */ = {
 			isa = PBXGroup;
 			children = (
+				D17E10D9235E9C9700E94BE6 /* Data */,
 				D1DB506C233B0A1B00CF5761 /* MyPage */,
 				D1DB506B233B0A0B00CF5761 /* OrderList */,
 				D1DB506A233B09FA00CF5761 /* Search */,
@@ -122,6 +191,7 @@
 				D104FCB02339B22400645C56 /* LaunchScreen.storyboard */,
 				D104FCB32339B22400645C56 /* Info.plist */,
 				D104FCAB2339B22200645C56 /* YogiyoClone.xcdatamodeld */,
+				D19124A523602D6200B8E5EB /* Appearance.swift */,
 			);
 			path = YogiyoClone;
 			sourceTree = "<group>";
@@ -144,14 +214,48 @@
 			path = YogiyoCloneUITests;
 			sourceTree = "<group>";
 		};
+		D17E10D9235E9C9700E94BE6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D17E10DA235E9CB000E94BE6 /* ImageData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D17E10E4235F635800E94BE6 /* Restaurants */ = {
+			isa = PBXGroup;
+			children = (
+				D17E10DE235F5F1B00E94BE6 /* RestaurantList.swift */,
+				D191249623602AB900B8E5EB /* RestaurantCell.swift */,
+				D168A0C92360473F00BE6181 /* RestaurantCell.xib */,
+				D191249A23602C8F00B8E5EB /* HeroHeaderView.swift */,
+			);
+			path = Restaurants;
+			sourceTree = "<group>";
+		};
+		D191249C23602CC800B8E5EB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D191249D23602CE900B8E5EB /* Article.swift */,
+				D191249F23602D0600B8E5EB /* Cancellable.swift */,
+				D19124A123602D1F00B8E5EB /* NewsClient.swift */,
+				D19124A323602D3900B8E5EB /* NewsSource.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		D1DB5069233B09E700CF5761 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D104FCA62339B22200645C56 /* ViewController.swift */,
+				D191249C23602CC800B8E5EB /* Services */,
+				D104FCA62339B22200645C56 /* HomeVC.swift */,
 				D104FCDB2339DD2700645C56 /* imageSlideCell.swift */,
 				D104FCDD2339E06600645C56 /* imageCell.swift */,
 				D1DB5065233A1ECF00CF5761 /* menupanCell.swift */,
 				D1DB5067233A1EDE00CF5761 /* menuCell.swift */,
+				D17E10D5235E824F00E94BE6 /* emptyCell.swift */,
+				D17E10D7235E8F3C00E94BE6 /* companyInfoCell.swift */,
+				D17E10E4235F635800E94BE6 /* Restaurants */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -159,6 +263,7 @@
 		D1DB506A233B09FA00CF5761 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				D15C7264235D70E3000DC1D4 /* SearchVC.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -166,7 +271,7 @@
 		D1DB506B233B0A0B00CF5761 /* OrderList */ = {
 			isa = PBXGroup;
 			children = (
-				D1D3C2B823541EFC00FFA90E /* OrderlistTVC.swift */,
+				D15C7262235D70D6000DC1D4 /* OrderListVC.swift */,
 			);
 			path = OrderList;
 			sourceTree = "<group>";
@@ -174,6 +279,7 @@
 		D1DB506C233B0A1B00CF5761 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				D15C726A235D9902000DC1D4 /* MyPageVC.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -185,9 +291,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D104FCCC2339B22400645C56 /* Build configuration list for PBXNativeTarget "YogiyoClone" */;
 			buildPhases = (
+				153A32F8C509D30A08A5CE5F /* [CP] Check Pods Manifest.lock */,
 				D104FC9B2339B22200645C56 /* Sources */,
 				D104FC9C2339B22200645C56 /* Frameworks */,
 				D104FC9D2339B22200645C56 /* Resources */,
+				E081AAAACBC80888FB01B5B1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -202,6 +310,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D104FCCF2339B22400645C56 /* Build configuration list for PBXNativeTarget "YogiyoCloneTests" */;
 			buildPhases = (
+				8FA7B29802E7FA748352BF17 /* [CP] Check Pods Manifest.lock */,
 				D104FCB42339B22400645C56 /* Sources */,
 				D104FCB52339B22400645C56 /* Frameworks */,
 				D104FCB62339B22400645C56 /* Resources */,
@@ -220,9 +329,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D104FCD22339B22400645C56 /* Build configuration list for PBXNativeTarget "YogiyoCloneUITests" */;
 			buildPhases = (
+				6BBD3E07FECD44A6BB07383F /* [CP] Check Pods Manifest.lock */,
 				D104FCBF2339B22400645C56 /* Sources */,
 				D104FCC02339B22400645C56 /* Frameworks */,
 				D104FCC12339B22400645C56 /* Resources */,
+				476E32F1FCC7FE31D78EF336 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -282,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D168A0CA2360473F00BE6181 /* RestaurantCell.xib in Resources */,
 				D104FCB22339B22400645C56 /* LaunchScreen.storyboard in Resources */,
 				D104FCAF2339B22400645C56 /* Assets.xcassets in Resources */,
 				D104FCAA2339B22200645C56 /* Main.storyboard in Resources */,
@@ -304,20 +416,136 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		153A32F8C509D30A08A5CE5F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YogiyoClone-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		476E32F1FCC7FE31D78EF336 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BBD3E07FECD44A6BB07383F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YogiyoClone-YogiyoCloneUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FA7B29802E7FA748352BF17 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YogiyoCloneTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E081AAAACBC80888FB01B5B1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YogiyoClone/Pods-YogiyoClone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YogiyoClone/Pods-YogiyoClone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YogiyoClone/Pods-YogiyoClone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D104FC9B2339B22200645C56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D17E10DF235F5F1B00E94BE6 /* RestaurantList.swift in Sources */,
 				D104FCDC2339DD2700645C56 /* imageSlideCell.swift in Sources */,
-				D104FCA72339B22200645C56 /* ViewController.swift in Sources */,
+				D191249E23602CE900B8E5EB /* Article.swift in Sources */,
+				D15C7265235D70E3000DC1D4 /* SearchVC.swift in Sources */,
+				D15C7263235D70D6000DC1D4 /* OrderListVC.swift in Sources */,
+				D104FCA72339B22200645C56 /* HomeVC.swift in Sources */,
+				D15C726B235D9902000DC1D4 /* MyPageVC.swift in Sources */,
+				D19124A623602D6200B8E5EB /* Appearance.swift in Sources */,
+				D19124A223602D1F00B8E5EB /* NewsClient.swift in Sources */,
 				D1DB5066233A1ECF00CF5761 /* menupanCell.swift in Sources */,
+				D17E10D8235E8F3C00E94BE6 /* companyInfoCell.swift in Sources */,
+				D191249823602AB900B8E5EB /* RestaurantCell.swift in Sources */,
+				D19124A023602D0600B8E5EB /* Cancellable.swift in Sources */,
+				D19124A423602D3900B8E5EB /* NewsSource.swift in Sources */,
 				D104FCAD2339B22200645C56 /* YogiyoClone.xcdatamodeld in Sources */,
-				D1D3C2B923541EFC00FFA90E /* OrderlistTVC.swift in Sources */,
 				D104FCA32339B22200645C56 /* AppDelegate.swift in Sources */,
 				D104FCA52339B22200645C56 /* SceneDelegate.swift in Sources */,
+				D191249B23602C8F00B8E5EB /* HeroHeaderView.swift in Sources */,
+				D17E10D6235E824F00E94BE6 /* emptyCell.swift in Sources */,
 				D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */,
 				D104FCDE2339E06600645C56 /* imageCell.swift in Sources */,
+				D17E10DB235E9CB000E94BE6 /* ImageData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +716,7 @@
 		};
 		D104FCCD2339B22400645C56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C401A5D22EA9AC8982A6CDD /* Pods-YogiyoClone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -506,6 +735,7 @@
 		};
 		D104FCCE2339B22400645C56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8248E5D02A22AB488A31B247 /* Pods-YogiyoClone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -524,6 +754,7 @@
 		};
 		D104FCD02339B22400645C56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19707815D47E5BA1C2791793 /* Pods-YogiyoCloneTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -546,6 +777,7 @@
 		};
 		D104FCD12339B22400645C56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F5BEAAB5CD0E5B70119166C /* Pods-YogiyoCloneTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -568,6 +800,7 @@
 		};
 		D104FCD32339B22400645C56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DFAE03BBC000540F0B279FA /* Pods-YogiyoClone-YogiyoCloneUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -588,6 +821,7 @@
 		};
 		D104FCD42339B22400645C56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F01BE132B4A2D225B9DC3A99 /* Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

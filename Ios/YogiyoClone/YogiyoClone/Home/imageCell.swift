@@ -9,12 +9,12 @@
 import UIKit
 
 class imageCell: UICollectionViewCell {
-    
+     
     @IBOutlet weak var imageView: UIImageView!
     
     var image : UIImage? {
         didSet {
             self.imageView.image = image ?? UIImage(named: "")
-        }
+        } 
     }
 }
