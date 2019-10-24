@@ -34,7 +34,7 @@
 
 ​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기) 
 
-​	:x: ​`POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) ​
+​	:heavy_check_mark: `POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) 
 
 
 
@@ -346,6 +346,35 @@ categoryId = [
             }
         ]
     }
+}
+```
+
+
+
+##### `POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) 
+
+```json
+// req
+{
+	"data": {
+		"menus": "1::2"
+	}
+}
+
+// res
+{
+    "status": true,
+    "menus": [
+        {
+            "name": "국물 떡볶이",
+            "price": 4500
+        },
+        {
+            "name": "후룩 떡복이",
+            "price": 5500
+        }
+    ],
+    "totalPrice": 10000
 }
 ```
 
