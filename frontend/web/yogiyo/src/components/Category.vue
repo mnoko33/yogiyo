@@ -2,9 +2,10 @@
   <v-content class="restaurant-category-menu">
     <div class="sms category-btn">
       <v-btn-toggle tile class="category ml-auto">
-        <v-btn color="white"><v-icon>mdi-magnify</v-icon></v-btn>
-        <v-btn color="white" v-for="category in categoryList" :key="category.categoryIdx">
-          <router-link class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx}}">{{ category.category }}</router-link></v-btn>
+        <v-btn class="toggle-btn" depressed color="white"><v-icon>mdi-magnify</v-icon></v-btn>
+        <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx}}">
+          <v-btn class="toggle-btn" depressed outlined color="black"><span style="font-size: 12px">{{category.category}}</span></v-btn>
+        </router-link>
       </v-btn-toggle>
     </div>
     <div class="category category-select">
@@ -50,7 +51,7 @@
 <style scoped>
 .sms {
   padding: 0;
-  border-bottom: 1px solid gray;
+  box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
   margin: auto;
   background-color: white;
   text-align: center;
@@ -64,6 +65,10 @@
   text-decoration: none;
   color: black;
 }
+.toggle-btn {
+  padding: 0 11px !important;
+  border-radius: 0;
+}
 @media (min-width: 992px) {
   .restaurant-category-menu {
     float: none;
@@ -73,12 +78,12 @@
     border-top: 0;
   }
 }
-@media (min-width: 1130px) {
+@media (min-width: 1020px) {
   .category-select {
     display: none;
   }
 }
-@media (max-width: 1130px) {
+@media (max-width: 1020px) {
   .category-btn {
     display: none;
   }

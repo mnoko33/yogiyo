@@ -98,4 +98,7 @@
   text-decoration: none;
   color: black;
 }
+.v-card:not(.v-sheet--tile) {
+  border-radius: 0;
+}
 </style>

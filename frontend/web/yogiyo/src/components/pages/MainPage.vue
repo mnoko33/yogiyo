@@ -1,5 +1,5 @@
 <template>
-  <v-container style="overflow: scroll;">
+  <v-container>
     <v-layout row style="width: 90%; margin: auto">
       <v-flex xs6 sm4 md3 v-for="category in categoryList" :key="category.categoryIdx">
         <router-link :to="{name: 'RestaurantListPage', params: {category: category.category, categoryIdx: category.categoryIdx}}"><v-card
