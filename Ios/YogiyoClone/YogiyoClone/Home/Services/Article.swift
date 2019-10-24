@@ -40,7 +40,7 @@ struct Article: Codable {
 
   var articleURL: URL? {
     if let url = url {
-      return URL(string: url)
+      return URL(string: "https://www.yogiyo.co.kr/mobile/#/229823/")
     }
     return nil
   }
