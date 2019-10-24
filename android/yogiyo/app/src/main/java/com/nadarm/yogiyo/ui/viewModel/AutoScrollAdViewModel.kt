@@ -1,7 +1,9 @@
 package com.nadarm.yogiyo.ui.viewModel
 
+import androidx.recyclerview.widget.RecyclerView
 import com.nadarm.yogiyo.data.repository.AdRepository
-import com.nadarm.yogiyo.ui.adapter.AutoScrollCircularListAdapter
+import com.nadarm.yogiyo.ui.adapter.BaseListAdapter
+import com.nadarm.yogiyo.ui.listener.ScrollStateListener
 import com.nadarm.yogiyo.ui.model.Ad
 import com.nadarm.yogiyo.ui.model.BaseItem
 import io.reactivex.Flowable
@@ -9,7 +11,6 @@ import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.withLatestFrom
-import io.reactivex.rxkotlin.zipWith
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 interface AutoScrollAdViewModel {
 
-    interface Inputs : AutoScrollCircularListAdapter.Delegate {
+    interface Inputs : BaseListAdapter.Delegate, ScrollStateListener.Delegate {
         fun setAdType(type: Ad.Type)
     }
 
@@ -25,6 +26,7 @@ interface AutoScrollAdViewModel {
         fun adItemList(): Flowable<List<BaseItem>>
         fun smoothScrollPosition(): Flowable<Int>
         fun scrollPosition(): Flowable<Int>
+        fun startAdActivity(): Flowable<Ad>
     }
 
     class ViewModelImpl @Inject constructor(
@@ -35,10 +37,12 @@ interface AutoScrollAdViewModel {
         private val adType: PublishProcessor<Ad.Type> = PublishProcessor.create()
         private val scrollStateChanged: PublishProcessor<Int> = PublishProcessor.create()
         private val scrollPositionChanged: PublishProcessor<Int> = PublishProcessor.create()
+        private val lastScrollPosition: PublishProcessor<Int> = PublishProcessor.create()
 
         private val adItemList: BehaviorProcessor<List<BaseItem>> = BehaviorProcessor.create()
-        private val scrollPosition: BehaviorProcessor<Int> = BehaviorProcessor.create()
-        private val smoothScrollPosition: BehaviorProcessor<Int> = BehaviorProcessor.create()
+        private val scrollPosition: BehaviorProcessor<Int> = BehaviorProcessor.createDefault(1)
+        private val smoothScrollPosition: Flowable<Int>
+        private val startAdActivity: Flowable<Ad>
 
         val inputs: Inputs = this
         val outputs: Outputs = this
@@ -61,31 +65,43 @@ interface AutoScrollAdViewModel {
                 .subscribe { adItemList.onNext(it) }
                 .addTo(compositeDisposable)
 
+            val itemCount = adItemList.map { it.size }
 
-            adItemList
-                .map { it.size }
-                .withLatestFrom(scrollPosition) { itemCount, position ->
-                    if (itemCount <= 1) return@withLatestFrom 0
+            scrollPositionChanged
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .withLatestFrom(itemCount) { position, count -> position to count }
+                .filter { it.second > 1 }
+                .filter { it.first == it.second - 1 || it.first == 0 }
+                .map {
+                    val position = it.first
+                    val count = it.second
                     when (position) {
-                        itemCount - 1 -> 1
-                        0 -> itemCount - 1
+                        count - 1 -> 1
+                        0 -> count - 2
                         else -> position
                     }
                 }
                 .subscribe(scrollPosition)
 
+            lastScrollPosition
+                .subscribe(scrollPosition)
 
-//            Flowable
-//                .interval(3000, TimeUnit.MILLISECONDS)
-//                .zipWith(scrollPositionChanged) { _, position -> position + 1 }
-//                .subscribe(scrollPosition)
+            smoothScrollPosition = Flowable
+                .interval(4000, 4000, TimeUnit.MILLISECONDS)
+                .withLatestFrom(scrollStateChanged) { _, state -> state }
+                .filter { state -> state == RecyclerView.SCROLL_STATE_IDLE }
+                .withLatestFrom(scrollPositionChanged) { _, position -> position + 1 }
 
+            startAdActivity = itemClicked
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .map { it as Ad }
 
         }
 
         override fun adItemList(): Flowable<List<BaseItem>> = adItemList
         override fun scrollPosition(): Flowable<Int> = scrollPosition
         override fun smoothScrollPosition(): Flowable<Int> = smoothScrollPosition
+        override fun startAdActivity(): Flowable<Ad> = startAdActivity
 
         override fun itemClicked(item: BaseItem) {
             itemClicked.onNext(item)
@@ -101,6 +117,10 @@ interface AutoScrollAdViewModel {
 
         override fun scrollPositionChanged(position: Int) {
             scrollPositionChanged.onNext(position)
+        }
+
+        override fun lastScrollPosition(position: Int) {
+            lastScrollPosition.onNext(position)
         }
     }
 

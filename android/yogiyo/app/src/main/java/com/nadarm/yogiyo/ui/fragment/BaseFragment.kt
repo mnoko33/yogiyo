@@ -1,14 +1,14 @@
 package com.nadarm.yogiyo.ui.fragment
 
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseFragment : DaggerFragment() {
+abstract class BaseFragment : Fragment() {
 
     protected val compositeDisposable = CompositeDisposable()
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onDestroyView() {
+        super.onDestroyView()
         compositeDisposable.clear()
     }
 }

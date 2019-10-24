@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 interface RestaurantRepository {
 
-    fun getRestaurants(): Single<List<Restaurant>>
+    fun getRestaurants(isPlus: Boolean, category: Long): Single<List<Restaurant>>
 }
 
 interface RestaurantDataSource : RestaurantRepository {

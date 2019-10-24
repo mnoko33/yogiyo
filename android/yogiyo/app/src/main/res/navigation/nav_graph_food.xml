@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_food"
+    app:startDestination="@id/foodHomeFragment">
+
+    <fragment
+        android:id="@+id/foodHomeFragment"
+        android:name="com.nadarm.yogiyo.ui.fragment.FoodHomeFragment"
+        android:label="FoodHomeFragment">
+        <action
+            android:id="@+id/action_foodHomeFragment_to_foodTabFragment"
+            app:destination="@id/foodTabFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodTabFragment"
+        android:name="com.nadarm.yogiyo.ui.fragment.FoodTabFragment"
+        android:label="fragment_food_tab"
+        tools:layout="@layout/fragment_food_tab" />
+
+
+</navigation>
