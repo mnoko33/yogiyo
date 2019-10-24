@@ -8,12 +8,17 @@
             name="item"
             type="com.nadarm.yogiyo.ui.model.Restaurant" />
 
+        <variable
+            name="delegate"
+            type="com.nadarm.yogiyo.ui.adapter.BaseListAdapter.Delegate" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:onClick="@{()->delegate.itemClicked(item)}">
 
         <ImageView
             android:id="@+id/restaurantImageView"

@@ -11,7 +11,7 @@ class RestaurantDataRepository @Inject constructor(
     private val cache: RestaurantDataSource.Cache
 ) : RestaurantRepository {
 
-    override fun getRestaurants(): Single<List<Restaurant>> {
-        return cache.getRestaurants()
+    override fun getRestaurants(isPlus: Boolean, category: Long): Single<List<Restaurant>> {
+        return cache.getRestaurants(isPlus, category)
     }
 }

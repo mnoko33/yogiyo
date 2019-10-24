@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <ImageView
-            bindImage="@{item.imageUrl}"
+            bindImage="@{item.imgUrl}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"

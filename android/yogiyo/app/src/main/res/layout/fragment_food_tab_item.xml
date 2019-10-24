@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="topButtonDelegate"
+            type="com.nadarm.yogiyo.ui.viewModel.TopScrollVIewModel.Inputs" />
+
+        <variable
+            name="adapter"
+            type="com.nadarm.yogiyo.ui.adapter.BaseListAdapter" />
+
+        <variable
+            name="scrollListener"
+            type="com.nadarm.yogiyo.ui.listener.BaseScrollListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        tools:context=".ui.fragment.FoodTabItemFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restaurantsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:bindAdapter="@{adapter}"
+            app:bindScrollListener="@{scrollListener}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_border_shape"
+            android:text="필터"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95" />
+
+        <Button
+            android:id="@+id/go_to_top_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/translucent_border_shape"
+            android:onClick="@{() -> topButtonDelegate.topButtonClicked()}"
+            android:stateListAnimator="@null"
+            android:text="위"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
