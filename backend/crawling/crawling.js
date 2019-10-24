@@ -141,26 +141,32 @@ async function addMissing() {
     // });
     const noMenuRest = [];
     for (let i = 0; i < restaurants.length; i++) {
-        const rest = restaurants[i];
-        const menus = await rest.getMenus()
-            .then(result => {
-                return result
-            })
-            .catch(err => {
-                console.log('메뉴를 불러오는데 오류가 발생했습니다.')
-                return false
-            });
-        if (menus === false || menus.length === 0) {
-            console.log('해당 음식점에 메뉴가 없습니다 - ', rest.name);
-            noMenuRest.push(rest)
-        }
+        (async (j) => {
+            const rest = restaurants[j];
+            const menus = await rest.getMenus()
+                .then(result => {
+                    return result
+                })
+                .catch(err => {
+                    console.log('메뉴를 불러오는데 오류가 발생했습니다.')
+                    return false
+                });
+            if (menus === false || menus.length === 0) {
+                console.log('해당 음식점에 메뉴가 없습니다 - ', rest.name);
+                noMenuRest.push(rest)
+            }
+        })(i);
+
     }
+    sleep(3000);
     console.log('############# 메뉴가 없는 음식점의 숫자');
     console.log(noMenuRest.length);
     // api restaurants
     let apiRest = [];
     for (let i = 0; i < 2; i++) {
-        (async (j) => {
+        sleep(3000);
+        console.log(i, '시도')
+        const restaurantList = await (async (j) => {
             const res =  await axios.get('https://www.yogiyo.co.kr/api/v1/restaurants-geo/', {
                 params: {
                     "items": 1000,
@@ -175,28 +181,37 @@ async function addMissing() {
                     "X-MOD-SBB-CTYPE": "xhr"
                 }
             });
-            const restaurantList = res.data["restaurants"];
-            apiRest.concat(restaurantList);
-        })(i)
+            return res.data["restaurants"];
+        })(i);
+        for (let i = 0; i < restaurantList.length; i++) {
+            apiRest.push(restaurantList[i])
+        }
+        console.log(apiRest.length)
     }
+    sleep(3000);
+    console.log('################# 음식점 갯수')
     console.log(apiRest.length);
     // { urlId: urlID, instanceId: instanceId, instanceName: instanceName,  }
-    let target = apiRest.map(rest => {
-        for (let i = 0; i < noMenuRest.length; i++) {
-            if (noMenuRest[i].name === rest.name) {
-                return {
+    let target = [];
+    for (let i = 0; i < apiRest.length; i++) {
+        const rest = apiRest[i];
+        for (let j = 0; j < noMenuRest.length; j++) {
+            if (rest.name === noMenuRest[j].name) {
+                target.push({
                     "urlId": rest.id,
-                    "instanceId": noMenuRest[i].id,
-                    "instanceName": noMenuRest[i].name
-                }
+                    "instanceId": noMenuRest[j].id,
+                    "instanceName": noMenuRest[j].name
+                })
             }
         }
-    })
+    }
+
     console.log(target.length);
     console.log(target);
 
     // start crawling
     for (let i = 0; i < target.length; i++) {
+        sleep(15000);
         (async (j) => {
             await crawlingMenus(target[j].urlId, target[j].instanceId, target[j].instanceName)
         })(i)
