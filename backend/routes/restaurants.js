@@ -125,7 +125,7 @@ router.get('/:restaurantId/menus', async function (req, res, next) {
             })
         });
     if (restaurant) {
-        const menus = await restaurant.getMenus()
+        const menuList = await restaurant.getMenus()
             .then((result) => {
                 return result
             })
@@ -135,10 +135,23 @@ router.get('/:restaurantId/menus', async function (req, res, next) {
                     "err": err
                 })
             });
+        let labels = [];
+        let menus = {};
+        for (let i = 0; i < menuList.length; i++) {
+            const menu = menuList[i];
+            if (labels.includes(menu.label)) {
+                menus[menu.label].push(menu)
+            } else {
+                labels.push(menu.label);
+                menus[menu.label] = [menu];
+            }
+        }
+
         res.json({
             "status": true,
             "restaurant": restaurant,
-            "numsOfMenus": menus.length,
+            "numsOfMenus": menuList.length,
+            "labels": labels,
             "menus": menus
         })
     } else {

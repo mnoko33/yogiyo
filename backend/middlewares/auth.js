@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const authMiddleware = (req, res, next) => {
     const token = req.headers['x-access-token'];
     const secret_key = "ssaudy";
-    console.log('token', token);
     if (!token) {
         return res.json({
             "status": false,

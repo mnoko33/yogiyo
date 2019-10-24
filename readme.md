@@ -8,7 +8,7 @@
 
 ​	:heavy_check_mark: ​`POST` url/api/auth/login (로그인)
 
-​	:heavy_check_mark: ​`POST` url/api/auth/address (위치 정보 저장 및 수정)
+​	:heavy_check_mark: ​`POST` url/api/auth/signup (회원가입)
 
 
 
@@ -209,6 +209,11 @@
             "id": 13,
             "name": "편의점",
             "imgUrl": "path"
+        },
+		{
+            "id": 14,
+            "name": "요기요플러스"
+            "imgUrl": "path"
         }
     ]
 }
@@ -253,6 +258,7 @@ categoryId = [
             "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
             "deliveryFee": 2000,
             "minOrderAmount": 12000,
+            "isPlus": 0,  // 0: false, 1: true
             "paymentMethods": "creditcard::online",
             "createdAt": "2019-10-15T13:48:47.000Z",
             "updatedAt": "2019-10-15T13:48:47.000Z"
@@ -314,19 +320,32 @@ categoryId = [
             "createdAt": "2019-10-15T13:48:47.000Z",
             "updatedAt": "2019-10-15T13:48:47.000Z"
         },
-    "numsOfMenus": 1,
-    "menus": [
-        {
-            "id": 12224,
-            "name": "짜장",
-            "restaurantId": 20,
-            "label": "인기메뉴",
-            "description": "곱빼기 추가 가능",
-            "price": 6000,
-            "createdAt": "2019-10-21T23:48:51.000Z",
-            "updatedAt": "2019-10-21T23:48:51.000Z"
-        }
-    ]
+    "numsOfMenus": 55,
+    "labels": [
+        "인기메뉴",
+        	.
+        	.
+        "음료 메뉴"
+    ],
+    "menus": {
+        "인기메뉴": [
+            {
+                "id": 1,
+                "name": "국물 떡볶이",
+                "restaurantId": 1,
+                "label": "인기메뉴",
+                "description": "사이즈 선택",
+                "price": 4500,
+                "createdAt": "2019-10-23T12:22:29.000Z",
+                "updatedAt": "2019-10-23T12:22:29.000Z"
+            }
+       	],
+       	"메인 메뉴": [
+            {
+                ...
+            }
+        ]
+    }
 }
 ```
 
