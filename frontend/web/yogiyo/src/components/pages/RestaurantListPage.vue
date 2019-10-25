@@ -1,12 +1,20 @@
 <template>
   <v-content>
-    <Category></Category>
-    <div style="font-size: 13px">
-      <p style="margin-left: 15%; margin-top: 15px">요기요 등록 음식점 <v-icon size="15" class="mb-1">mdi-help-circle-outline</v-icon>
-        <span style="color: red"> {{restaurants.length}}곳</span>을 찾았습니다.</p>
-    </div>
+    <Category
+      :categoryName="categoryName"
+    ></Category>
     <v-layout row class="restaurant-list">
-      <v-flex sm12 md6 class="restaurant" v-for="restaurant in restaurants" :key="restaurant.id">
+      <v-flex sm12>
+         <p class="ml-5 mt-8" style="font-size: 13px">요기요 등록 음식점
+           <v-tooltip bottom color="white">
+            <template v-slot:activator="{ on }">
+             <v-icon size="15" class="mb-1" v-on="on">mdi-help-circle-outline</v-icon>
+            </template>
+             <span style="color: black">요기요와 계약하여 등록된 음식점. 거리, <br>재주문율 등 기준에 따라 결정되었으며 <br>기준 외에 신규 및 할인음식점이 표시됩니다.</span>
+           </v-tooltip>
+        <span style="color: red"> {{restaurants.length}}곳</span>을 찾았습니다.</p>
+      </v-flex>
+      <v-flex xs12 sm6 class="restaurant" v-for="restaurant in restaurants" :key="restaurant.id">
         <Restaurant
                :id="restaurant.id"
                :name="restaurant.name"
@@ -36,7 +44,7 @@
     name: "RestaurantListPage",
     props: {
       categoryIdx: {type: String},
-      category: {type: String}
+      categoryName: {type: String}
     },
     components: {
       Category,

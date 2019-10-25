@@ -2,7 +2,7 @@
   <v-container>
     <v-layout v-if="categories" row style="width: 90%; margin: auto">
       <v-flex xs6 sm4 md3 v-for="category in categories" :key="category.categoryIdx">
-        <router-link :to="{name: 'RestaurantListPage', params: {categoryIdx: category.id+1}}"><v-card
+        <router-link :to="{name: 'RestaurantListPage', params: {categoryIdx: category.id+1, categoryName: category.name}}"><v-card
             outlined
             flat
             height="218px"
