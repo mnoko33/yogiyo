@@ -11,12 +11,20 @@ router.post('/address', async function(req, res, next) {
     const userInfo = await jwt.decodeJWT(token);
     const userId = userInfo.id;
 
-    // TODO: 변경된 위치 정보를 기반으로 jwt 재발급
     const newLng = req.body.data.lng;
     const newLat = req.body.data.lat;
-    const url = `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${newLng}&y=${newLat}`;
+    const newAddress = req.body.data.address;
 
-    // kakao api 로부터 주소값 받아오기
+    let url = '';
+    if (newAddress) {
+        // 주소값으로 위도 경도 찾기
+        url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(newAddress);
+    } else {
+        // 위도 경도로 주소값 찾기
+        url = `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${newLng}&y=${newLat}`;
+    }
+
+    // kakao api
     async function getResponse() {
         try {
             return await axios.get(url, {
@@ -28,44 +36,58 @@ router.post('/address', async function(req, res, next) {
             return false
         }
     }
-
     const response = await getResponse();
+
     if (!response) {
         res.json({
             "status": false,
             "message": "kakao로부터 주소값을 가져오는데 오류가 발생했습니다."
         })
-    }
-
-    const newAddress = response.data.documents[0].address_name;
-
-    // user update
-    async function updateUser(userId, newLng, newLat, newAddress) {
-        try {
-            return await models.User.update(
-                { address: newAddress, lng: newLng, lat: newLat },
-                { where: { id: userId } }
-            )
-        } catch (e) {
-            return false
+    } else if (!response.data.documents[0]) {
+        res.json({
+            "status": true,
+            "address": null,
+            "lng": null,
+            "lat": null,
+            "message": "올바르지 않은 주소입니다. 도로명 또는 지번 주소를 입력해주세요."
+        })
+    } else {
+        const resAddress = newAddress ? response.data.documents[0].address_name : response.data.documents[0].address_name;
+        const resLng = response.data.documents[0].x;
+        const resLat = response.data.documents[0].y;
+        console.log(resAddress);
+        console.log(resLng);
+        console.log(resLat);
+        // user update
+        async function updateUser(userId, resLng, resLat, resAddress) {
+            try {
+                return await models.User.update(
+                    { address: resAddress, lng: resLng, lat: resLat },
+                    { where: { id: userId } }
+                )
+            } catch (e) {
+                return false
+            }
         }
+
+        await updateUser(userId, resLng, resLat, resAddress)
+            .then(() => {
+                res.json({
+                    "status": true,
+                    "address": resAddress,
+                    "lng": resLng,
+                    "lat": resLat
+                })
+            })
+            .catch((err) => {
+                res.json({
+                    "status": false,
+                    "message": "주소 수정에 실패했습니다."
+                })
+            })
     }
 
-    updateUser(userId, newLng, newLat, newAddress)
-        .then(() => {
-            res.json({
-                "status": true,
-                "address": newAddress,
-                "lng": newLng,
-                "lat": newLat
-            })
-        })
-        .catch((err) => {
-            res.json({
-                "status": false,
-                "message": "주소 수정에 실패했습니다."
-            })
-        })
+
 });
 
 // 유저정보
