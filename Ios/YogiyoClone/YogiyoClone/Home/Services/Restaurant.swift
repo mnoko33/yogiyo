@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct ArticlesResponse: Codable {
+struct RestaurantsResponse: Codable {
 
-  let articles: [Article]
+  let restaurants: [Restaurant]
 
-  static func parseArticles(fromJSON data: Data?) -> [Article]? {
+  static func parseRestaurants(fromJSON data: Data?) -> [Restaurant]? {
     guard let data = data else {
         return nil
     }
@@ -20,8 +20,8 @@ struct ArticlesResponse: Codable {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
     do {
-      let articleResponse = try decoder.decode(ArticlesResponse.self, from: data)
-      return articleResponse.articles
+      let restaurantResponse = try decoder.decode(RestaurantsResponse.self, from: data)
+      return restaurantResponse.restaurants
     } catch {
       NSLog("Error parsing articles: \(error.localizedDescription)")
     }
@@ -30,7 +30,7 @@ struct ArticlesResponse: Codable {
 
 }
 
-struct Article: Codable {
+struct Restaurant: Codable {
 
   let title: String
   let description: String?
@@ -38,7 +38,7 @@ struct Article: Codable {
   let urlToImage: String?
   let publishedAt: String?
 
-  var articleURL: URL? {
+  var restaurantURL: URL? {
     if let url = url {
       return URL(string: url)
     }
