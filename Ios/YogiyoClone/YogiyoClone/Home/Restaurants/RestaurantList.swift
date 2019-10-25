@@ -17,8 +17,8 @@ class RestaurantList: UICollectionViewController {
     let heroHeaderView = HeroHeaderView()
     let tabBar = MDCTabBar()
 
-    let apiClient = NewsClient()
-    var articles: [Article] = []
+    let apiClient = RestaurantClient()
+    var restaurants: [Restaurant] = []
     var inProgressTask: Cancellable?
 
     override func viewDidLoad() {
@@ -52,7 +52,7 @@ extension RestaurantList {
 
 //    headerView.insertSubview(heroHeaderView, at: 0)
     tabBar.itemAppearance = .titles
-    tabBar.items = NewsSource.allValues.enumerated().map({ (index, source) -> UITabBarItem in
+    tabBar.items = RestaurantSource.allValues.enumerated().map({ (index, source) -> UITabBarItem in
         let a = UITabBarItem()
         a.title = source.title
         a.image = nil
@@ -152,12 +152,12 @@ extension RestaurantList {
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return articles.count
+    return restaurants.count
   }
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.cellID, for: indexPath) as? RestaurantCell {
-        cell.article = articles[indexPath.row]
+        cell.restaurant = restaurants[indexPath.row]
         return cell
     } else {
       fatalError("Missing cell for indexPath: \(indexPath)")
@@ -165,9 +165,9 @@ extension RestaurantList {
   }
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let article = articles[indexPath.row]
+    let restaurant = restaurants[indexPath.row]
 
-    guard let url = article.articleURL else {
+    guard let url = restaurant.restaurantURL else {
       return
     }
 
@@ -201,12 +201,12 @@ extension RestaurantList {
       return
     }
 
-    let source = NewsSource.allValues[selectedItem.tag]
+    let source = RestaurantSource.allValues[selectedItem.tag]
 
-    inProgressTask = apiClient.articles(forSource: source) { [weak self] (articles, error) in
+    inProgressTask = apiClient.restaurants(forSource: source) { [weak self] (restaurants, error) in
       self?.inProgressTask = nil
-      if let articles = articles {
-        self?.articles = articles
+      if let restaurants = restaurants {
+        self?.restaurants = restaurants
         self?.collectionView?.reloadData()
       } else {
         self?.showError()

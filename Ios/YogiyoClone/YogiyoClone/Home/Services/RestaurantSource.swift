@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NewsSource: String {
+enum RestaurantSource: String {
 
   case associatedPress = "associated-press"
   case bbcNews = "bbc-news"
@@ -30,7 +30,7 @@ enum NewsSource: String {
     }
   }
 
-  static var allValues: [NewsSource] {
+  static var allValues: [RestaurantSource] {
     return [
       .associatedPress,
       .bbcNews,

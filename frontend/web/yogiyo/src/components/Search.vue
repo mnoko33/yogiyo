@@ -16,7 +16,7 @@
          <button @click="clearAddress" class="clear-btn">지우기</button>
        </v-flex>
        <v-flex>
-         <v-btn v-if="isUser" color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
+         <v-btn v-if="isUser" @keyup.enter="setAddress" @click="setAddress" color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
          <v-btn v-else color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><router-link style="text-decoration: none" :to="{name: 'LoginPage'}"><span style="color:#ffffff; font-weight: bold">검색</span></router-link></v-btn>
        </v-flex>
      </v-layout>
@@ -26,6 +26,7 @@
 
 <script>
   import api from '@/api'
+  import Swal from 'sweetalert2'
   import { mapState } from 'vuex';
   export default {
     name: "Search",
@@ -33,24 +34,35 @@
         latitude: 0,
         longitude: 0,
         address: '',
+        originAddress: '',
         isUser: false,
     }),
     mounted() {
-        if(this.$store.state.address == 'undefined') {
-            this.address = ''
-        }
         this.isUser = this.$store.state.currentUser
+        this.getUserInfo();
+    },
+    created() {
     },
     watch: {
         currentUser() {
-          this.isUser = this.$store.state.currentUser
-        }
+          this.isUser = this.$store.state.currentUser;
+          this.getUserInfo();
+        },
     },
     computed: {
-        ... mapState(['currentUser'])
+        ... mapState(['currentUser']),
 
     },
     methods: {
+      async getUserInfo() {
+       if (this.isUser) {
+         await api.getUserInfo().then(res => {
+             this.address = res.data.user.address;
+             this.originAddress = res.data.user.address;
+         })
+       }
+       else{ this.address='' }
+         },
       getLocation: function() {
         if (!navigator.geolocation) {
           this.errorMsg = "Geolocation is not supported by your browser";
@@ -74,11 +86,26 @@
         console.warn(this.errorMsg);
       },
       async setAddress(lat, lng) {
+          if (this.address != this.originAddress) {
+              lng = '';
+              lat = '';
+          }
+          else {
+              this.address = ''
+          }
         const data = {
           "lng": lng, // 위도
           "lat": lat, // 경도
+          "address": this.address,
         };
         await api.setAddress(data).then(async res => {
+            if (!res.data.address&&!res.data.lng&&!res.data.lat) {
+                Swal.fire(
+                    '',
+                  res.data.message,
+                  'error'
+                )
+            }
           this.address = res.data.address;
           localStorage.setItem('address', this.address);
         }).catch(e => {

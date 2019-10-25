@@ -4,7 +4,7 @@
       <Category></Category>
     </div>
     <v-container>
-    <v-row no-gutters>
+    <v-row no-gutters class="mx-12">
       <v-col cols="12" md="8" class="pa-4 detail-restaurant">
         <v-card outlined class="mr-5 restaurant-info">
           <div class="mx-2 my-2" >{{ name }}</div>
@@ -25,18 +25,26 @@
         <v-list class="mt-5 mr-8" style="padding: 0 0">
           <v-row class="ml-0">
             <v-col style="padding: 0;">
-              <v-btn big outlined @click="clickMenu()" style="height: 48px"><span style="color: black">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span></v-btn>
+              <v-btn big outlined v-if="menu === true" @click="clickMenu()" style="height: 58px; border-bottom: 5px solid #f0001e">
+                <span style="color: #f0001e; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
+              </v-btn>
+              <v-btn big outlined v-if="menu === false" @click="clickMenu()" style="height: 58px; border-bottom: 0">
+                <span style="color: black; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
+              </v-btn>   
             </v-col>
             <v-col style="padding: 0;">
-              <v-btn big outlined @click="clickInfo()" style="height: 48px"><span style="color: black">정보</span></v-btn>
+              <v-btn big outlined v-if="info === false" @click="clickInfo()" style="height: 58px; border-bottom: 0">
+                <span style="color: black; font-size: 16px">정보</span></v-btn>
+              <v-btn big outlined v-if="info === true" @click="clickInfo()" style="height: 58px; border-bottom: 5px solid #f0001e">
+                <span style="color: #f0001e; font-size: 16px">정보</span></v-btn>
             </v-col>
           </v-row>
         </v-list>
 
         <v-list no-action class="mr-5" v-if="menu" style="padding: 0;">
-          <v-list-group active-class="black--text" v-for="(label, index) in labels" :key="index">
+          <v-list-group  active-class="black--text" v-for="(label, index) in labels" :key="index">
             <template v-slot:activator>
-              <v-list-item-title><v-icon color="yellow" class="mr-2" v-show="label === '인기메뉴'">mdi-trophy</v-icon>{{label}}</v-list-item-title>
+              <v-list-item-title><v-icon color="yellow darken-2" class="mr-2" v-show="label === '인기메뉴'">mdi-trophy</v-icon>{{label}}</v-list-item-title>
             </template>
             <v-list-item v-for="(menu, index) in menuList[label]" :key="index">
               <v-list-item-content style="border-bottom: 0.5px solid rgba(0,0,0,.3)">

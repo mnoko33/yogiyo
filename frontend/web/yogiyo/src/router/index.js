@@ -6,7 +6,7 @@ import JoinPage from "../components/pages/JoinPage";
 import RestaurantListPage from "@/components/pages/RestaurantListPage";
 import DetailRestaurantPage from "@/components/pages/DetailRestaurantPage";
 
-import Test from '../components/pages/Test'
+import Page404 from '../components/pages/404Page'
 
 Vue.use(VueRouter);
 
@@ -41,9 +41,9 @@ Vue.use(VueRouter);
        name: 'DetailRestaurantPage',
        props: true},
      {
-       path:'/test',
-       component: Test,
-       name: 'Test',
+       path:'*',
+       component: Page404,
+       name: 'Page404',
      }
 
    ]

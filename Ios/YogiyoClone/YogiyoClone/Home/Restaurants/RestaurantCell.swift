@@ -22,9 +22,9 @@ class RestaurantCell: UICollectionViewCell {
     @IBOutlet weak var orderTime: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     
-    var article: Article? {
+    var restaurant: Restaurant? {
       didSet {
-        guard let article = article else {
+        guard let restaurant = restaurant else {
           return
         }
 
@@ -35,7 +35,7 @@ class RestaurantCell: UICollectionViewCell {
         titleLabel.text = "비비큐"
         subtitleLabel.text = "치킨"
         imageView.image = UIImage(named: "food7")
-        if let date = article.publishedAt {
+        if let date = restaurant.publishedAt {
           orderTime.isHidden = false
 //          orderTime.text = date
             orderTime.text = "40분"
