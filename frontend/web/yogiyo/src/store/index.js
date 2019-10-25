@@ -11,6 +11,5 @@ export default new Vuex.Store({
   state: {
     currentUser: localStorage.getItem('currentUser'),
     token: localStorage.getItem('token'),
-    address: localStorage.getItem('address'),
   }
 })

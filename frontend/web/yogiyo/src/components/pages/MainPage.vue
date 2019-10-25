@@ -14,7 +14,7 @@
             width="216px"
             height="216px"
             style="margin-right: 0; position: absolute; bottom: 0; right: 0"
-            :src="category.imgUrl"
+            :src="'http://70.12.247.65:3000' + category.imgUrl"
           />
         </v-card></router-link>
       </v-flex>
@@ -34,13 +34,9 @@
   },
   methods: {
         async getCategory() {
-            const apiurl = 'http://70.12.247.65:3000';
             api.getCategory().then(res => {
                 this.categories = res.data.categories
                 this.categories.pop()
-                for (var i in this.categories) {
-                    this.categories[i].imgUrl = apiurl+ this.categories[i].imgUrl
-                }
             })
         }
   }
