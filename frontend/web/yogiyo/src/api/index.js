@@ -19,6 +19,12 @@ export default {
         data,
     })
     },
+    getUserInfo() {
+        return axios.get(`${apiUrl}/api/user-info/user/`,{
+            headers: {
+                "x-access-token": localStorage.getItem('token')
+            }})
+    },
     setAddress(data) {
         return axios.post(`${apiUrl}/api/user-info/address`,{data}, {
             headers: {

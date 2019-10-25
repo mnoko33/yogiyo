@@ -65,7 +65,7 @@ import api from '@/api'
           })
         }
       },
-     getUser() {
+     async getUser() {
       let token = this.$session.get("token")
       // parseJwt
       let base64Url = token.split('.')[1];
