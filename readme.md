@@ -424,7 +424,7 @@ categoryId = [
 ##### `GET` url/api/info/ad (광고 정보)
 
 ```json
-//res
+// res
 {
 	"status": true,
     "ads": [
@@ -433,7 +433,7 @@ categoryId = [
             "name": "ad1",
             "imgUrl": "/images/ad1.jpg",
             "type": "mainAd",
-            "startDate": "2019-10-22T01:30:18.000Z",
+            "startDate": "2019-10-22T01:30:19.000Z",
             "endDate": "2019-10-22T01:30:18.000Z",
             "createdAt": "2019-10-22T01:30:18.000Z",
             "updatedAt": "2019-10-22T01:30:18.000Z"
