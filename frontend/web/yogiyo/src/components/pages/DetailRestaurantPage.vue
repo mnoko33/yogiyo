@@ -74,13 +74,18 @@
           </div>
         </v-card>
       </v-col>
-      <v-col cols="6" md="4" class="pa-4 cart">
+      <v-col cols="6" md="4" class="pa-4 cart sticky">
         <v-card outlined dark style="background-color: black;">
           <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
         </v-card>
-        <v-card outlined class="restaurant-info" style="min-height: 122px">
+        <div style="overflow: scroll">
+        <v-card v-if="carts.length < 1" outlined class="restaurant-info" style="min-height: 122px">
           <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
         </v-card>
+        <v-card v-else outlined class="restaurant-info" style="">
+          <p class="text-center" style="padding: 5px 0" v-for="cart in carts">{{cart}}</p>
+        </v-card>
+        </div>
         <v-card v-if="deliveryFee > 0" outlined class="restaurant-info">
           <p class="mr-3 mt-3 font14" style="text-align: right">배달요금 {{deliveryFee}}원 별도</p>
         </v-card>
@@ -128,6 +133,7 @@
         menu: true,
         info: false,
         model: 1,
+        carts: ''
       }
     },
     mounted() {
@@ -135,6 +141,7 @@
       this.getPaymentMethods();
       this.getThumbnailUrl();
       this.getDeliveryTime();
+      this.getUserInfo();
     },
     methods: {
       async getRestaurant() {
@@ -177,7 +184,16 @@
       clickInfo() {
         this.menu = false;
         this.info = true;
-      }
+      },
+        async getUserInfo() {
+             await api.getUserInfo().then(res => {
+               this.carts = res.data.cart;
+               console.log(this.carts)
+               if (this.carts) {
+                   // this.restaurantId = res.data.cart[0].restaurantId;
+               }
+             })
+        }
     },
     watch: {
       thumbnail() {
@@ -194,6 +210,13 @@
 </script>
 
 <style scoped>
+.sticky {
+  display: inline-block;
+  position: sticky;
+  top: 30px;
+  width: 80px;
+  height: 80px;
+  }
 .detail-restaurant {
   padding-left: 10px;
   padding-right: 10px;
