@@ -9,7 +9,7 @@ import store from './store'
 import Swal from 'sweetalert2'
 
 
-Vue.use(VueSpinnersCss)
+Vue.use(VueSpinnersCss);
 Vue.config.productionTip = false;
 
 new Vue({
@@ -20,4 +20,4 @@ new Vue({
   render: h => h(App),
 }).$mount('#app');
 
-Vue.use(VueSession)
+Vue.use(VueSession);

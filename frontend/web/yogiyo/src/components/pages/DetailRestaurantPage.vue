@@ -3,105 +3,119 @@
     <div class="category">
       <Category></Category>
     </div>
+    <div v-if="restaurantInformation === []" class="loader">
+      <SpinnerLoader :color="'#9e9d99'"/>
+    </div>
     <v-container>
-    <v-row no-gutters class="mx-12">
-      <v-col cols="12" md="8" class="pa-4 detail-restaurant">
-        <v-card outlined class="mr-5 restaurant-info">
-          <div class="mx-2 my-2" >{{ name }}</div>
-          <v-divider></v-divider>
-          <div class="d-flex flex-no-wrap">
-            <v-avatar class="mx-2 my-3" tile size="70">
-              <v-img :src="thumbnail"></v-img>
-            </v-avatar>
-            <div class="mx-2 my-auto" style="font-size: 13px">
-              <p class="mb-1"><span class="grey-font">최소주문금액 </span>{{ minOrderAmount }}원</p>
-              <p class="mb-1"><span class="grey-font">결제 </span>
-                <span>{{creditCard}}</span><span style="color: red"> {{online}}</span></p>
-              <p class="mb-1"><span class="grey-font">배달시간</span> {{deliveryTime}}분</p>
+      <v-row no-gutters class="">
+        <v-col cols="12" md="8" class="pa-4 detail-restaurant">
+          <v-card outlined class="mr-5 restaurant-info">
+            <div class="mx-2 my-2" >{{ name }}</div>
+            <v-divider></v-divider>
+            <div class="d-flex flex-no-wrap">
+              <v-avatar class="mx-2 my-3" tile size="70">
+                <v-img :src="thumbnail"></v-img>
+              </v-avatar>
+              <div class="mx-2 my-auto" style="font-size: 13px">
+                <p class="mb-1"><span class="grey-font">최소주문금액 </span>{{ minOrderAmount }}원</p>
+                <p class="mb-1"><span class="grey-font">결제 </span>
+                  <span>{{creditCard}}</span><span style="color: red"> {{online}}</span></p>
+                <p class="mb-1"><span class="grey-font">배달시간</span> {{deliveryTime}}분</p>
+              </div>
             </div>
+          </v-card>
+
+          <v-list class="mt-5 mr-8" style="padding: 0 0">
+            <v-row class="ml-0">
+              <v-col style="padding: 0;">
+                <v-btn big outlined v-if="menu === true" @click="clickMenu()" style="height: 58px; border-bottom: 5px solid #f0001e">
+                  <span style="color: #f0001e; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
+                </v-btn>
+                <v-btn big outlined v-if="menu === false" @click="clickMenu()" style="height: 58px; border-bottom: 0">
+                  <span style="color: black; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
+                </v-btn>
+              </v-col>
+              <v-col style="padding: 0;">
+                <v-btn big outlined v-if="info === false" @click="clickInfo()" style="height: 58px; border-bottom: 0">
+                  <span style="color: black; font-size: 16px">정보</span></v-btn>
+                <v-btn big outlined v-if="info === true" @click="clickInfo()" style="height: 58px; border-bottom: 5px solid #f0001e">
+                  <span style="color: #f0001e; font-size: 16px">정보</span></v-btn>
+              </v-col>
+            </v-row>
+          </v-list>
+
+          <div v-if="menu">
+            <v-list no-action v-if="numsOfMenus > 0" class="mr-5" style="padding: 0;">
+              <v-list-group active-class="black--text" v-for="(label, index) in labels" :key="index" style="border: 0.3px solid rgba(0,0,0,.1)">
+                <template v-slot:activator>
+                  <v-list-item-title><v-icon color="yellow darken-2" class="mr-2" v-show="label === '인기메뉴'">mdi-trophy</v-icon>{{label}}</v-list-item-title>
+                </template>
+                <v-card outlined class="pa-0">
+                  <v-list-item v-for="(menu, index) in menuList[label]" :key="index" style="border-top: 0.5px solid rgba(0,0,0,.3)">
+                    <v-list-item-content>
+                      <v-list-item-title><strong>{{menu.name}}</strong></v-list-item-title>
+                      <v-list-item-subtitle style="font-size: 13px">{{menu.description}}</v-list-item-subtitle>
+                      <v-list-item-title class="mt-1">{{menu.price}}원</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+              </v-list-group>
+            </v-list>
+            <v-card v-else outlined class="mr-5 restaurant-info">
+              <div style="margin: 33%">
+                가게로 직접 문의해주세요.
+              </div>
+            </v-card>
           </div>
-        </v-card>
 
-        <v-list class="mt-5 mr-8" style="padding: 0 0">
-          <v-row class="ml-0">
-            <v-col style="padding: 0;">
-              <v-btn big outlined v-if="menu === true" @click="clickMenu()" style="height: 58px; border-bottom: 5px solid #f0001e">
-                <span style="color: #f0001e; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
-              </v-btn>
-              <v-btn big outlined v-if="menu === false" @click="clickMenu()" style="height: 58px; border-bottom: 0">
-                <span style="color: black; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
-              </v-btn>   
-            </v-col>
-            <v-col style="padding: 0;">
-              <v-btn big outlined v-if="info === false" @click="clickInfo()" style="height: 58px; border-bottom: 0">
-                <span style="color: black; font-size: 16px">정보</span></v-btn>
-              <v-btn big outlined v-if="info === true" @click="clickInfo()" style="height: 58px; border-bottom: 5px solid #f0001e">
-                <span style="color: #f0001e; font-size: 16px">정보</span></v-btn>
-            </v-col>
-          </v-row>
-        </v-list>
+          <v-card v-if="info" outlined class="mr-5 restaurant-info">
+            <div class="mx-4">
+              <p class="mt-12"><v-icon class="mb-1" size="18">mdi-storefront</v-icon><strong> 업체정보</strong></p>
+              <v-divider color="black"></v-divider>
+              <p class="mt-3 font14"><span class="grey-font">영업시간</span> <span class="ml-12">{{openTime}}</span></p>
 
-        <v-list no-action class="mr-5" v-if="menu" style="padding: 0;">
-          <v-list-group  active-class="black--text" v-for="(label, index) in labels" :key="index">
-            <template v-slot:activator>
-              <v-list-item-title><v-icon color="yellow darken-2" class="mr-2" v-show="label === '인기메뉴'">mdi-trophy</v-icon>{{label}}</v-list-item-title>
-            </template>
-            <v-list-item v-for="(menu, index) in menuList[label]" :key="index">
-              <v-list-item-content style="border-bottom: 0.5px solid rgba(0,0,0,.3)">
-                <v-list-item-title><strong>{{menu.name}}</strong></v-list-item-title>
-                <v-list-item-subtitle style="font-size: 13px">{{menu.description}}</v-list-item-subtitle>
-                <v-list-item-title class="mt-1">{{menu.price}}원</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-        </v-list>
+              <p class="mt-12"><v-icon class="mb-1" size="18">mdi-credit-card-outline</v-icon><strong> 결제정보</strong></p>
+              <v-divider class="mt-1" color="black"></v-divider>
+              <p class="mt-3 font14"><span class="grey-font">최소주문금액</span> <span class="ml-5">{{minOrderAmount}}원</span></p>
+              <p class="mt-3 font14"><span class="grey-font">배달금액</span> <span class="ml-12">{{deliveryFee}}원</span></p>
+              <p class="mt-3 font14"><span class="grey-font">결제수단</span> <span class="ml-12"><span v-if="creditCard">{{creditCard}} </span><span v-if="online">{{online}}</span></span></p>
 
-        <v-card v-if="info" outlined class="mr-5 restaurant-info">
-          <div class="mx-4">
-            <p class="mt-12"><v-icon class="mb-1" size="18">mdi-storefront</v-icon><strong> 업체정보</strong></p>
-            <v-divider color="black"></v-divider>
-            <p class="mt-3 font14"><span class="grey-font">영업시간</span> <span class="ml-12">{{openTime}}</span></p>
+              <p class="mt-12"><v-icon class="mb-1" size="18">mdi-card-text-outline</v-icon><strong> 사업자정보</strong></p>
+              <v-divider color="black"></v-divider>
+              <p class="mt-3 mb-12 font14"><span class="grey-font mr-4">상호명</span> <span class="ml-12">{{name}}</span></p>
+            </div>
+          </v-card>
+        </v-col>
+        <v-col cols="6" md="4" class="pa-4 cart">
+          <v-card outlined dark style="background-color: black;">
+            <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
+          </v-card>
+          <v-card outlined class="restaurant-info" style="min-height: 122px">
+            <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
+          </v-card>
+          <v-card v-if="deliveryFee > 0" outlined class="restaurant-info">
+            <p class="mr-3 mt-3 font14" style="text-align: right">배달요금 {{deliveryFee}}원 별도</p>
+          </v-card>
+          <v-card class="mt-4" outlined dark color="grey lighten-1">
+            <p class="mt-3" style="text-align: center">주문하기</p>
+          </v-card>
 
-            <p class="mt-12"><v-icon class="mb-1" size="18">mdi-credit-card-outline</v-icon><strong> 결제정보</strong></p>
-            <v-divider class="mt-1" color="black"></v-divider>
-            <p class="mt-3 font14"><span class="grey-font">최소주문금액</span> <span class="ml-5">{{minOrderAmount}}원</span></p>
-            <p class="mt-3 font14"><span class="grey-font">배달금액</span> <span class="ml-12">{{deliveryFee}}원</span></p>
-            <p class="mt-3 font14"><span class="grey-font">결제수단</span> <span class="ml-12"><span v-if="creditCard">{{creditCard}} </span><span v-if="online">{{online}}</span></span></p>
-
-            <p class="mt-12"><v-icon class="mb-1" size="18">mdi-card-text-outline</v-icon><strong> 사업자정보</strong></p>
-            <v-divider color="black"></v-divider>
-            <p class="mt-3 mb-12 font14"><span class="grey-font mr-4">상호명</span> <span class="ml-12">{{name}}</span></p>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="6" md="4" class="pa-4 cart">
-        <v-card outlined dark style="background-color: black;">
-          <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
-        </v-card>
-        <v-card outlined class="restaurant-info" style="min-height: 122px">
-          <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
-        </v-card>
-        <v-card v-if="deliveryFee > 0" outlined class="restaurant-info">
-          <p class="mr-3 mt-3 font14" style="text-align: right">배달요금 {{deliveryFee}}원 별도</p>
-        </v-card>
-        <v-card class="mt-4" outlined dark color="grey lighten-1">
-          <p class="mt-3" style="text-align: center">주문하기</p>
-        </v-card>
-
-      </v-col>
-    </v-row>
-      </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-content>
 </template>
 
 <script>
   import api from '../../api';
   import Category from "@/components/Category";
+  import { SpinnerLoader } from 'vue-spinners-css';
 
   export default {
     name: "DetailRestaurantPage",
     components: {
-      Category
+      Category,
+      SpinnerLoader
     },
     props: {
       restaurantId: {type: String},
@@ -223,6 +237,11 @@
   border: 1px solid #d9d9d9;
   width: 100%;
   background-color: white;
+}
+.loader {
+  position: absolute;
+  z-index: 900;
+  margin: 45%;
 }
 @media(max-width: 960px){
   .cart {
