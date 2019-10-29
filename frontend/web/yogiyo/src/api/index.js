@@ -52,4 +52,11 @@ export default {
     async getCategory() {
         return await axios.get(`${apiUrl}/api/restaurants/categories/`)
     },
+    async postCart(data, restaurantId) {
+        return await axios.post(`${apiUrl}/api/restaurants/${restaurantId}/cart/`, {data}, {
+            headers: {
+                "x-access-token": localStorage.getItem('token')
+            }
+        })
+    }
 }

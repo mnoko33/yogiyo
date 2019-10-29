@@ -25,24 +25,24 @@
             </div>
           </v-card>
 
-          <v-list class="mt-5 mr-8" style="padding: 0 0">
-            <v-row class="ml-0">
-              <v-col style="padding: 0;">
-                <v-btn big outlined v-if="menu === true" @click="clickMenu()" style="height: 58px; border-bottom: 5px solid #f0001e">
-                  <span style="color: #f0001e; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
-                </v-btn>
-                <v-btn big outlined v-if="menu === false" @click="clickMenu()" style="height: 58px; border-bottom: 0">
-                  <span style="color: black; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
-                </v-btn>
-              </v-col>
-              <v-col style="padding: 0;">
-                <v-btn big outlined v-if="info === false" @click="clickInfo()" style="height: 58px; border-bottom: 0">
-                  <span style="color: black; font-size: 16px">정보</span></v-btn>
-                <v-btn big outlined v-if="info === true" @click="clickInfo()" style="height: 58px; border-bottom: 5px solid #f0001e">
-                  <span style="color: #f0001e; font-size: 16px">정보</span></v-btn>
-              </v-col>
-            </v-row>
-          </v-list>
+        <v-list class="mt-5 mr-8" style="padding: 0 0">
+          <v-row class="ml-0">
+            <v-col style="padding: 0;">
+              <v-btn big outlined v-if="menu === true" @click="clickMenu()" style="height: 58px; border-bottom: 5px solid #f0001e">
+                <span style="color: #f0001e; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
+              </v-btn>
+              <v-btn big outlined v-if="menu === false" @click="clickMenu()" style="height: 58px; border-bottom: 0">
+                <span style="color: black; font-size: 16px">메뉴 <span style="font-size: 12px">{{numsOfMenus}}</span></span>
+              </v-btn>
+            </v-col>
+            <v-col style="padding: 0;">
+              <v-btn big outlined v-if="info === false" @click="clickInfo()" style="height: 58px; border-bottom: 0">
+                <span style="color: black; font-size: 16px">정보</span></v-btn>
+              <v-btn big outlined v-if="info === true" @click="clickInfo()" style="height: 58px; border-bottom: 5px solid #f0001e">
+                <span style="color: #f0001e; font-size: 16px">정보</span></v-btn>
+            </v-col>
+          </v-row>
+        </v-list>
 
           <div v-if="menu">
             <v-list no-action v-if="numsOfMenus > 0" class="mr-5" style="padding: 0;">
@@ -80,25 +80,45 @@
               <p class="mt-3 font14"><span class="grey-font">배달금액</span> <span class="ml-12">{{deliveryFee}}원</span></p>
               <p class="mt-3 font14"><span class="grey-font">결제수단</span> <span class="ml-12"><span v-if="creditCard">{{creditCard}} </span><span v-if="online">{{online}}</span></span></p>
 
-              <p class="mt-12"><v-icon class="mb-1" size="18">mdi-card-text-outline</v-icon><strong> 사업자정보</strong></p>
-              <v-divider color="black"></v-divider>
-              <p class="mt-3 mb-12 font14"><span class="grey-font mr-4">상호명</span> <span class="ml-12">{{name}}</span></p>
-            </div>
+            <p class="mt-12"><v-icon class="mb-1" size="18">mdi-card-text-outline</v-icon><strong> 사업자정보</strong></p>
+            <v-divider color="black"></v-divider>
+            <p class="mt-3 mb-12 font14"><span class="grey-font mr-4">상호명</span> <span class="ml-12">{{name}}</span></p>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="6" md="4" class="pa-4 cart sticky">
+        <v-card outlined dark style="background-color: black;">
+          <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
+        </v-card>
+        <div style="overflow: scroll">
+        <v-card v-if="carts.length < 1" outlined class="restaurant-info" style="min-height: 122px">
+          <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
+        </v-card>
+        <v-card v-else outlined class="restaurant-info" style="" v-for="cart in carts">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-list-item-title class="body-2 mb-1">{{ cart.name }}</v-list-item-title>
+              <span class="body-2 mb-1"><v-icon style="border: black 2px;">mdi-close</v-icon><span class="ml-2">{{ cart.price }}원</span><v-icon style="margin-left: 50%" @click="countMinus(cart.id, cart.count)">mdi-minus</v-icon><span>{{ cart.count }}</span><v-icon @click="countPlus(cart.id, cart.count)">mdi-plus</v-icon></span>
+              <span class="body-2"></span>
+            </v-list-item-content>
+          </v-list-item>
+          <!--<p class="text-center" style="padding: 5px 0" v-for="cart in carts">{{cart}}</p>-->
+        </v-card>
+        </div>
+        <v-card v-if="deliveryFee != '0'" outlined class="restaurant-info">
+          <p class="mr-3 mt-3 font14" style="text-align: right">배달요금 {{deliveryFee}}원 별도</p>
+        </v-card>
+        <div>
+          <v-card v-if="carts.length > 0" outlined class="restaurant-info" style="background-color: #f3f3f3">
+            <p class="mr-3 mt-3 caption" style="text-align: right;">최소주문금액: {{ minOrderAmount }}원 이상</p>
           </v-card>
-        </v-col>
-        <v-col cols="6" md="4" class="pa-4 cart">
-          <v-card outlined dark style="background-color: black;">
-            <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
+          <v-card v-if="carts.length > 0" outlined class="restaurant-info" style="background-color: #fef8ec">
+            <p class="mr-3 mt-3 font-weight-bold" style="text-align: right; color: #f0001e;">합계: {{ totalPrice }}원</p>
           </v-card>
-          <v-card outlined class="restaurant-info" style="min-height: 122px">
-            <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
-          </v-card>
-          <v-card v-if="deliveryFee > 0" outlined class="restaurant-info">
-            <p class="mr-3 mt-3 font14" style="text-align: right">배달요금 {{deliveryFee}}원 별도</p>
-          </v-card>
-          <v-card class="mt-4" outlined dark color="grey lighten-1">
-            <p class="mt-3" style="text-align: center">주문하기</p>
-          </v-card>
+        </div>
+        <v-card class="mt-4" outlined dark color="grey lighten-1">
+          <p class="mt-3" style="text-align: center">주문하기</p>
+        </v-card>
 
         </v-col>
       </v-row>
@@ -142,6 +162,10 @@
         menu: true,
         info: false,
         model: 1,
+        carts: '',
+        frontCart: {},
+        resId: 0,
+        totalPrice: 0,
       }
     },
     mounted() {
@@ -149,6 +173,7 @@
       this.getPaymentMethods();
       this.getThumbnailUrl();
       this.getDeliveryTime();
+      this.getUserInfo();
     },
     methods: {
       async getRestaurant() {
@@ -159,12 +184,17 @@
         this.address = this.restaurantInformation.address;
         this.openTime = this.restaurantInformation.openTime;
         this.deliveryTime = this.restaurantInformation.deliveryTime;
-        this.deliveryFee = this.restaurantInformation.deliveryFee;
-        this.minOrderAmount = this.restaurantInformation.minOrderAmount;
+        this.deliveryFee = this.comma(this.restaurantInformation.deliveryFee);
+        this.minOrderAmount = this.comma(this.restaurantInformation.minOrderAmount);
         this.paymentMethods = this.restaurantInformation.paymentMethods;
         this.numsOfMenus = this.restaurantData.data.numsOfMenus;
         this.labels = this.restaurantData.data.labels;
         this.menuList = this.restaurantData.data.menus;
+        for (const menu in this.menuList) {
+            for (const index in this.menuList[menu]) {
+                this.menuList[menu][index].price = this.comma(this.menuList[menu][index].price);
+            }
+        }
       },
       getPaymentMethods() {
         const isCreditCard = this.paymentMethods.indexOf('creditcard');
@@ -191,6 +221,66 @@
       clickInfo() {
         this.menu = false;
         this.info = true;
+      },
+      comma(num){
+          var len, point, str;
+
+          num = num + "";
+          point = num.length % 3 ;
+          len = num.length;
+
+          str = num.substring(0, point);
+          while (point < len) {
+              if (str != "") str += ",";
+              str += num.substring(point, point + 3);
+              point += 3;
+          }
+          return str;
+      },
+
+
+      async getUserInfo() {
+           await api.getUserInfo().then(res => {
+             this.carts = res.data.cart;
+             this.totalPrice = this.comma(res.data.totalPrice);
+
+             // console.log(res)
+             //   console.log(this.carts)
+             for (const cart in this.carts) {
+                 this.frontCart[this.carts[cart].id] = Number(this.carts[cart].count)
+                 this.carts[cart].price = this.comma(this.carts[cart].price)
+             }
+             if (this.carts.length > 0) {
+                 this.resId = res.data.cart[0].restaurantId;
+             }
+           })
+      },
+      async postCart(id, count) {
+          this.frontCart[id] = count;
+          let cartInfo = '';
+          for (const cart in this.frontCart) {
+              if (cart != 'undefined') {
+                cartInfo += String(cart) + "::" + String(this.frontCart[cart]) + "::";
+              }
+          }
+          cartInfo = cartInfo.slice(0,-2)
+          const data = {
+              "menus" : cartInfo
+          }
+          await api.postCart(data, this.resId).then(res =>  {
+              console.log(res.data.status);
+              this.getUserInfo()
+          })
+      },
+      countPlus(id, count) {
+          count = Number(count)
+          count += 1
+          this.postCart(id, count)
+      },
+      countMinus(id, count) {
+          count = Number(count)
+          count -= 1
+          this.postCart(id, count)
       }
     },
     watch: {
@@ -208,6 +298,13 @@
 </script>
 
 <style scoped>
+.sticky {
+  display: inline-block;
+  position: sticky;
+  top: 30px;
+  width: 80px;
+  height: 80px;
+  }
 .detail-restaurant {
   padding-left: 10px;
   padding-right: 10px;
