@@ -36,6 +36,7 @@
 		D19124A223602D1F00B8E5EB /* RestaurantClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A123602D1F00B8E5EB /* RestaurantClient.swift */; };
 		D19124A423602D3900B8E5EB /* RestaurantSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A323602D3900B8E5EB /* RestaurantSource.swift */; };
 		D19124A623602D6200B8E5EB /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A523602D6200B8E5EB /* Appearance.swift */; };
+		D1CB35252366D6ED00FAA8FC /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB35242366D6ED00FAA8FC /* SignUpVC.swift */; };
 		D1DB5066233A1ECF00CF5761 /* menupanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5065233A1ECF00CF5761 /* menupanCell.swift */; };
 		D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5067233A1EDE00CF5761 /* menuCell.swift */; };
 		E1AB204027F6B8CF6FA364CF /* Pods_YogiyoClone_YogiyoCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D66B7E612E04D76A4C8D91 /* Pods_YogiyoClone_YogiyoCloneUITests.framework */; };
@@ -100,6 +101,7 @@
 		D19124A123602D1F00B8E5EB /* RestaurantClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantClient.swift; sourceTree = "<group>"; };
 		D19124A323602D3900B8E5EB /* RestaurantSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSource.swift; sourceTree = "<group>"; };
 		D19124A523602D6200B8E5EB /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		D1CB35242366D6ED00FAA8FC /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		D1DB5065233A1ECF00CF5761 /* menupanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menupanCell.swift; sourceTree = "<group>"; };
 		D1DB5067233A1EDE00CF5761 /* menuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuCell.swift; sourceTree = "<group>"; };
 		F01BE132B4A2D225B9DC3A99 /* Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -250,8 +252,8 @@
 		D1DB5069233B09E700CF5761 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D191249C23602CC800B8E5EB /* Services */,
 				D104FCA62339B22200645C56 /* HomeVC.swift */,
+				D191249C23602CC800B8E5EB /* Services */,
 				D104FCDB2339DD2700645C56 /* imageSlideCell.swift */,
 				D104FCDD2339E06600645C56 /* imageCell.swift */,
 				D1DB5065233A1ECF00CF5761 /* menupanCell.swift */,
@@ -283,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				D15C726A235D9902000DC1D4 /* MyPageVC.swift */,
+				D1CB35242366D6ED00FAA8FC /* SignUpVC.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				D19124A023602D0600B8E5EB /* Cancellable.swift in Sources */,
 				D19124A423602D3900B8E5EB /* RestaurantSource.swift in Sources */,
 				D104FCAD2339B22200645C56 /* YogiyoClone.xcdatamodeld in Sources */,
+				D1CB35252366D6ED00FAA8FC /* SignUpVC.swift in Sources */,
 				D104FCA32339B22200645C56 /* AppDelegate.swift in Sources */,
 				D104FCA52339B22200645C56 /* SceneDelegate.swift in Sources */,
 				D191249B23602C8F00B8E5EB /* HeroHeaderView.swift in Sources */,
