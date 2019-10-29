@@ -24,7 +24,6 @@ class MyPageVC: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-<<<<<<< HEAD
 
         loginExplain.text = "로그인 하고 다양한 혜택을 받아보세요!"
         loginbtn.backgroundColor = .red
@@ -72,8 +71,6 @@ class MyPageVC: UIViewController, UIScrollViewDelegate {
         
         
         signUpbtn.addTarget(self, action: #selector(gotopage), for: .touchUpInside)
-=======
->>>>>>> e1140e14e8c77e64e6948e5525f06cb1367d6500
         
         // Do any additional setup after loading the view.
     }
