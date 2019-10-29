@@ -74,13 +74,18 @@ router.get('/categories/:categoryId', async function (req, res, next) {
         restaurants = await models.Restaurant.findAll();
     }
 
-    if (categoryId !== 1) {
-        restaurants = restaurants.filter((restaurant) => {
-            if (restaurant.category.includes(category.name) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= 15) {
-                return restaurant
-            }
-        });
-    }
+    const deliveryLimitDistance = 3;
+    restaurants = await restaurants.filter((restaurant) => {
+        // 전체 보기
+        if ((categoryId === 1 || categoryId === 14) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= deliveryLimitDistance) {
+            return restaurant
+        }
+        // 카테고리별 보기
+        else if (restaurant.category.includes(category.name) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= deliveryLimitDistance) {
+            return restaurant
+        }
+    });
+
     res.json({
         "status": true,
         "numsOfRestaurants": restaurants.length,

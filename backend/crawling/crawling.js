@@ -5,6 +5,7 @@ const createAds = require('../functions/createAd');
 const createCategories = require('../functions/createCategories');
 const webCrawling = require('../functions/webCrawling');
 const editPrice = require('../functions/editPrice');
+const makePlus = require('../functions/makePlus');
 
 
 const webdriver = require('selenium-webdriver');
@@ -359,7 +360,10 @@ async function main() {
     // await createAds(startAdIdx, endAdIdx, adType);
 
     // edit price error
-    await editPrice();
+    // await editPrice();
+
+    // make isPlus true
+    await makePlus();
 }
 
 main()

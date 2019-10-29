@@ -109,11 +109,30 @@ router.get('/user', async function(req, res, next) {
             })
         });
     const cart = await user.getCart();
-    const idList = cart.menus.split('::');
+    const idAndCount = cart.menus.split('::');
+    let idList = [];
+    let countList = [];
+    for (let i = 0; i < idAndCount.length; i += 2) {
+        idList.push(idAndCount[i]);
+        countList.push(idAndCount[i + 1]);
+    }
 
     const menus = await models.Menu.findAll({
         where: {id: idList}
     });
+
+    let resCart = [];
+    for (let i = 0; i < countList.length; i++) {
+        resCart.push({
+            "id": menus[i].id,
+            "name": menus[i].name,
+            "count": countList[i],
+            "restaurantId": menus[i].restaurantId,
+            "label": menus[i].label,
+            "description": menus[i].description,
+            "price": menus[i].price
+        })
+    }
 
     res.json({
         "status": true,
@@ -124,7 +143,7 @@ router.get('/user', async function(req, res, next) {
             "phone_num": user.phone_num,
         },
         "numsOfCart": menus.length,
-        "cart": menus
+        "cart": resCart
     })
 });
 
