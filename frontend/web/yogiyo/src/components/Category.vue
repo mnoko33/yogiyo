@@ -51,7 +51,7 @@
       }
     },
     mounted() {
-      console.log(this.categoryName);
+      // console.log(this.categoryName);
     },
     methods: {
       clickSelectButton() {
