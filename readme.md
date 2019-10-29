@@ -127,20 +127,19 @@
     "user": {
         "username": "admin",
         "email": "admin@admin.com",
-        "address": "서울특별시 종로구 동숭동",
+        "address": "서울 종로구 명륜2가",
         "phone_num": "01012345678"
     },
     "numsOfCart": 1,
     "cart": [
         {
             "id": 1,
-            "name": "새우버거세트",
-            "restaurantId": 213,
+            "name": "국물 떡볶이",
+            "count": "2",
+            "restaurantId": 1,
             "label": "인기메뉴",
-            "description": "새우살...",
-            "price": 6800,
-            "createdAt": "2019-10-21T22:59:29.000Z",
-            "updatedAt": "2019-10-21T22:59:29.000Z"
+            "description": "사이즈 선택",
+            "price": 4500
         }
     ]
 }
@@ -359,7 +358,7 @@ categoryId = [
 // req
 {
 	"data": {
-		"menus": "1::2"
+		"menus": "1::2"  // id::count::id::count:id::count ... (메뉴 아이디::해당메뉴갯수)
 	}
 }
 
