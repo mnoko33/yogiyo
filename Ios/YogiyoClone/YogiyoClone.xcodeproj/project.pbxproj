@@ -37,6 +37,9 @@
 		D19124A423602D3900B8E5EB /* RestaurantSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A323602D3900B8E5EB /* RestaurantSource.swift */; };
 		D19124A623602D6200B8E5EB /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19124A523602D6200B8E5EB /* Appearance.swift */; };
 		D1CB35252366D6ED00FAA8FC /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB35242366D6ED00FAA8FC /* SignUpVC.swift */; };
+		D1CB35292368492500FAA8FC /* SnsSignUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB35282368492500FAA8FC /* SnsSignUpCell.swift */; };
+		D1CB352B2368495300FAA8FC /* EmailSignUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB352A2368495300FAA8FC /* EmailSignUpCell.swift */; };
+		D1CB352D2368496500FAA8FC /* AgreementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB352C2368496500FAA8FC /* AgreementCell.swift */; };
 		D1DB5066233A1ECF00CF5761 /* menupanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5065233A1ECF00CF5761 /* menupanCell.swift */; };
 		D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DB5067233A1EDE00CF5761 /* menuCell.swift */; };
 		E1AB204027F6B8CF6FA364CF /* Pods_YogiyoClone_YogiyoCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D66B7E612E04D76A4C8D91 /* Pods_YogiyoClone_YogiyoCloneUITests.framework */; };
@@ -102,6 +105,9 @@
 		D19124A323602D3900B8E5EB /* RestaurantSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSource.swift; sourceTree = "<group>"; };
 		D19124A523602D6200B8E5EB /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		D1CB35242366D6ED00FAA8FC /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		D1CB35282368492500FAA8FC /* SnsSignUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsSignUpCell.swift; sourceTree = "<group>"; };
+		D1CB352A2368495300FAA8FC /* EmailSignUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpCell.swift; sourceTree = "<group>"; };
+		D1CB352C2368496500FAA8FC /* AgreementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementCell.swift; sourceTree = "<group>"; };
 		D1DB5065233A1ECF00CF5761 /* menupanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menupanCell.swift; sourceTree = "<group>"; };
 		D1DB5067233A1EDE00CF5761 /* menuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuCell.swift; sourceTree = "<group>"; };
 		F01BE132B4A2D225B9DC3A99 /* Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-YogiyoClone-YogiyoCloneUITests/Pods-YogiyoClone-YogiyoCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -286,6 +292,9 @@
 			children = (
 				D15C726A235D9902000DC1D4 /* MyPageVC.swift */,
 				D1CB35242366D6ED00FAA8FC /* SignUpVC.swift */,
+				D1CB35282368492500FAA8FC /* SnsSignUpCell.swift */,
+				D1CB352A2368495300FAA8FC /* EmailSignUpCell.swift */,
+				D1CB352C2368496500FAA8FC /* AgreementCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -530,6 +539,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1CB352B2368495300FAA8FC /* EmailSignUpCell.swift in Sources */,
 				D17E10DF235F5F1B00E94BE6 /* RestaurantList.swift in Sources */,
 				D104FCDC2339DD2700645C56 /* imageSlideCell.swift in Sources */,
 				D191249E23602CE900B8E5EB /* Restaurant.swift in Sources */,
@@ -548,8 +558,10 @@
 				D104FCAD2339B22200645C56 /* YogiyoClone.xcdatamodeld in Sources */,
 				D1CB35252366D6ED00FAA8FC /* SignUpVC.swift in Sources */,
 				D104FCA32339B22200645C56 /* AppDelegate.swift in Sources */,
+				D1CB352D2368496500FAA8FC /* AgreementCell.swift in Sources */,
 				D104FCA52339B22200645C56 /* SceneDelegate.swift in Sources */,
 				D191249B23602C8F00B8E5EB /* HeroHeaderView.swift in Sources */,
+				D1CB35292368492500FAA8FC /* SnsSignUpCell.swift in Sources */,
 				D17E10D6235E824F00E94BE6 /* emptyCell.swift in Sources */,
 				D1DB5068233A1EDE00CF5761 /* menuCell.swift in Sources */,
 				D104FCDE2339E06600645C56 /* imageCell.swift in Sources */,
