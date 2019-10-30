@@ -124,7 +124,6 @@
   height: 235px;
   padding: 125px 100px 70px 100px;
   background-image: url("../assets/mainsearch.jpg");
-  /*background-color: black;*/
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

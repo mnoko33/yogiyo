@@ -10,7 +10,7 @@ import Foundation
 
 protocol Cancellable {
 
-  func cancel()
+    func cancel()
 
 }
 

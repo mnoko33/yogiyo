@@ -1,11 +1,11 @@
 <template>
   <v-content>
-    <Category
-      :categoryName="categoryName"
-    ></Category>
+    <div style="position: sticky; z-index: 100">
+      <Category :categoryName="categoryName"></Category>
+    </div>
     <v-layout row class="restaurant-list">
       <v-flex sm12>
-         <p class="ml-5 mt-8" style="font-size: 13px">요기요 등록 음식점
+        <p class="ml-5 mt-8" style="font-size: 13px">요기요 등록 음식점
            <v-tooltip bottom color="white">
             <template v-slot:activator="{ on }">
              <v-icon size="15" class="mb-1" v-on="on">mdi-help-circle-outline</v-icon>
@@ -14,7 +14,15 @@
            </v-tooltip>
         <span style="color: red"> {{restaurants.length}}곳</span>을 찾았습니다.</p>
       </v-flex>
-      <v-flex xs12 sm6 class="restaurant" v-for="restaurant in restaurants" :key="restaurant.id">
+      <v-flex v-if="restaurantsNumber === 0" xs12 class="restaurant">
+        <v-card outlined class="card-loader">
+          <div class="mx-auto my-auto">
+          <SpinnerLoader class="loader" :color="'#9e9d99'"/>
+          <p class="mx-auto">레스토랑 리스트를 불러오는 중입니다.</p>
+        </div>
+        </v-card>
+      </v-flex>
+      <v-flex v-else xs12 sm6 class="restaurant" v-for="restaurant in restaurants" :key="restaurant.id">
         <Restaurant
                :id="restaurant.id"
                :name="restaurant.name"
@@ -39,6 +47,8 @@
   import Category from "@/components/Category";
   import api from '../../api'
   import Restaurant from "@/components/Restaurant";
+  import { SpinnerLoader } from 'vue-spinners-css';
+  
 
   export default {
     name: "RestaurantListPage",
@@ -48,7 +58,8 @@
     },
     components: {
       Category,
-      Restaurant
+      Restaurant,
+      SpinnerLoader
     },
     data() {
       return {
@@ -77,6 +88,7 @@
 
 <style scoped>
 .restaurant-list {
+  position: relative;
   max-width: 1020px;
   margin: 0 auto;
   overflow: hidden;
@@ -84,5 +96,17 @@
 .restaurant {
   padding-left: 10px;
   padding-right: 10px;
+}
+.loader {
+  z-index: 100;
+  margin: auto;
+}
+.v-card:not(.v-sheet--tile) {
+  border-radius: 0;
+  background-color: white;
+  height: 500px;
+  text-align: center;
+  padding-top: 150px;
+  margin-bottom: 12px;
 }
 </style>

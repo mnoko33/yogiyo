@@ -1,5 +1,5 @@
 <template>
-  <v-content class="restaurant-category-menu">
+  <v-content>
     <div class="sms category-btn">
       <v-btn-toggle tile class="category ml-auto">
         <v-btn class="toggle-btn" depressed color="white"><v-icon>mdi-magnify</v-icon></v-btn>
@@ -9,11 +9,11 @@
       </v-btn-toggle>
     </div>
 
-    <div class="category category-select mx-3 mt-3">
+    <div class="category-select mx-3 mt-3">
       <v-btn outlined @click="clickSelectButton" style="width: 100%; border-radius: 0; border: 1px solid rgba(0,0,0,.12);">{{categoryName}}</v-btn>
     </div>
 
-    <v-list v-if="selectBtn" class="mt-2 mx-3" style="padding: 0 0; box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);">
+    <v-list v-if="selectBtn" class="mt-2 mx-3 select-btn-list" >
       <v-row>
         <v-col style="padding-top: 0; padding-bottom: 0">
           <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx, categoryName: category.category}}">
@@ -51,7 +51,7 @@
       }
     },
     mounted() {
-      console.log(this.categoryName);
+      // console.log(this.categoryName);
     },
     methods: {
       clickSelectButton() {
@@ -65,12 +65,11 @@
 .sms {
   padding: 0;
   box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
-  margin: auto;
   background-color: white;
   text-align: center;
 }
 .category {
-  position: relative;
+  /*position: relative;*/
   color: #333;
   background-color: #fff !important;
 }
@@ -88,11 +87,19 @@
   border-radius: 0;
   border: 0.5px solid rgba(0,0,0,.12);
 }
+.category-select {
+  position: sticky;
+  color: #333;
+  background-color: #fff !important;
+  top: 0;
+}
+.select-btn-list {
+  position: absolute;
+  padding: 0 0;
+  box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.25);
+  z-index: 9;
+}
 @media (min-width: 992px) {
-  .restaurant-category-menu {
-    float: none;
-    width: 100%;
-  }
   .category-menu ul {
     border-top: 0;
   }
