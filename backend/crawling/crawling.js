@@ -6,6 +6,7 @@ const createCategories = require('../functions/createCategories');
 const webCrawling = require('../functions/webCrawling');
 const editPrice = require('../functions/editPrice');
 const makePlus = require('../functions/makePlus');
+const createRestaurantInfo = require('../functions/createRestInfo');
 
 
 const webdriver = require('selenium-webdriver');
@@ -346,6 +347,8 @@ async function crawlingMenus (urlId, id, name) {
     driver.close();
 }
 
+
+
 async function main() {
     // create Category instance
     const startCategoryIdx = 0;
@@ -363,7 +366,10 @@ async function main() {
     // await editPrice();
 
     // make isPlus true
-    await makePlus();
+    // await makePlus();
+
+    // create Restaurant Info
+    await createRestaurantInfo();
 }
 
 main()

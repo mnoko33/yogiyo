@@ -7,11 +7,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        orderedPrice: {
-            field: "orderedPrice",
-            type: DataTypes.TEXT,
-            allowNull: false
-        },
         orderedDate: {
             field: "orderedDate",
             type: DataTypes.DATE,
@@ -31,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
             foreignKey: 'restaurantId'
         });
         History.belongsTo(models.User, {
-            foreignKey: 'uid'
+            foreignKey: 'userId'
         });
     };
     return History;

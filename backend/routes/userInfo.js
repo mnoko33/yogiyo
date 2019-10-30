@@ -109,45 +109,129 @@ router.get('/user', async function(req, res, next) {
             })
         });
     const cart = await user.getCart();
-    const idAndCount = cart.menus.split('::');
-    let idList = [];
-    let countList = [];
-    for (let i = 0; i < idAndCount.length; i += 2) {
-        idList.push(idAndCount[i]);
-        countList.push(idAndCount[i + 1]);
-    }
+    if (!cart.menus) {
+        res.json({
+            "status": true,
+            "user": {
+                "username": user.username,
+                "email": user.email,
+                "address": user.address,
+                "phone_num": user.phone_num,
+            },
+            "numsOfCart": 0,
+            "cart": []
+        })
+    } else {
+        const idAndCount = cart.menus.split('::');
+        let idList = [];
+        let countList = [];
+        for (let i = 0; i < idAndCount.length; i += 2) {
+            idList.push(idAndCount[i]);
+            countList.push(idAndCount[i + 1]);
+        }
 
-    const menus = await models.Menu.findAll({
-        where: {id: idList}
-    });
+        const menus = await models.Menu.findAll({
+            where: {id: idList}
+        });
 
-    let resCart = [];
-    for (let i = 0; i < countList.length; i++) {
-        resCart.push({
-            "id": menus[i].id,
-            "name": menus[i].name,
-            "count": countList[i],
-            "restaurantId": menus[i].restaurantId,
-            "label": menus[i].label,
-            "description": menus[i].description,
-            "price": menus[i].price
+        let totalPrice = 0;
+        let resCart = [];
+        for (let i = 0; i < countList.length; i++) {
+            totalPrice += menus[i].price * countList[i];
+            resCart.push({
+                "id": menus[i].id,
+                "name": menus[i].name,
+                "count": countList[i],
+                "restaurantId": menus[i].restaurantId,
+                "label": menus[i].label,
+                "description": menus[i].description,
+                "price": menus[i].price
+            })
+        }
+
+        res.json({
+            "status": true,
+            "user": {
+                "username": user.username,
+                "email": user.email,
+                "address": user.address,
+                "phone_num": user.phone_num,
+            },
+            "numsOfCart": menus.length,
+            "totalPrice": totalPrice,
+            "cart": resCart
         })
     }
-
-    res.json({
-        "status": true,
-        "user": {
-            "username": user.username,
-            "email": user.email,
-            "address": user.address,
-            "phone_num": user.phone_num,
-        },
-        "numsOfCart": menus.length,
-        "cart": resCart
-    })
 });
 
-// TODO: url/api/user-info/history (유저 주문 기록 보기)
-// TODO: url/api/user-info/history (유저 주문 기록 추가)
+
+router.get('/history', async function(req, res, next) {
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+    const userId = userInfo.id;
+    const history = await models.History.findAll({
+        where: { userId: userId }
+    })
+        .then(history => {
+            return history
+        })
+        .catch(err => {
+            return res.json({
+                "status": false,
+                "message": "유저 기록을 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+    if (!history.length) {
+        res.json({
+            "status": true,
+            "history": []
+        })
+    } else {
+        const historyPromises = history.map(async (h) => {
+            return new Promise(async (resolve, reject) => {
+                let menus = h.orderedMenus;
+                menus = menus.split('::');
+                let menuList = [];
+                let totalPrice = 0;
+                for (let i = 0; i < menus.length; i += 2) {
+                    menuList.push([menus[i], menus[i + 1]])
+                }
+                const menuPromises = await menuList.map(async (list) => {
+                    return new Promise(async (resolve, reject) => {
+                        const menuId = list[0];
+                        const menuCount = list[1];
+                        const menuInstance = await models.Menu.findOne({
+                            where: { id: menuId * 1 }
+                        })
+                            .then(result => {
+                                totalPrice += result.price * menuCount;
+                                return {
+                                    "name": result.name,
+                                    "count": menuCount * 1,
+                                    "price": result.price
+                                }
+                            })
+                            .catch(() => false);
+                        resolve(menuInstance)
+                    })
+                });
+                const orderedMenus = await Promise.all(menuPromises);
+                resolve({
+                    "orderedMenus": orderedMenus,
+                    "orderedPrice": totalPrice,
+                    "orderedDate": h.orderedDate,
+                    "orderedAddress": h.orderedAddress,
+                    "restaurantId": h.restaurantId,
+                })
+            })
+        });
+        const historyList = await Promise.all(historyPromises);
+        res.json({
+            "status": true,
+            "historyList": historyList
+        })
+    }
+});
 
 module.exports = router;

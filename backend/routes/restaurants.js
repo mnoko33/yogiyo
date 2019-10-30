@@ -122,6 +122,48 @@ router.get('/:restaurantId', async function (req, res, next) {
     }
 });
 
+// 매장별 상세 정보 보기
+router.get('/:restaurantId/info', async function (req, res, next) {
+    const restaurantId = req.params.restaurantId * 1;
+    const restaurant = await models.Restaurant.findOne({
+        where: {id: restaurantId}
+    })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "메뉴 정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+    if (!restaurant) {
+        res.json({
+            "Status": false,
+            "message": "일치하는 매장이 존재하지 않습니다."
+        })
+    } else {
+        const restaurantInfo = await models.RestaurantInfo.findOne({
+            where: { restaurantId: restaurant.id }
+        })
+            .then(result => {
+                return result
+            })
+            .catch(err => {
+                return res.json({
+                    "status": false,
+                    "message": "매장 정보를 가져오는데 오류가 발생했습니다.",
+                    "err": err
+                })
+            });
+        res.json({
+            "status": true,
+            "restaurantInfo": restaurantInfo
+        })
+    }
+});
+
 // 매장별 메뉴 보기
 router.get('/:restaurantId/menus', async function (req, res, next) {
     const restaurantId = req.params.restaurantId * 1;
@@ -218,16 +260,25 @@ router.post('/:restaurantId/cart', async function(req, res, next) {
         })
     }
     menus = menus.split('::');
+    let menuList = [];
+    for (let i = 0; i < menus.length; i += 2) {
+        menuList.push([menus[i], menus[i + 1]])  // [id, count]
+    }
+
     let totalPrice = 0;
-    const promisesMenus = menus.map(async (menu) => {
-        return new Promise((resolve, reject) => {
-            const menuInstance = models.Menu.findOne({
-                where: { id: menu * 1 }
+
+    const promisesMenus = menuList.map(async (list) => {
+        return new Promise(async (resolve, reject) => {
+            const menuId = list[0];
+            const menuCount = list[1];
+            const menuInstance = await models.Menu.findOne({
+                where: { id: menuId * 1 }
             })
                 .then(result => {
                     totalPrice += result.price;
                     return {
                         "name": result.name,
+                        "count": menuCount * 1,
                         "price": result.price
                     }
                 })
@@ -242,6 +293,86 @@ router.post('/:restaurantId/cart', async function(req, res, next) {
         "menus": menus,
         "totalPrice": totalPrice
     })
+});
+
+// TODO: check it works well
+router.post('/order', async function(req, res, next) {
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+    const userId = userInfo.id;
+
+    const user = await models.User.findOne({
+        where: { id: userId }
+    })
+        .then(user => {
+            return user
+        })
+        .catch(err => {
+            return res.json({
+                "status": false,
+                "message": "유저정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+
+
+    const cart = await models.Cart.findOne({
+        where: { userId: userId }
+    })
+        .then(user => {
+            return user
+        })
+        .catch(err => {
+            return res.json({
+                "status": false,
+                "message": "장바구니 정보를 가져오는데 실패했습니다.",
+                "err": err
+            })
+        });
+
+    if (!user || !cart) {
+        return res.json({
+            "status": false,
+            "message": !user ? "존재하지 않는 유저입니다." : "장바구니가 비어있습니다."
+        })
+    } else {
+        const history = await models.History.create({
+            orderedMenus: cart.menus,
+            orderedDate: new Date(),
+            orderedAddress: user.address,
+            restaurantId: cart.restaurantId,
+            userId: user.id
+        })
+            .then(history => {
+                return history
+            })
+            .catch(err => {
+                return res.json({
+                    "status": false,
+                    "message": "주문기록을 저장하는데 실패했습니다.",
+                    "err": err
+                })
+            });
+        // cart 초기화
+        // await models.Cart.update({
+        //     menus: null
+        // })
+        //     .then(result => {
+        //         console.log('cart is updated')
+        //     })
+        //     .catch(err => {
+        //        res.json({
+        //            "status": false,
+        //            "message": '장바구니를 초기화하는데 실패했습니다.',
+        //            "err": err
+        //        })
+        //     });
+
+        res.json({
+            "status": true,
+            "history": history
+        })
+    }
 });
 
 module.exports = router;
