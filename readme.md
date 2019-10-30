@@ -20,8 +20,6 @@
 
 ​	:x: `GET` url/api/user-info/history (유저 주문 기록 보기)
 
-​	:x: `POST` url/api/user-info/history (유저 주문 기록 추가)
-
 
 
 **3. routes/restaurants.js**
@@ -32,9 +30,13 @@
 
 ​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId (매장 정보 보기)
 
+​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId/info (매장 상세 정보 보기)
+
 ​	:heavy_check_mark: `GET` url/api/restaurants/:restaurantId/menus (매장별 메뉴 보기) 
 
 ​	:heavy_check_mark: `POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) 
+
+​	:x: `POST` url/api/restaurants/order (주문하기) 
 
 
 
