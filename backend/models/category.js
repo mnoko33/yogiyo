@@ -12,9 +12,9 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         underscored: false,
-        freezeTableName: true,
+        freezeTableName: false,
         timestamps: false,
-        tableName: "Category"
+        tableName: "category"
     });
     return Category;
 };
