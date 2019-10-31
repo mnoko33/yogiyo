@@ -58,5 +58,12 @@ export default {
                 "x-access-token": localStorage.getItem('token')
             }
         })
+    },
+    async orderCart(data) {
+        return await axios.post(`${apiUrl}/api/restaurants/order/`, {data}, {
+            headers: {
+                "x-access-token": localStorage.getItem('token')
+            }
+        })
     }
 }

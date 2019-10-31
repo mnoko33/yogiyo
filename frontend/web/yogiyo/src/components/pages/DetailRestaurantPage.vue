@@ -90,7 +90,7 @@
         <v-card outlined dark style="background-color: black;">
           <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
         </v-card>
-        <div style="height:200px; overflow: scroll">
+        <div style="max-height:260px; overflow: scroll">
         <v-card v-if="carts.length < 1" outlined class="restaurant-info" style="min-height: 122px">
           <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
         </v-card>
@@ -98,7 +98,7 @@
           <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="body-2 mb-1">{{ cart.name }}</v-list-item-title>
-              <span class="body-2 mb-1"><v-icon style="border: black 2px;">mdi-close</v-icon><span class="ml-2">{{ cart.price }}원</span><v-icon style="margin-left: 50%" @click="countMinus(cart.id, cart.count)">mdi-minus</v-icon><span>{{ cart.count }}</span><v-icon @click="countPlus(cart.id, cart.count)">mdi-plus</v-icon></span>
+              <span class="body-2 mb-1"><v-icon @click="deleteFromCart(cart.id)" style="border: black 2px;">mdi-close</v-icon><span class="ml-2">{{ cart.price }}원</span><v-icon style="margin-left: 50%" @click="countMinus(cart.id, cart.count)">mdi-minus</v-icon><span>{{ cart.count }}</span><v-icon @click="countPlus(cart.id, cart.count)">mdi-plus</v-icon></span>
               <span class="body-2"></span>
             </v-list-item-content>
           </v-list-item>
@@ -116,8 +116,8 @@
             <p class="mr-3 mt-3 font-weight-bold" style="text-align: right; color: #f0001e;">합계: {{ totalPrice }}원</p>
           </v-card>
         </div>
-        <v-card v-if="frontCart&&Object.keys(frontCart).length" class="mt-4" outlined dark color="red lighten-1">
-          <p class="mt-3" style="text-align: center">{{frontCart}}주문하기</p>
+        <v-card v-if="canOrder" @click="orderCart" class="mt-4" outlined dark color="red lighten-1">
+          <p class="mt-3" style="text-align: center">주문하기</p>
         </v-card>
         <v-card v-else class="mt-4" outlined dark color="grey lighten-1">
           <p class="mt-3" style="text-align: center">주문하기</p>
@@ -170,6 +170,7 @@
         frontCart: {},
         resId: 0,
         totalPrice: 0,
+        canOrder: false,
       }
     },
     mounted() {
@@ -241,13 +242,19 @@
           }
           return str;
       },
-
+      uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+      },
 
       async getUserInfo() {
            await api.getUserInfo().then(res => {
              this.carts = res.data.cart;
              this.totalPrice = this.comma(res.data.totalPrice);
-
+             if (Number(this.uncomma(this.totalPrice)) >= Number(this.uncomma(this.minOrderAmount))) {
+                 this.canOrder = true;
+             }
+             else {this.canOrder = false}
              // console.log(res)
              //   console.log(this.carts)
              for (const cart in this.carts) {
@@ -260,7 +267,9 @@
            })
       },
       async postCart(id, count) {
-          this.frontCart[id] = count;
+          if (id && count) {
+              this.frontCart[id] = count;
+          }
           let cartInfo = '';
           for (const cart in this.frontCart) {
               if (cart != 'undefined') {
@@ -283,8 +292,17 @@
       },
       countMinus(id, count) {
           count = Number(count)
-          count -= 1
-          this.postCart(id, count)
+          if (count > 1) {
+            count -= 1;
+            this.postCart(id, count)
+          }
+          else {
+              Swal.fire({
+                  text:'주문 최소 수량은 1개 입니다.'
+              }
+              )
+          }
+
       },
       addToCart(id) {
           if (this.frontCart[id]) {
@@ -301,6 +319,21 @@
               })
           }
 
+      },
+      deleteFromCart(id) {
+          delete this.frontCart[id]
+          this.postCart()
+      },
+      async orderCart() {
+          const data = {}
+          await api.orderCart(data).then(res => {
+              if (res.data.status) {
+                  Swal.fire({
+                      text: '주문이 성공적으로 완료되었습니다.'
+                  })
+                  this.getUserInfo()
+              }
+          })
       }
     },
     watch: {
