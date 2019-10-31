@@ -18,7 +18,7 @@
 
 ​	:heavy_check_mark: `POST` url/api/user-info/address (유저 위치 정보)
 
-​	:x: `GET` url/api/user-info/history (유저 주문 기록 보기)
+​	:heavy_check_mark: `GET` url/api/user-info/history (유저 주문 기록 보기)
 
 
 
@@ -36,7 +36,7 @@
 
 ​	:heavy_check_mark: `POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) 
 
-​	:x: `POST` url/api/restaurants/order (주문하기) 
+​	:heavy_check_mark: `POST` url/api/restaurants/order (주문하기) 
 
 
 
@@ -173,21 +173,35 @@
 
 
 
-##### `GET` url/api/user-info/history
+##### `GET` url/api/user-info/history (유저 주문 기록 보기)
 
+```js
+// res
+{
+    "status": true,
+    "historyList": [
+        {
+            "restaurantId": 1,
+            "restaurantName": "인정국물떡볶이&눈꽃빙수",
+            "orderedMenus": [
+                {
+                    "name": "국물 떡볶이",
+                    "count": 2,
+                    "price": 4500
+                },
+                {
+                    "name": "세트1（국물떡볶이2인＋부산꼬지어묵3개＋인정김밥5줄＋쿨피스 500mL）",
+                    "count": 3,
+                    "price": 14500
+                }
+            ],
+            "orderedPrice": 52500,
+            "orderedDate": "2019-10-30T12:52:46.000Z",
+            "orderedAddress": "서울 종로구 명륜2가"
+        }
+    ]
+}
 ```
-
-```
-
-
-
-##### `POST` url/api/user-info/history
-
-```
-
-```
-
-
 
 
 
@@ -383,6 +397,16 @@ categoryId = [
 
 
 
+##### `POST` url/api/restaurants/order (주문하기) 
+
+```js
+
+```
+
+
+
+
+
 # 4. routes/smsAuth.js
 
 ##### `POST` url/api/sms-auth/certification (인증코드 발급받기)
@@ -445,7 +469,7 @@ categoryId = [
 
 
 
-`GET` url/api/info/ad/:adId (광고 페이지 html)
+##### `GET` url/api/info/ad/:adId (광고 페이지 html)
 
 ```html
 <!DOCTYPE html>
