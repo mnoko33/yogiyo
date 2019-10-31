@@ -28,7 +28,7 @@
   export default {
     name: "Category",
     props: {
-      categoryName: {type: String}
+      categoryIdx: {type: String}
     },
     data() {
       return {
@@ -47,17 +47,26 @@
             {category: '카페/디저트', categoryIdx: '12', icon: require('../assets/categoryIcon/12.jpg')},
             {category: '편의점', categoryIdx: '13', icon: require('../assets/categoryIcon/13.jpg')},
         ],
+        categoryName: '',
         selectBtn: false
       }
     },
     mounted() {
-      // console.log(this.categoryName);
+      this.setCategoryName();
     },
     methods: {
       clickSelectButton() {
         this.selectBtn = !this.selectBtn;
+      },
+      setCategoryName() {
+        this.categoryName = this.categoryList[this.categoryIdx - 1].category;
       }
     },
+    watch: {
+      categoryIdx() {
+        this.setCategoryName();
+      }
+    }
   }
 </script>
 
@@ -69,7 +78,6 @@
   text-align: center;
 }
 .category {
-  /*position: relative;*/
   color: #333;
   background-color: #fff !important;
 }
@@ -88,7 +96,6 @@
   border: 0.5px solid rgba(0,0,0,.12);
 }
 .category-select {
-  position: sticky;
   color: #333;
   background-color: #fff !important;
   top: 0;
