@@ -21,13 +21,13 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         tableName: "History"
     });
-    History.associate = function(models) {
-        History.belongsTo(models.Restaurant, {
-            foreignKey: 'restaurantId'
-        });
-        History.belongsTo(models.User, {
-            foreignKey: 'userId'
-        });
-    };
+    // History.associate = function(models) {
+    //     History.belongsTo(models.Restaurant, {
+    //         foreignKey: 'restaurantId'
+    //     });
+    //     History.belongsTo(models.User, {
+    //         foreignKey: 'userId'
+    //     });
+    // };
     return History;
 };
