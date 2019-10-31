@@ -180,14 +180,18 @@ router.get('/:restaurantId/menus', async function (req, res, next) {
                 "err": err
             })
         });
+
     if (restaurant) {
-        const menuList = await restaurant.getMenus()
-            .then((result) => {
+        const menuList =  await models.Menu.findAll({
+            where: { restaurantId: restaurant.id }
+        })
+            .then(result => {
                 return result
             })
-            .catch((err) => {
+            .catch(err => {
                 return res.json({
                     "status": false,
+                    "message": "메뉴를 불러오는데 실패했습니다.",
                     "err": err
                 })
             });
