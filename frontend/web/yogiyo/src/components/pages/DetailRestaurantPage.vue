@@ -52,7 +52,7 @@
                 </template>
                 <v-card outlined class="pa-0">
                   <v-list-item v-for="(menu, index) in menuList[label]" :key="index" style="border-top: 0.5px solid rgba(0,0,0,.3)">
-                    <v-list-item-content>
+                    <v-list-item-content @click="addToCart(menu.id)" style="cursor: pointer">
                       <v-list-item-title><strong>{{menu.name}}</strong></v-list-item-title>
                       <v-list-item-subtitle style="font-size: 13px">{{menu.description}}</v-list-item-subtitle>
                       <v-list-item-title class="mt-1">{{menu.price}}원</v-list-item-title>
@@ -90,7 +90,7 @@
         <v-card outlined dark style="background-color: black;">
           <div class="my-0"><p class="mx-2 my-2">주문표</p></div>
         </v-card>
-        <div style="overflow: scroll">
+        <div style="height:200px; overflow: scroll">
         <v-card v-if="carts.length < 1" outlined class="restaurant-info" style="min-height: 122px">
           <p class="text-center" style="padding: 100px 0">주문표에 담긴 메뉴가 없습니다.</p>
         </v-card>
@@ -116,7 +116,10 @@
             <p class="mr-3 mt-3 font-weight-bold" style="text-align: right; color: #f0001e;">합계: {{ totalPrice }}원</p>
           </v-card>
         </div>
-        <v-card class="mt-4" outlined dark color="grey lighten-1">
+        <v-card v-if="frontCart&&Object.keys(frontCart).length" class="mt-4" outlined dark color="red lighten-1">
+          <p class="mt-3" style="text-align: center">{{frontCart}}주문하기</p>
+        </v-card>
+        <v-card v-else class="mt-4" outlined dark color="grey lighten-1">
           <p class="mt-3" style="text-align: center">주문하기</p>
         </v-card>
 
@@ -130,6 +133,7 @@
   import api from '../../api';
   import Category from "@/components/Category";
   import { SpinnerLoader } from 'vue-spinners-css';
+  import Swal from 'sweetalert2'
 
   export default {
     name: "DetailRestaurantPage",
@@ -281,6 +285,22 @@
           count = Number(count)
           count -= 1
           this.postCart(id, count)
+      },
+      addToCart(id) {
+          if (this.frontCart[id]) {
+              const count = this.frontCart[id];
+              this.postCart(id, count)
+              Swal.fire({
+                  text: '이미 주문표에 있는 메뉴입니다.'
+              })
+          } else {
+              const count = 1;
+              this.postCart(id, count)
+              Swal.fire({
+                  text: '주문표에 메뉴가 추가되었습니다.'
+              })
+          }
+
       }
     },
     watch: {
