@@ -53,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         underscored: false,
         freezeTableName: true,
-        tableName: "RestaurantInfo"
+        tableName: "restaurantInfo"
     });
     RestaurantInfo.associate = function(models) {
         RestaurantInfo.belongsTo(models.Restaurant, {

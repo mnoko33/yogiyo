@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'http://70.12.226.56:3000';
+const apiUrl = 'http://70.12.247.65:3000';
 const headers = {
     'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTcxNzA0MDk1LCJleHAiOjE1NzUzMDQwOTV9.WFPbwyhOKJa6r9jmlJE4Pq1VPG3lVDq4daMTiFH2yQs'
 };
@@ -54,6 +54,13 @@ export default {
     },
     async postCart(data, restaurantId) {
         return await axios.post(`${apiUrl}/api/restaurants/${restaurantId}/cart/`, {data}, {
+            headers: {
+                "x-access-token": localStorage.getItem('token')
+            }
+        })
+    },
+    async orderCart(data) {
+        return await axios.post(`${apiUrl}/api/restaurants/order/`, {data}, {
             headers: {
                 "x-access-token": localStorage.getItem('token')
             }
