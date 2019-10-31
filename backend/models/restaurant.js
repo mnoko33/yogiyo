@@ -71,7 +71,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         underscored: false,
         freezeTableName: true,
-        tableName: "restaurant"
+        tableName: "Restaurant"
     });
     Restaurant.associate = function(models) {
         models.Restaurant.hasMany(models.Menu, {
