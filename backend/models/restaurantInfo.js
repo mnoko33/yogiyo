@@ -55,10 +55,10 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         tableName: "RestaurantInfo"
     });
-    RestaurantInfo.associate = function(models) {
-        RestaurantInfo.belongsTo(models.Restaurant, {
-            foreignKey: 'restaurantId'
-        });
-    };
+    // RestaurantInfo.associate = function(models) {
+    //     RestaurantInfo.belongsTo(models.Restaurant, {
+    //         foreignKey: 'restaurantId'
+    //     });
+    // };
     return RestaurantInfo;
 };
