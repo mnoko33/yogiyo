@@ -354,19 +354,20 @@ router.post('/order', async function(req, res, next) {
                 })
             });
         // cart 초기화
-        // await models.Cart.update({
-        //     menus: null
-        // })
-        //     .then(result => {
-        //         console.log('cart is updated')
-        //     })
-        //     .catch(err => {
-        //        res.json({
-        //            "status": false,
-        //            "message": '장바구니를 초기화하는데 실패했습니다.',
-        //            "err": err
-        //        })
-        //     });
+        await models.Cart.update(
+            { menus: null },
+            { where: { userId: userId }}
+            )
+                    .then(result => {
+                        console.log('cart is updated')
+                    })
+                    .catch(err => {
+                       res.json({
+                           "status": false,
+                           "message": '장바구니를 초기화하는데 실패했습니다.',
+                           "err": err
+                       })
+                    });
 
         res.json({
             "status": true,

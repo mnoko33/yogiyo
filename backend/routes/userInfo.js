@@ -217,12 +217,16 @@ router.get('/history', async function(req, res, next) {
                     })
                 });
                 const orderedMenus = await Promise.all(menuPromises);
+                const restaurant = await models.Restaurant.findOne({
+                    where: { id: h.restaurantId }
+                });
                 resolve({
+                    "restaurantId": h.id,
+                    "restaurantName": restaurant.name,
                     "orderedMenus": orderedMenus,
                     "orderedPrice": totalPrice,
                     "orderedDate": h.orderedDate,
-                    "orderedAddress": h.orderedAddress,
-                    "restaurantId": h.restaurantId,
+                    "orderedAddress": h.orderedAddress
                 })
             })
         });
