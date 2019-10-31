@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "yogiyo",
-    "password": "yogiyo",
+    "username": "ubuntu",
+    "password": "",
     "database": "clone_prj",
     "host": "127.0.0.1",
     "dialect": "mysql"
