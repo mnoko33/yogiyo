@@ -232,120 +232,120 @@ async function addMissing() {
 
 
 // 메뉴 크롤링 and 만들기
-async function crawlingMenus (urlId, id, name) {
-    let driver = new webdriver.Builder()
-        .forBrowser('chrome')
-        .build();
-
-    const url = `https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/${urlId}/`;
-    await driver.get(url);
-
-    let i = 2;
-    while (true) {
-        try {
-            let labelXpath = `//*[@id="menu"]/div/div[${i}]/div[1]/h4/a/span`;
-            // 라벨
-            let label = await driver.findElement(By.xpath(labelXpath))
-                .then(result => {
-                    return result
-                })
-                .catch(err => {
-                   RESULT.push({
-                       "type": "menu",
-                       "name": `${name}`
-                   })
-                });
-            let labelName = await label.getAttribute('innerText')
-                .then(result => {
-                    return result
-                })
-                .catch(err => {
-                    RESULT.push({
-                        "type": "menu",
-                        "name": `${name}`
-                    })
-                });
-            // 메뉴 크롤링
-            let j = 1;
-            while (true) {
-                try {
-                    const menuXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[2]`;
-                    const priceXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[4]/span[1]`;
-                    const descriptionXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[3]`;
-
-                    // 메뉴 이름
-                    const menu = await driver.findElement(By.xpath(menuXpath))
-                        .then(result => {
-                            return result
-                        })
-                        .catch(err => {
-                            RESULT.push({
-                                "type": "menu",
-                                "name": `${name}`
-                            })
-                        });
-                    const menuName = await menu.getAttribute('innerText')
-                        .then(result => {
-                            return result
-                        })
-                        .catch(err => {
-                            RESULT.push({
-                                "type": "menu",
-                                "name": `${name}`
-                            })
-                        });
-
-                    const description = await driver.findElement(By.xpath(descriptionXpath))
-                        .then(result => {
-                            return result
-                        })
-                        .catch(err => {
-                            RESULT.push({
-                                "type": "menu",
-                                "name": `${name}`
-                            });
-                            return null
-                        });
-
-                    const descriptionContent = description ? await description.getAttribute('innerText') : null;
-
-                    // 메뉴 가격
-                    const price = await driver.findElement(By.xpath(priceXpath))
-                    let priceValue = await price.getAttribute('innerText');
-                    priceValue = priceValue.slice(0, -1);
-                    const idx = priceValue.indexOf(',');
-                    priceValue = (priceValue.slice(0, idx) + priceValue.slice(idx+1)) * 1;
-
-                    // 메뉴 instance 저장
-                    try {
-                        await models.Menu.create({
-                            name: menuName,
-                            restaurantId: id,
-                            label: labelName,
-                            description: descriptionContent,
-                            price: priceValue
-                        });
-                    }
-                    catch {
-                        RESULT.push({
-                            "type": "menu",
-                            "name": `${name}`
-                        });
-                    }
-                    j += 1
-                }
-                catch (e) {
-                    break
-                }
-            }
-            i += 1
-        }
-        catch {
-            break
-        }
-    }
-    driver.close();
-}
+// async function crawlingMenus (urlId, id, name) {
+//     let driver = new webdriver.Builder()
+//         .forBrowser('chrome')
+//         .build();
+//
+//     const url = `https://www.yogiyo.co.kr/mobile/?gclid=Cj0KCQjwuZDtBRDvARIsAPXFx3CcG_91Vgu45cDGd7chcdbWKevyxxOoGVGX7RSM8udHB4mwcYI2o3gaAoXrEALw_wcB#/${urlId}/`;
+//     await driver.get(url);
+//
+//     let i = 2;
+//     while (true) {
+//         try {
+//             let labelXpath = `//*[@id="menu"]/div/div[${i}]/div[1]/h4/a/span`;
+//             // 라벨
+//             let label = await driver.findElement(By.xpath(labelXpath))
+//                 .then(result => {
+//                     return result
+//                 })
+//                 .catch(err => {
+//                    RESULT.push({
+//                        "type": "menu",
+//                        "name": `${name}`
+//                    })
+//                 });
+//             let labelName = await label.getAttribute('innerText')
+//                 .then(result => {
+//                     return result
+//                 })
+//                 .catch(err => {
+//                     RESULT.push({
+//                         "type": "menu",
+//                         "name": `${name}`
+//                     })
+//                 });
+//             // 메뉴 크롤링
+//             let j = 1;
+//             while (true) {
+//                 try {
+//                     const menuXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[2]`;
+//                     const priceXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[4]/span[1]`;
+//                     const descriptionXpath = `//*[@id="menu"]/div/div[${i}]/div[2]/div/ul/li[${j}]/table/tbody/tr/td[1]/div[3]`;
+//
+//                     // 메뉴 이름
+//                     const menu = await driver.findElement(By.xpath(menuXpath))
+//                         .then(result => {
+//                             return result
+//                         })
+//                         .catch(err => {
+//                             RESULT.push({
+//                                 "type": "menu",
+//                                 "name": `${name}`
+//                             })
+//                         });
+//                     const menuName = await menu.getAttribute('innerText')
+//                         .then(result => {
+//                             return result
+//                         })
+//                         .catch(err => {
+//                             RESULT.push({
+//                                 "type": "menu",
+//                                 "name": `${name}`
+//                             })
+//                         });
+//
+//                     const description = await driver.findElement(By.xpath(descriptionXpath))
+//                         .then(result => {
+//                             return result
+//                         })
+//                         .catch(err => {
+//                             RESULT.push({
+//                                 "type": "menu",
+//                                 "name": `${name}`
+//                             });
+//                             return null
+//                         });
+//
+//                     const descriptionContent = description ? await description.getAttribute('innerText') : null;
+//
+//                     // 메뉴 가격
+//                     const price = await driver.findElement(By.xpath(priceXpath))
+//                     let priceValue = await price.getAttribute('innerText');
+//                     priceValue = priceValue.slice(0, -1);
+//                     const idx = priceValue.indexOf(',');
+//                     priceValue = (priceValue.slice(0, idx) + priceValue.slice(idx+1)) * 1;
+//
+//                     // 메뉴 instance 저장
+//                     try {
+//                         await models.Menu.create({
+//                             name: menuName,
+//                             restaurantId: id,
+//                             label: labelName,
+//                             description: descriptionContent,
+//                             price: priceValue
+//                         });
+//                     }
+//                     catch {
+//                         RESULT.push({
+//                             "type": "menu",
+//                             "name": `${name}`
+//                         });
+//                     }
+//                     j += 1
+//                 }
+//                 catch (e) {
+//                     break
+//                 }
+//             }
+//             i += 1
+//         }
+//         catch {
+//             break
+//         }
+//     }
+//     driver.close();
+// }
 
 
 

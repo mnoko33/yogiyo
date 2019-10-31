@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         underscored: false,
         freezeTableName: true,
-        tableName: "sms"
+        tableName: "Sms"
     });
     return Sms;
 };

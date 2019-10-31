@@ -42,7 +42,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         underscored: false,
         freezeTableName: true,
-        tableName: "user"
+        tableName: "User"
     });
     User.associate = function(models) {
         models.User.hasOne(models.Cart, {
