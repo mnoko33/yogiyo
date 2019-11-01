@@ -36,7 +36,9 @@
 
 ​	:heavy_check_mark: `POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) 
 
-​	:heavy_check_mark: `POST` url/api/restaurants/order (주문하기) 
+​	:heavy_check_mark: `POST` url/api/restaurants/payment-request (주문요청) 
+
+​	:heavy_check_mark: `POST` url/api/restaurants/payment-approval (주문승인) 
 
 
 
@@ -397,13 +399,38 @@ categoryId = [
 
 
 
-##### `POST` url/api/restaurants/order (주문하기) 
+##### `POST` url/api/restaurants/payment-request(주문요청) 
 
 ```js
-
+// res
+{
+    "status": true,
+    "tid": "T2688296636022244891",
+    "next_redirect_app_url": "https://mockup-pg-web.kakao.com/v1/690370ca8e18a4fc5b28c59d2b72e46aafb39f1d47392f73c1ed6b70ba2edf5d/aInfo",
+    "next_redirect_pc_url": "https://mockup-pg-web.kakao.com/v1/690370ca8e18a4fc5b28c59d2b72e46aafb39f1d47392f73c1ed6b70ba2edf5d/info",
+    "created_at": "2019-11-01T10:03:56"
+}
 ```
 
 
+
+##### `POST` url/api/restaurants/payment-approval (주문승인) 
+
+```js
+// res
+{
+    "status": true,
+    "message": "결제가 완료됐습니다.",
+    "history": {
+        "id": 14,
+        "orderedMenus": "1::1::2::2::3::3",
+        "orderedDate": "2019-11-01T01:05:27.902Z",
+        "orderedAddress": "서울 강남구 역삼동",
+        "updatedAt": "2019-11-01T01:05:27.904Z",
+        "createdAt": "2019-11-01T01:05:27.904Z"
+    }
+}
+```
 
 
 

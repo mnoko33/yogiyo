@@ -301,7 +301,7 @@ router.post('/:restaurantId/cart', async function(req, res, next) {
 });
 
 
-router.post('/order', async function(req, res, next) {
+router.post('/payment-approval', async function(req, res, next) {
     const token = req.headers['x-access-token'];
     const userInfo = await jwt.decodeJWT(token);
     const userId = userInfo.id;
@@ -348,9 +348,7 @@ router.post('/order', async function(req, res, next) {
             restaurantId: cart.restaurantId,
             userId: user.id
         })
-            .then(history => {
-                return history
-            })
+            .then(history => history)
             .catch(err => {
                 return res.json({
                     "status": false,
@@ -376,13 +374,14 @@ router.post('/order', async function(req, res, next) {
 
         res.json({
             "status": true,
+            "message": "결제가 완료됐습니다.",
             "history": history
         })
     }
 });
 
 // 카카오 결제
-router.post('/request', async function(req, res, next) {
+router.post('/payment-request', async function(req, res, next) {
     const token = req.headers['x-access-token'];
     const userInfo = await jwt.decodeJWT(token);
     const userId = userInfo.id;
@@ -415,65 +414,73 @@ router.post('/request', async function(req, res, next) {
             })
         });
     let menus = cart.menus;
-    menus = menus.split('::');
-    let menuList = [];
-    for (let i = 0; i < menus.length; i += 2) {
-        menuList.push([menus[i], menus[i + 1]])  // [id, count]
-    }
-
-    let totalPrice = 0;
-    let totalCount = 0;
-
-    const promisesMenus = menuList.map(async (list) => {
-        return new Promise(async (resolve, reject) => {
-            const menuId = list[0];
-            const menuCount = list[1];
-            const menuInstance = await models.Menu.findOne({
-                where: { id: menuId * 1 }
-            })
-                .then(result => {
-                    totalPrice += result.price;
-                    totalCount += menuCount * 1;
-                    return {
-                        "name": result.name,
-                        "count": menuCount * 1,
-                        "price": result.price
-                    }
-                })
-                .catch(() => false);
-            resolve(menuInstance)
-        })
-    });
-    menus = await Promise.all(promisesMenus);
-    const cid = "TC0ONETIME";
-    const itemName = totalCount === 1 ? menus[0].name : menus[0].name + `외 ${totalCount - 1}개`;
-    const url = encodeURI(`https://kapi.kakao.com/v1/payment/ready?cid=${cid}&partner_order_id=ssaudy&partner_user_id=ssaudy&item_name=${itemName}&quantity=1&total_amount=${totalPrice}&tax_free_amount=0&approval_url=http://13.124.8.90:3000&fail_url=http://13.124.8.90:3000&cancel_url=http://13.124.8.90:3000`);
-    const headers = {
-        "Authorization": "KakaoAK 03b49b6d6fa9478669ef7eba22d58302",
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-    };
-
-    const paymentRes =  await axios.post(url, {},{ "headers": headers })
-        .then(result => result)
-        .catch(err => {
-            console.log(err)
-            return false
-        });
-    if (!paymentRes) {
+    if (!menus) {
         res.json({
-            "status": false
+            "status": false,
+            "message": "장바구니가 비어있습니다."
         })
     } else {
-        res.json({
-            "status": true,
-            "tid": paymentRes.data.tid,
-            "tms_result": paymentRes.data.tms_result,
-            "next_redirect_app_url": paymentRes.data.next_redirect_app_url,
-            "next_redirect_pc_url": paymentRes.data.next_redirect_pc_url,
-            "created_at": paymentRes.data.created_at
-        })
-    }
+        menus = menus.split('::');
+        let menuList = [];
+        for (let i = 0; i < menus.length; i += 2) {
+            menuList.push([menus[i], menus[i + 1]])  // [id, count]
+        }
 
+        let totalPrice = 0;
+        let totalCount = 0;
+
+        const promisesMenus = menuList.map(async (list) => {
+            return new Promise(async (resolve, reject) => {
+                const menuId = list[0];
+                const menuCount = list[1];
+                const menuInstance = await models.Menu.findOne({
+                    where: { id: menuId * 1 }
+                })
+                    .then(result => {
+                        totalPrice += result.price;
+                        totalCount += menuCount * 1;
+                        return {
+                            "name": result.name,
+                            "count": menuCount * 1,
+                            "price": result.price
+                        }
+                    })
+                    .catch(() => false);
+                resolve(menuInstance)
+            })
+        });
+        menus = await Promise.all(promisesMenus);
+        const cid = "TC0ONETIME";
+        const itemName = totalCount === 1 ? menus[0].name : menus[0].name + `외 ${totalCount - 1}개`;
+        const approvalUrl = 'http://13.124.8.90:3000';
+        const failUrl = 'http://13.124.8.90:3000';
+        const cancelUrl = 'http://13.124.8.90:3000';
+        const url = encodeURI(`https://kapi.kakao.com/v1/payment/ready?cid=${cid}&partner_order_id=ssaudy&partner_user_id=ssaudy&item_name=${itemName}&quantity=1&total_amount=${totalPrice}&tax_free_amount=0&approval_url=${approvalUrl}&fail_url=${failUrl}&cancel_url=${cancelUrl}`);
+        const headers = {
+            "Authorization": "KakaoAK 03b49b6d6fa9478669ef7eba22d58302",
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        };
+
+        const paymentRes =  await axios.post(url, {},{ "headers": headers })
+            .then(result => result)
+            .catch(err => {
+                console.log(err);
+                return false
+            });
+        if (!paymentRes) {
+            res.json({
+                "status": false
+            })
+        } else {
+            res.json({
+                "status": true,
+                "tid": paymentRes.data.tid,
+                "next_redirect_app_url": paymentRes.data.next_redirect_app_url,
+                "next_redirect_pc_url": paymentRes.data.next_redirect_pc_url,
+                "created_at": paymentRes.data.created_at
+            })
+        }
+    }
 });
 
 
