@@ -45,7 +45,7 @@ Vue.use(VueRouter);
        path: '/finish',
        component: finishPage,
        name: 'finishPage',
-       props: true,
+       // props: true,
      },
      {
        path:'*',
