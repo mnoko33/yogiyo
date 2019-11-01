@@ -42,16 +42,16 @@ Vue.use(VueRouter);
        props: true
      },
      {
-       path:'*',
-       component: Page404,
-       name: 'Page404',
-     },
-     {
        path: '/finish',
        component: finishPage,
        name: 'finishPage',
        props: true,
-     }
+     },
+     {
+       path:'*',
+       component: Page404,
+       name: 'Page404',
+     },
    ]
  });
  
