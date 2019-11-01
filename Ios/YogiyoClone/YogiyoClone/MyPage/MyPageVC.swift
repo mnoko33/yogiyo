@@ -13,7 +13,7 @@ class MyPageVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var loginExplain: UILabel!
     @IBOutlet weak var loginbtn: UIButton!
     @IBOutlet weak var signUpbtn: UIButton!
-    
+     
     @IBOutlet weak var couponStore: UIButton!
     @IBOutlet weak var points: UIButton!
     @IBOutlet weak var reviewManage: UIButton!
