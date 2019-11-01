@@ -42,10 +42,10 @@ export default {
   
   // restaurant
   async getCategoryList(idx) {
-    return await axios.get(`${apiUrl}/api/restaurants/categories/${idx}`, {headers: headers})
+    return await axios.get(`${apiUrl}/api/restaurants/categories/${idx}/`, {headers: headers})
   },
   async getDetailRestaurant(id) {
-    return await axios.get(`${apiUrl}/api/restaurants/${id}/menus`, {headers: headers})
+    return await axios.get(`${apiUrl}/api/restaurants/${id}/menuss/`, {headers: headers})
   },
   async getCategory() {
     return await axios.get(`${apiUrl}/api/restaurants/categories/`)
