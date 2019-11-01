@@ -26,30 +26,30 @@
       }
     },
     mounted() {
-        this.isUser = this.$store.state.currentUser;
-        this.getUserInfo()
+      this.isUser = this.$store.state.currentUser;
+      this.getUserInfo()
     },
     watch: {
-        currentUser() {
-          this.isUser = this.$store.state.currentUser;
-          this.getUserInfo();
-        }
+      currentUser() {
+        this.isUser = this.$store.state.currentUser;
+        this.getUserInfo();
+      }
     },
     computed: {
-        ... mapState(['currentUser'])
+      ... mapState(['currentUser'])
 
     },
     methods: {
-         async getUserInfo() {
-             if (this.isUser) {
-                 await api.getUserInfo().then(res => {
-                     this.cart = res.data.cart.length;
-                     if (this.cart) {
-                         this.restaurantId = res.data.cart[0].restaurantId;
-                     }
-                 })
-             }
-         }
+      async getUserInfo() {
+        if (this.isUser) {
+          await api.getUserInfo().then(res => {
+            this.cart = res.data.cart.length;
+            if (this.cart) {
+              this.restaurantId = res.data.cart[0].restaurantId;
+            }
+          })
+        }
+      }
     }
   }
 </script>
