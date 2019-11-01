@@ -277,7 +277,39 @@ categoryId = [
             "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
             "deliveryFee": 2000,
             "minOrderAmount": 12000,
-            "isPlus": 0,  // 0: false, 1: true
+            "isPlus": false,  // 0: false, 1: true
+            "paymentMethods": "creditcard::online",
+            "createdAt": "2019-10-15T13:48:47.000Z",
+            "updatedAt": "2019-10-15T13:48:47.000Z"
+        }
+    ]
+}
+```
+
+
+
+`GET` url/api/restaurants/plus-categories/:categoryId (카테고리별 요기요 플러스 식당)
+
+```json
+// res
+{
+    "status": true,
+    "numsOfRestaurants": 570,
+    "restaurants": [
+        {
+            "id": 2,
+            "name": "쫄면주는 삼겹본능-강남점",
+            "category": "야식::프랜차이즈::한식",
+            "thumbnailUrl": "",
+            "address": "역삼동",
+            "lng": 127.029799209808,
+            "lat": 37.4970170754811,
+            "openTime": "11:00 - 01:00",
+            "deliveryTime": 60,
+            "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
+            "deliveryFee": 2000,
+            "minOrderAmount": 12000,
+            "isPlus": false,  // 0: false, 1: true
             "paymentMethods": "creditcard::online",
             "createdAt": "2019-10-15T13:48:47.000Z",
             "updatedAt": "2019-10-15T13:48:47.000Z"

@@ -102,7 +102,6 @@
               <span class="body-2"></span>
             </v-list-item-content>
           </v-list-item>
-          <!--<p class="text-center" style="padding: 5px 0" v-for="cart in carts">{{cart}}</p>-->
         </v-card>
         </div>
         <v-card v-if="deliveryFee != '0'" outlined class="restaurant-info">
@@ -134,6 +133,7 @@
   import Category from "@/components/Category";
   import { SpinnerLoader } from 'vue-spinners-css';
   import Swal from 'sweetalert2'
+  import router from '@/router';
 
   export default {
     name: "DetailRestaurantPage",
@@ -171,6 +171,11 @@
         resId: 0,
         totalPrice: 0,
         canOrder: false,
+      }
+    },
+    created() {
+      if (this.$store.state.currentUser === null) {
+        router.push({name: 'LoginPage'})
       }
     },
     mounted() {

@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <div style="position: sticky; z-index: 100">
-      <Category :categoryName="categoryName"></Category>
+      <Category :categoryIdx="categoryIdx"></Category>
     </div>
     <v-layout row class="restaurant-list">
       <v-flex sm12>
@@ -48,6 +48,7 @@
   import api from '../../api'
   import Restaurant from "@/components/Restaurant";
   import { SpinnerLoader } from 'vue-spinners-css';
+  import router from "@/router";
   
 
   export default {
@@ -66,17 +67,23 @@
         restaurantList: '',
         restaurants: [],
         restaurantsNumber: 0,
+        isUser: ''
+      }
+    },
+    created() {
+      if (this.$store.state.currentUser === null) {
+        router.push({name: 'LoginPage'})
       }
     },
     mounted() {
-     this.getRestaurantList();
+      this.getRestaurantList();
     },
     methods: {
       async getRestaurantList() {
         this.restaurantList = await api.getCategoryList(this.categoryIdx);
         this.restaurants = this.restaurantList.data.restaurants;
         this.restaurantsNumber = this.restaurants.length;
-      }
+      },
     },
     watch: {
       categoryIdx() {
