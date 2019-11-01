@@ -568,7 +568,7 @@ router.post('/payment-request', async function(req, res, next) {
         const cid = "TC0ONETIME";
         const itemName = totalCount === 1 ? menus[0].name : menus[0].name + `외 ${totalCount - 1}개`;
 
-        const basicUrl = 'http://13.124.8.90:3000'; // aws server
+        const basicUrl = 'http://13.124.8.90:8080'; // aws server
         const approvalUrl = `${basicUrl}/finish`;  // real server page
 
         const failUrl = `${basicUrl}/restaurant/detail/${restaurantId}`;
