@@ -378,25 +378,38 @@ categoryId = [
         	.
         "음료 메뉴"
     ],
-    "menus": {
-        "인기메뉴": [
-            {
-                "id": 1,
-                "name": "국물 떡볶이",
-                "restaurantId": 1,
-                "label": "인기메뉴",
-                "description": "사이즈 선택",
-                "price": 4500,
-                "createdAt": "2019-10-23T12:22:29.000Z",
-                "updatedAt": "2019-10-23T12:22:29.000Z"
-            }
-       	],
-       	"메인 메뉴": [
-            {
-                ...
+    "menus": [
+           {
+               "label": "인기메뉴",
+               "dishes": [
+                   {
+                        "id": 1,
+                        "name": "국물 떡볶이",
+                        "restaurantId": 1,
+                        "label": "인기메뉴",
+                        "description": "사이즈 선택",
+                        "price": 4500,
+                        "createdAt": "2019-10-23T12:22:29.000Z",
+                        "updatedAt": "2019-10-23T12:22:29.000Z"
+                    }
+               ]
+           },
+        	{
+               "label": "음료메뉴",
+               "dishes": [
+                   {
+                        "id": 2,
+                        "name": "국물 떡볶이",
+                        "restaurantId": 1,
+                        "label": "인기메뉴",
+                        "description": "사이즈 선택",
+                        "price": 4500,
+                        "createdAt": "2019-10-23T12:22:29.000Z",
+                        "updatedAt": "2019-10-23T12:22:29.000Z"
+                    }
+               ] 
             }
         ]
-    }
 }
 ```
 
