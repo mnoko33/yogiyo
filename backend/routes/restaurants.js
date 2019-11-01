@@ -215,8 +215,7 @@ router.get('/:restaurantId/info', async function (req, res, next) {
     }
 });
 
-// 매장별 메뉴 보기
-router.get('/:restaurantId/menus', async function (req, res, next) {
+router.get('/:restaurantId/menuss', async function (req, res, next) {
     const restaurantId = req.params.restaurantId * 1;
     const restaurant = await models.Restaurant.findOne({
         where: {id: restaurantId}
@@ -255,6 +254,71 @@ router.get('/:restaurantId/menus', async function (req, res, next) {
             } else {
                 labels.push(menu.label);
                 menus[menu.label] = [menu];
+            }
+        }
+
+        res.json({
+            "status": true,
+            "restaurant": restaurant,
+            "numsOfMenus": menuList.length,
+            "labels": labels,
+            "menus": menus
+        })
+    } else {
+        res.json({
+            "status": false,
+            "message": "일치하는 음식점이 존재하지 않습니다."
+        })
+    }
+});
+
+
+// 매장별 메뉴 보기
+router.get('/:restaurantId/menus', async function (req, res, next) {
+    const restaurantId = req.params.restaurantId * 1;
+    const restaurant = await models.Restaurant.findOne({
+        where: {id: restaurantId}
+    })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "메뉴 정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+
+    if (restaurant) {
+        const menuList =  await models.Menu.findAll({
+            where: { restaurantId: restaurant.id }
+        })
+            .then(result => {
+                return result
+            })
+            .catch(err => {
+                return res.json({
+                    "status": false,
+                    "message": "메뉴를 불러오는데 실패했습니다.",
+                    "err": err
+                })
+            });
+
+        let labels = [];
+        let menus = [];
+
+        for (let i = 0; i < menuList.length; i++) {
+            const menu = menuList[i];
+            if (labels.includes(menu.label)) {
+                const idx = labels.indexOf(menu.label);
+                menus[idx]['dishes'].push(menu)
+            } else {
+                labels.push(menu.label);
+                menus.push({
+                    "label": menu.label,
+                    "dishes": []
+                })
             }
         }
 
