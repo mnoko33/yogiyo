@@ -570,7 +570,7 @@ router.post('/payment-request', async function(req, res, next) {
 
         const basicUrl = 'http://13.124.8.90:8080'; // aws server
         const approvalUrl = `${basicUrl}/finish`;  // real server page
-
+	
         const failUrl = `${basicUrl}/restaurant/detail/${restaurantId}`;
         const cancelUrl = `${basicUrl}/restaurant/detail/${restaurantId}`;
         const url = encodeURI(`https://kapi.kakao.com/v1/payment/ready?cid=${cid}&partner_order_id=ssaudy&partner_user_id=ssaudy&item_name=${itemName}&quantity=1&total_amount=${totalPrice}&tax_free_amount=0&approval_url=${approvalUrl}&fail_url=${failUrl}&cancel_url=${cancelUrl}`);
