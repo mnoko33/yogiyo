@@ -57,8 +57,8 @@ export default {
       }
     })
   },
-  async requestPayment() {
-    return await axios.post(`${apiUrl}/api/restaurants/payment-request/`, {},{
+  async requestPayment(data) {
+    return await axios.post(`${apiUrl}/api/restaurants/payment-request/`, {data},{
       headers: {
         "x-access-token": localStorage.getItem('token')
       }
