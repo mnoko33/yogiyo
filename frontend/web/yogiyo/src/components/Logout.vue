@@ -31,7 +31,7 @@
         },
         logout () {
           this.$session.start();
-          if (this.$session.has("token")) {
+          //if (this.$session.has("token")) {
           // this.$session.remove("token")
           this.$session.destroy();
           this.$store.state.currentUser = '';
@@ -39,7 +39,7 @@
           localStorage.removeItem('currentUser');
           localStorage.removeItem('token');
           return this.$router.push({name:'MainPage'});
-      }
+      //}
         }
     }
 
