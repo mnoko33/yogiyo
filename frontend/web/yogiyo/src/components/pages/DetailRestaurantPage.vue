@@ -61,7 +61,7 @@
                 </v-card>
               </v-list-group>
             </v-list>
-            <v-card v-else outlined class="mr-5 restaurant-info">
+            <v-card v-else outlined class="mr-1 restaurant-info">
               <div style="margin: 33%">가게로 직접 문의해주세요.</div>
             </v-card>
           </div>
@@ -369,22 +369,14 @@
         });
       },
       async orderCart() {
-        await api.requestPayment().then(res => {
+        const params = { restaurantId: this.restaurantId};
+        await api.requestPayment(params).then(res => {
           window.location.href = res.data.next_redirect_pc_url;
           if (res.data.status) {
-            // this.approveOrder();
             this.getUserInfo();
           }
         })
       },
-      // async approveOrder() {
-      //   await api.approvalPayment().then(res => {
-      //     console.log('---------------');
-      //     if(res.data.status) {
-      //       router.push({name: 'finishPage', params: {finish: this.finish}});
-      //     }
-      //   })
-      // }
     },
     watch: {
       thumbnail() {

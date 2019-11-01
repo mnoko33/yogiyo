@@ -51,9 +51,6 @@ Vue.use(VueRouter);
        component: finishPage,
        name: 'finishPage',
        props: true,
-       beforeEnter: function(to, from, next) {
-         console.log(from.path)
-       }
      }
    ]
  });
