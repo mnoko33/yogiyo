@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-  <img src="../../assets/404Page.png" />
+  <v-container class="center">
+    <img src="../../assets/404Page.png" />
   </v-container>
 </template>
 <script>
@@ -12,3 +12,8 @@
       }
   }
 </script>
+<style>
+  .center {
+    text-align: center;
+  }
+</style>

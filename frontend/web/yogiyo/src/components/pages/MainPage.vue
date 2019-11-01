@@ -2,7 +2,7 @@
   <v-container>
     <v-layout v-if="categories" row style="width: 90%; margin: auto">
       <v-flex xs6 sm4 md3 v-for="category in categories" :key="category.categoryIdx">
-        <router-link :to="{name: 'RestaurantListPage', params: {categoryIdx: category.id+1, categoryName: category.name}}"><v-card
+        <router-link :to="{name: 'RestaurantListPage', params: {categoryIdx: category.id, categoryName: category.name}}"><v-card
             outlined
             flat
             height="218px"
@@ -14,7 +14,7 @@
             width="216px"
             height="216px"
             style="margin-right: 0; position: absolute; bottom: 0; right: 0"
-            :src="'http://70.12.247.65:3000' + category.imgUrl"
+            :src="'http://13.124.8.90:3000' + category.imgUrl"
           />
         </v-card></router-link>
       </v-flex>

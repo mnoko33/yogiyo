@@ -5,8 +5,8 @@ import LoginPage from "../components/pages/LoginPage";
 import JoinPage from "../components/pages/JoinPage";
 import RestaurantListPage from "@/components/pages/RestaurantListPage";
 import DetailRestaurantPage from "@/components/pages/DetailRestaurantPage";
-
 import Page404 from '../components/pages/404Page'
+import finishPage from "@/components/pages/finishPage";
 
 Vue.use(VueRouter);
 
@@ -39,13 +39,22 @@ Vue.use(VueRouter);
        path: '/restaurant/detail/:restaurantId',
        component: DetailRestaurantPage,
        name: 'DetailRestaurantPage',
-       props: true},
+       props: true
+     },
      {
        path:'*',
        component: Page404,
        name: 'Page404',
+     },
+     {
+       path: '/finish',
+       component: finishPage,
+       name: 'finishPage',
+       props: true,
+       beforeEnter: function(to, from, next) {
+         console.log(from.path)
+       }
      }
-
    ]
  });
  
