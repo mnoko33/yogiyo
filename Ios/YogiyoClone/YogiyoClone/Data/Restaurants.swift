@@ -9,7 +9,7 @@
 import Foundation
 
 class Restaurants {
-    private let restaurants = [
+    private let restaurants = [  
         [
             "id": 1,
             "name": "쫄면주는 삼겹본능-강남점1",
