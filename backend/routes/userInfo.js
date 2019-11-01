@@ -108,7 +108,19 @@ router.get('/user', async function(req, res, next) {
                 "err": err
             })
         });
-    const cart = await user.getCart();
+    // const cart = await user.getCart();
+    const cart = await models.Cart.findOne({
+        where: { userId: userId }
+    })
+        .then(result => result)
+        .catch(err => {
+            return res.json({
+                "status": false,
+                "message": "장바구니 정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+
     if (!cart.menus) {
         res.json({
             "status": true,
