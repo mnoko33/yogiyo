@@ -335,7 +335,7 @@ router.post('/payment-approval', async function(req, res, next) {
             })
         });
 
-    if (!user || !cart) {
+    if (!user || !cart.menus) {
         return res.json({
             "status": false,
             "message": !user ? "존재하지 않는 유저입니다." : "장바구니가 비어있습니다."
