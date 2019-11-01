@@ -18,16 +18,16 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         underscored: false,
-        freezeTableName: true,
-        tableName: "History"
+        freezeTableName: false,
+        tableName: "history"
     });
-    History.associate = function(models) {
-        History.belongsTo(models.Restaurant, {
-            foreignKey: 'restaurantId'
-        });
-        History.belongsTo(models.User, {
-            foreignKey: 'userId'
-        });
-    };
+    // History.associate = function(models) {
+    //     History.belongsTo(models.Restaurant, {
+    //         foreignKey: 'restaurantId'
+    //     });
+    //     History.belongsTo(models.User, {
+    //         foreignKey: 'userId'
+    //     });
+    // };
     return History;
 };

@@ -1,21 +1,21 @@
 {
   "development": {
-    "username": "ubuntu",
-    "password": "",
+    "username": "yogiyo",
+    "password": "yogiyo",
     "database": "clone_prj",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "ubuntu",
-    "password": "",
+    "username": "yogiyo",
+    "password": "yogiyo",
     "database": "clone_prj",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "ubuntu",
-    "password": "",
+    "username": "yogiyo",
+    "password": "yogiyo",
     "database": "clone_prj",
     "host": "127.0.0.1",
     "dialect": "mysql"

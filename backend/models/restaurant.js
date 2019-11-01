@@ -70,16 +70,16 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         underscored: false,
-        freezeTableName: true,
-        tableName: "Restaurant"
+        freezeTableName: false,
+        tableName: "restaurant"
     });
-    Restaurant.associate = function(models) {
-        models.Restaurant.hasMany(models.Menu, {
-            foreignKey: "restaurantId"
-        });
-        models.Restaurant.hasMany(models.Cart, {
-            foreignKey: "restaurantId"
-        });
-    };
+    // Restaurant.associate = function(models) {
+    //     models.Restaurant.hasMany(models.Menu, {
+    //         foreignKey: "restaurantId"
+    //     });
+    //     models.Restaurant.hasMany(models.Cart, {
+    //         foreignKey: "restaurantId"
+    //     });
+    // };
     return Restaurant;
 };

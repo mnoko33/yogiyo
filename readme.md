@@ -36,7 +36,9 @@
 
 ​	:heavy_check_mark: `POST` url/api/restaurants/:restaurantId/cart (카트에 메뉴 추가하기) 
 
-​	:heavy_check_mark: `POST` url/api/restaurants/order (주문하기) 
+​	:heavy_check_mark: `POST` url/api/restaurants/payment-request (주문요청) 
+
+​	:heavy_check_mark: `POST` url/api/restaurants/payment-approval (주문승인) 
 
 
 
@@ -58,7 +60,7 @@
 
 ------
 
-**현재 url** = `http://70.12.247.65:3000`
+**AWS** `http://13.124.8.90:3000`
 
 **주의**
 
@@ -275,7 +277,39 @@ categoryId = [
             "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
             "deliveryFee": 2000,
             "minOrderAmount": 12000,
-            "isPlus": 0,  // 0: false, 1: true
+            "isPlus": false,  // 0: false, 1: true
+            "paymentMethods": "creditcard::online",
+            "createdAt": "2019-10-15T13:48:47.000Z",
+            "updatedAt": "2019-10-15T13:48:47.000Z"
+        }
+    ]
+}
+```
+
+
+
+`GET` url/api/restaurants/plus-categories/:categoryId (카테고리별 요기요 플러스 식당)
+
+```json
+// res
+{
+    "status": true,
+    "numsOfRestaurants": 570,
+    "restaurants": [
+        {
+            "id": 2,
+            "name": "쫄면주는 삼겹본능-강남점",
+            "category": "야식::프랜차이즈::한식",
+            "thumbnailUrl": "",
+            "address": "역삼동",
+            "lng": 127.029799209808,
+            "lat": 37.4970170754811,
+            "openTime": "11:00 - 01:00",
+            "deliveryTime": 60,
+            "representativeMenus": "구이삼겹 1인, 구이삼겹 2인",
+            "deliveryFee": 2000,
+            "minOrderAmount": 12000,
+            "isPlus": false,  // 0: false, 1: true
             "paymentMethods": "creditcard::online",
             "createdAt": "2019-10-15T13:48:47.000Z",
             "updatedAt": "2019-10-15T13:48:47.000Z"
@@ -397,13 +431,38 @@ categoryId = [
 
 
 
-##### `POST` url/api/restaurants/order (주문하기) 
+##### `POST` url/api/restaurants/payment-request(주문요청) 
 
 ```js
-
+// res
+{
+    "status": true,
+    "tid": "T2688296636022244891",
+    "next_redirect_app_url": "https://mockup-pg-web.kakao.com/v1/690370ca8e18a4fc5b28c59d2b72e46aafb39f1d47392f73c1ed6b70ba2edf5d/aInfo",
+    "next_redirect_pc_url": "https://mockup-pg-web.kakao.com/v1/690370ca8e18a4fc5b28c59d2b72e46aafb39f1d47392f73c1ed6b70ba2edf5d/info",
+    "created_at": "2019-11-01T10:03:56"
+}
 ```
 
 
+
+##### `POST` url/api/restaurants/payment-approval (주문승인) 
+
+```js
+// res
+{
+    "status": true,
+    "message": "결제가 완료됐습니다.",
+    "history": {
+        "id": 14,
+        "orderedMenus": "1::1::2::2::3::3",
+        "orderedDate": "2019-11-01T01:05:27.902Z",
+        "orderedAddress": "서울 강남구 역삼동",
+        "updatedAt": "2019-11-01T01:05:27.904Z",
+        "createdAt": "2019-11-01T01:05:27.904Z"
+    }
+}
+```
 
 
 

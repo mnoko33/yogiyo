@@ -2,7 +2,8 @@ const express = require('express');
 const models = require('../models');
 const router = express.Router();
 const jwt = require('../functions/jwt');
-
+const axios = require('axios');
+const os = require( 'os' );
 function getDistance(userLng, userLat, restLng, restLat) {
     function degreeToRadian(deg) {
         return deg * (Math.PI / 180)
@@ -32,6 +33,61 @@ router.get('/categories', async function(req, res, next) {
         })
     }
 });
+
+// 요기요 플러스
+router.get('/plus-categories/:categoryId', async function (req, res, next) {
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+
+    const user = await models.User.findOne({
+        where: { id: userInfo.id }
+    });
+
+    if (!user) {
+        res.json({
+            "status": false,
+            "message": "일치하는 유저가 없습니다."
+        })
+    }
+
+    // 유저 위치 정보
+    const userLng = user.lng;
+    const userLat = user.lat;
+
+    // 카테고리 이름
+    const categoryId = req.params.categoryId * 1;
+    const category = await models.Category.findOne({
+        where: { id: categoryId }
+    });
+    if (!category) {
+        res.json({
+            "status": false,
+            "message": `${categoryId}번에 해당하는 카테고리가 존재하지 않습니다.`
+        })
+    }
+    // 요기요 플러스
+    let restaurants = [];
+
+    restaurants = await models.Restaurant.findAll();
+
+    const deliveryLimitDistance = 3;
+    restaurants = await restaurants.filter((restaurant) => {
+        // 전체 보기
+        if ((categoryId === 1 || categoryId === 14) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= deliveryLimitDistance) {
+            return restaurant
+        }
+        // 카테고리별 보기
+        else if (restaurant.category.includes(category.name) && getDistance(userLng, userLat, restaurant.lng, restaurant.lat) <= deliveryLimitDistance) {
+            return restaurant
+        }
+    });
+
+    res.json({
+        "status": true,
+        "numsOfRestaurants": restaurants.length,
+        "restaurants": restaurants
+    })
+})
 
 // 카테고리 별 식당보기 위치의 경우 token 정보에 기반
 router.get('/categories/:categoryId', async function (req, res, next) {
@@ -66,13 +122,8 @@ router.get('/categories/:categoryId', async function (req, res, next) {
     }
     // 요기요 플러스
     let restaurants = [];
-    if (categoryId === 14) {
-        restaurants = await models.Restaurant.findAll({
-            where: { isPlus: true }
-        })
-    } else {
-        restaurants = await models.Restaurant.findAll();
-    }
+
+    restaurants = await models.Restaurant.findAll();
 
     const deliveryLimitDistance = 3;
     restaurants = await restaurants.filter((restaurant) => {
@@ -180,14 +231,18 @@ router.get('/:restaurantId/menus', async function (req, res, next) {
                 "err": err
             })
         });
+
     if (restaurant) {
-        const menuList = await restaurant.getMenus()
-            .then((result) => {
+        const menuList =  await models.Menu.findAll({
+            where: { restaurantId: restaurant.id }
+        })
+            .then(result => {
                 return result
             })
-            .catch((err) => {
+            .catch(err => {
                 return res.json({
                     "status": false,
+                    "message": "메뉴를 불러오는데 실패했습니다.",
                     "err": err
                 })
             });
@@ -295,8 +350,8 @@ router.post('/:restaurantId/cart', async function(req, res, next) {
     })
 });
 
-// TODO: check it works well
-router.post('/order', async function(req, res, next) {
+
+router.post('/payment-approval', async function(req, res, next) {
     const token = req.headers['x-access-token'];
     const userInfo = await jwt.decodeJWT(token);
     const userId = userInfo.id;
@@ -330,7 +385,7 @@ router.post('/order', async function(req, res, next) {
             })
         });
 
-    if (!user || !cart) {
+    if (!user || !cart.menus) {
         return res.json({
             "status": false,
             "message": !user ? "존재하지 않는 유저입니다." : "장바구니가 비어있습니다."
@@ -343,9 +398,7 @@ router.post('/order', async function(req, res, next) {
             restaurantId: cart.restaurantId,
             userId: user.id
         })
-            .then(history => {
-                return history
-            })
+            .then(history => history)
             .catch(err => {
                 return res.json({
                     "status": false,
@@ -371,9 +424,118 @@ router.post('/order', async function(req, res, next) {
 
         res.json({
             "status": true,
+            "message": "결제가 완료됐습니다.",
             "history": history
         })
     }
 });
+
+// 카카오 결제
+router.post('/payment-request', async function(req, res, next) {
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+    const userId = userInfo.id;
+    const restaurantId = req.body.data.restaurantId;
+
+    const user = await models.User.findOne({
+        where: { id: userId }
+    })
+        .then(user => {
+            return user
+        })
+        .catch(err => {
+            return res.json({
+                "status": false,
+                "message": "유저정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
+
+    const cart = await models.Cart.findOne({
+        where: { userId: userId }
+    })
+        .then(user => {
+            return user
+        })
+        .catch(err => {
+            return res.json({
+                "status": false,
+                "message": "장바구니 정보를 가져오는데 실패했습니다.",
+                "err": err
+            })
+        });
+    let menus = cart.menus;
+    if (!menus) {
+        res.json({
+            "status": false,
+            "message": "장바구니가 비어있습니다."
+        })
+    } else {
+        menus = menus.split('::');
+        let menuList = [];
+        for (let i = 0; i < menus.length; i += 2) {
+            menuList.push([menus[i], menus[i + 1]])  // [id, count]
+        }
+
+        let totalPrice = 0;
+        let totalCount = 0;
+
+        const promisesMenus = menuList.map(async (list) => {
+            return new Promise(async (resolve, reject) => {
+                const menuId = list[0];
+                const menuCount = list[1];
+                const menuInstance = await models.Menu.findOne({
+                    where: { id: menuId * 1 }
+                })
+                    .then(result => {
+                        totalPrice += result.price;
+                        totalCount += menuCount * 1;
+                        return {
+                            "name": result.name,
+                            "count": menuCount * 1,
+                            "price": result.price
+                        }
+                    })
+                    .catch(() => false);
+                resolve(menuInstance)
+            })
+        });
+        menus = await Promise.all(promisesMenus);
+        const cid = "TC0ONETIME";
+        const itemName = totalCount === 1 ? menus[0].name : menus[0].name + `외 ${totalCount - 1}개`;
+
+        const basicUrl = 'http://13.124.8.90:3000'; // aws server
+        const approvalUrl = `${basicUrl}/finish`;  // real server page
+
+        const failUrl = `${basicUrl}/restaurant/detail/${restaurantId}`;
+        const cancelUrl = `${basicUrl}/restaurant/detail/${restaurantId}`;
+        const url = encodeURI(`https://kapi.kakao.com/v1/payment/ready?cid=${cid}&partner_order_id=ssaudy&partner_user_id=ssaudy&item_name=${itemName}&quantity=1&total_amount=${totalPrice}&tax_free_amount=0&approval_url=${approvalUrl}&fail_url=${failUrl}&cancel_url=${cancelUrl}`);
+        const headers = {
+            "Authorization": "KakaoAK 03b49b6d6fa9478669ef7eba22d58302",
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        };
+
+        const paymentRes =  await axios.post(url, {},{ "headers": headers })
+            .then(result => result)
+            .catch(err => {
+                console.log(err);
+                return false
+            });
+        if (!paymentRes) {
+            res.json({
+                "status": false
+            })
+        } else {
+            res.json({
+                "status": true,
+                "tid": paymentRes.data.tid,
+                "next_redirect_app_url": paymentRes.data.next_redirect_app_url,
+                "next_redirect_pc_url": paymentRes.data.next_redirect_pc_url,
+                "created_at": paymentRes.data.created_at
+            })
+        }
+    }
+});
+
 
 module.exports = router;
