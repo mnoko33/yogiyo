@@ -17,7 +17,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!{
         didSet {
             self.tableView.delegate = self
-            self.tableView.dataSource = self
+            self.tableView.dataSource = self 
         }
     }
     
