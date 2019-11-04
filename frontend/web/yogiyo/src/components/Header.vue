@@ -23,21 +23,29 @@
         isUser: false,
         cart: 0,
         restaurantId: 0,
+        cartLen: 0
       }
     },
     mounted() {
       this.isUser = this.$store.state.currentUser;
+      this.cartLen = this.$store.state.cartLength;
+      console.log(this.cartLen,'mounted')
+      console.log(this.cartLength,'store')
       this.getUserInfo()
     },
     watch: {
       currentUser() {
         this.isUser = this.$store.state.currentUser;
         this.getUserInfo();
-      }
+      },
+      cartLength() {
+          console.log(this.$store.state.cartLength)
+          this.getUserInfo();
+      },
     },
     computed: {
-      ... mapState(['currentUser'])
-
+      ... mapState(['currentUser']),
+      ... mapState(['cartLength']),
     },
     methods: {
       async getUserInfo() {

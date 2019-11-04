@@ -11,5 +11,6 @@ export default new Vuex.Store({
   state: {
     currentUser: localStorage.getItem('currentUser'),
     token: localStorage.getItem('token'),
+    cartLength: localStorage.getItem('cartLength'),
   }
 })

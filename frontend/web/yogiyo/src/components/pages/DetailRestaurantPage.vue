@@ -84,7 +84,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col cols="12" md="4" class="pa-4 cart sticky">
+        <v-col cols="12" md="4" class="pa-4 cart sticky" style="z-index: 100">
           <v-card outlined dark style="background-color: black;">
             <div class="my-0"><p class="mx-2 my-2">주문표
               <v-icon v-if="carts.length > 0" color="white" @click="deleteAllCart" style="float: right">mdi-trash-can-outline</v-icon></p></div>
@@ -264,6 +264,9 @@
       async getUserInfo() {
         await api.getUserInfo().then(res => {
           this.carts = res.data.cart;
+          const cartLength = String(this.carts.length);
+          localStorage.setItem('cartLength', cartLength);
+          // console.log(localStorage.getItem('cartLength')
           this.totalPrice = this.comma(res.data.totalPrice);
           this.checkCanOrder();
           for (const cart in this.carts) {
@@ -288,7 +291,7 @@
           "menus" : cartInfo
         };
         await api.postCart(data, this.resId).then(res =>  {
-          console.log(res.data.status);
+          // console.log(res.data.status);
           this.getUserInfo();
         })
       },
