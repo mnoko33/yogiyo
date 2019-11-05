@@ -12,17 +12,37 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragment.FoodTabFragment">
 
-
-        <TextView
-            android:id="@+id/tab_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="tab layout"
-            android:textSize="30sp"
+        <LinearLayout
+            android:id="@+id/topBarLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/viewPager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/yogiyo_logo" />
+
+            <TextView
+                android:id="@+id/tab_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="역삼동"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
@@ -31,14 +51,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_textView">
+            app:layout_constraintTop_toBottomOf="@id/topBarLinearLayout">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/colorAccent"
-                android:layout_height="wrap_content">
+                app:tabSelectedTextColor="@color/colorAccent">
 
             </com.google.android.material.tabs.TabLayout>
 

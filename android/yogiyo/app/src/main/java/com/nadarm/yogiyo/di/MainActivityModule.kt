@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module(includes = [MainActivityProviderModule::class])
-abstract class MainActivityModule {
+interface MainActivityModule {
 
 //    @FragmentScope
 //    @ContributesAndroidInjector(modules = [FoodModule.FoodProviderModule::class])
@@ -15,7 +15,7 @@ abstract class MainActivityModule {
 
     @Binds
     @ActivityScope
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }
 

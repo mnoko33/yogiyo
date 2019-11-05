@@ -7,11 +7,17 @@ import javax.inject.Singleton
 
 @Singleton
 class AdDataRepository @Inject constructor(
-    private val cache: AdDataSource.Cache
+    private val cache: AdDataSource.Cache,
+    private val remote: AdDataSource.Remote
 ) : AdRepository {
 
 
-    override fun getAds(type: Ad.Type): Single<List<Ad>> {
-        return cache.getAds(type)
+    override fun getAds(
+        type: Ad.Type,
+        token: String,
+        baseUrl: String
+    ): Single<List<Ad>> {
+//        return cache.getAds(type, token, baseUrl)  TODO ads cache
+        return remote.getAds(type, token, baseUrl)
     }
 }

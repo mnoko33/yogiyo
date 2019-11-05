@@ -27,7 +27,7 @@ class FoodTabItemFragment(
     private val category: FoodCategory,
     private val restaurantVm: RestaurantViewModel.ViewModelImpl,
     private val topScrollVm: TopScrollVIewModel.ViewModelImpl
-) : BaseFragment() {
+) : BaseItemFragment() {
 
     private lateinit var binding: FragmentFoodTabItemBinding
     private val adapter: BaseListAdapter = BaseListAdapter(restaurantVm)
@@ -39,7 +39,7 @@ class FoodTabItemFragment(
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_food_tab_item, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -79,11 +79,13 @@ class FoodTabItemFragment(
         restaurantVm.inputs.category(category.id)
     }
 
-    fun getCategory(): FoodCategory = category
-
     private fun startRestaurantActivity(restaurant: Restaurant) {
         val intent = Intent(context, RestaurantActivity::class.java)
         intent.putExtra("restaurantId", restaurant.id)
         startActivity(intent)
+    }
+
+    override fun getTitle(): String {
+        return category.name
     }
 }

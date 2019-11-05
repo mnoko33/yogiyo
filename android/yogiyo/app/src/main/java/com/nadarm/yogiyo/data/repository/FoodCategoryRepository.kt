@@ -5,10 +5,11 @@ import io.reactivex.Single
 
 interface FoodCategoryRepository {
 
-    fun getCategories(): Single<List<FoodCategory>>
+    fun getCategories(token: String, baseUrl: String): Single<List<FoodCategory>>
 
 }
 
 interface FoodCategoryDataSource : FoodCategoryRepository {
     interface Cache : FoodCategoryDataSource
+    interface Remote: FoodCategoryDataSource
 }

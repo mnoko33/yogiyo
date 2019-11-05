@@ -15,8 +15,10 @@ fun bindImage(view: ImageView, srcId: Int) {
 }
 
 @BindingAdapter("bindImage")
-fun bindImage(view: ImageView, imageUrl: String) {
-    Glide.with(view.context).load(imageUrl).into(view)
+fun bindImage(view: ImageView, imageUrl: String?) {
+    if (imageUrl != null) {
+        Glide.with(view.context).load(imageUrl).into(view)
+    }
 }
 
 @BindingAdapter("bindAdapter", "bindScrollListener", "bindSnapHelper", requireAll = false)

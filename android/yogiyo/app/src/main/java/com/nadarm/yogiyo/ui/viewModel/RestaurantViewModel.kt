@@ -26,7 +26,8 @@ interface RestaurantViewModel {
     }
 
     class ViewModelImpl @Inject constructor(
-        private val restaurantRepo: RestaurantRepository
+        private val restaurantRepo: RestaurantRepository,
+        stringMap:Map<String, String>
     ) : BaseViewModel(), Inputs, Outputs {
 
         private val itemClicked: PublishProcessor<BaseItem> = PublishProcessor.create()
@@ -38,6 +39,7 @@ interface RestaurantViewModel {
         private val scrollPosition: BehaviorProcessor<Int> = BehaviorProcessor.createDefault(0)
         private val startRestaurantActivity: Flowable<Restaurant>
 
+        private val token = stringMap["token"]?: error("token error")
 
         val inputs: Inputs = this
         val outputs: Outputs = this
@@ -48,7 +50,7 @@ interface RestaurantViewModel {
                 .flatMapSingle {
                     val isPlus = it.first
                     val categoryId = it.second
-                    restaurantRepo.getRestaurants(isPlus, categoryId)
+                    restaurantRepo.getRestaurants(isPlus, categoryId, token)
                         .subscribeOn(Schedulers.io())
                 }
                 .subscribe(restaurantList)

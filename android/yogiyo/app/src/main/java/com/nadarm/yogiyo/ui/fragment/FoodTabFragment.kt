@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.nadarm.yogiyo.R
 import com.nadarm.yogiyo.databinding.FragmentFoodTabBinding
-import com.nadarm.yogiyo.ui.adapter.FoodCategoryPagerAdapter
+import com.nadarm.yogiyo.ui.adapter.BaseFragmentPagerAdapter
 import com.nadarm.yogiyo.ui.model.FoodCategory
 import com.nadarm.yogiyo.ui.viewModel.FoodCategoryViewModel
 import com.nadarm.yogiyo.ui.viewModel.RestaurantViewModel
@@ -16,6 +16,7 @@ import com.nadarm.yogiyo.ui.viewModel.TopScrollVIewModel
 import com.nadarm.yogiyo.util.subscribeMainThread
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_food_tab.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -35,7 +36,7 @@ class FoodTabFragment @Inject constructor(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_food_tab, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -43,8 +44,9 @@ class FoodTabFragment @Inject constructor(
         super.onActivityCreated(savedInstanceState)
 
         val manager = childFragmentManager
-        val adapter = FoodCategoryPagerAdapter(manager)
+        val adapter = BaseFragmentPagerAdapter(manager)
         viewPager.adapter = adapter
+        tabLayout.setupWithViewPager(viewPager)
 
         foodCategoryVm.outputs.foodCategoryList()
             .map {
@@ -61,15 +63,17 @@ class FoodTabFragment @Inject constructor(
             .subscribeMainThread(Schedulers.io(), compositeDisposable) { adapter.tabs = it }
 
 
-        tabLayout.setupWithViewPager(viewPager)
-
-        arguments?.let {
-            tab_textView.text = it["category"].toString()
-        }
-
         // TODO 선택된 카테고리 탭에서 시작
         // TODO 선택된 카테고리 탭 유지하기
-//        viewPager.currentItem
+        foodCategoryVm.outputs.changePagePosition()
+            .delay(100, TimeUnit.MILLISECONDS)
+            .subscribeMainThread(Schedulers.computation(), compositeDisposable) {
+                viewPager.currentItem = it
+            }
+        arguments?.let {
+            foodCategoryVm.inputs.pageSelected(it["category"] as Long)
+        }
+
 
     }
 }
