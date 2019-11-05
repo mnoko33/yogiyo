@@ -1,26 +1,16 @@
 <template>
-  <v-footer
-    padless
-    color="white"
-  >
-    <v-card
-      flat
-      tile
-      class="lighten-1 white--text text-center"
-
-    >
+  <v-footer padless color="white">
+    <v-card flat tile class="lighten-1 white--text text-center">
       <v-divider></v-divider>
 
       <v-card-text class="py-2" style="width: 1000px; margin: auto;">
         <nav>
           <ul>
-            <li v-for="menu in menus"><a :href="menu.address" target="_blank" style="text-decoration: none; color: #818181; font-size: 12px">{{ menu.name }}</a></li>
+            <li v-for="(menu, index) in menus" :key="index"><a :href="menu.address" target="_blank" style="text-decoration: none; color: #818181; font-size: 12px">{{ menu.name }}</a></li>
              <v-btn class="mx-5" icon><img src="../assets/페이스북로고.png" style="width: 12px" alt=""><a href="https://www.facebook.com/Yogiyokorea/" target="_blank" style="text-decoration:none; color: #818181; font-size: 12px;">페이스북</a></v-btn>
               <v-btn class="mx-5" icon><img src="../assets/네이버블로그.png" style="width: 12px" alt=""><a href="http://blog.yogiyo.co.kr/" target="_blank" style="text-decoration:none; color: #818181; font-size: 12px">블로그</a></v-btn>
           </ul>
         </nav>
-        <!--<div v-if="windows.width > 740">-->
-        <!--</div>-->
       </v-card-text>
       <v-divider></v-divider>
       <v-card-text class="pt-0" style="font-size: 12px; width: 60%; margin: auto;">
@@ -34,43 +24,43 @@
 
 <script>
   export default {
-      name: "Footer",
-      data: () => ({
-          windows: {
-            width: 0,
-            height: 0
-          },
-          menus: [
-            {name: '이용약관', address: 'https://www.yogiyo.co.kr/mobile/#/policy/'},
-            {name: '개인정보처리방침', address: 'https://www.yogiyo.co.kr/mobile/#/privacy/'},
-            {name: '회원등급정책', address: 'https://www.yogiyo.co.kr/mobile/#/point_policy/'},
-            {name: '회사소개', address: 'https://www.deliveryhero.co.kr/'},
-            {name: '요기요사장님', address: 'https://owner.yogiyo.co.kr/owner/login/'},
-            {name: '입점문의', address: 'https://owner.yogiyo.co.kr/owner/join/request/'},
-            {name: '공지사항', address: 'https://www.yogiyo.co.kr/mobile/#/notice/'},
+    name: "Footer",
+    data: () => ({
+      windows: {
+        width: 0,
+        height: 0
+      },
+      menus: [
+        {name: '이용약관', address: 'https://www.yogiyo.co.kr/mobile/#/policy/'},
+        {name: '개인정보처리방침', address: 'https://www.yogiyo.co.kr/mobile/#/privacy/'},
+        {name: '회원등급정책', address: 'https://www.yogiyo.co.kr/mobile/#/point_policy/'},
+        {name: '회사소개', address: 'https://www.deliveryhero.co.kr/'},
+        {name: '요기요사장님', address: 'https://owner.yogiyo.co.kr/owner/login/'},
+        {name: '입점문의', address: 'https://owner.yogiyo.co.kr/owner/join/request/'},
+        {name: '공지사항', address: 'https://www.yogiyo.co.kr/mobile/#/notice/'},
       ],
     }),
-      created() {
-        window.addEventListener('resize', this.handleResize)
-        this.handleResize();
-      },
-      methods: {
-        handleResize() {
+    created() {
+      window.addEventListener('resize', this.handleResize)
+      this.handleResize();
+    },
+    methods: {
+      handleResize() {
         this.windows.width = window.innerWidth;
         this.windows.height = window.innerHeight;
-    },
-      }
+      },
+    }
   }
 </script>
 
 <style type="text/css">
  nav ul{padding-top:10px;}
  nav ul li {
-    display:inline;
-    border-left:1px solid #999;
-    font:bold 12px Dotum;
-    padding:0 25px;
-}
+   display:inline;
+   border-left:1px solid #999;
+   font:bold 12px Dotum;
+   padding:0 25px;
+ }
  nav ul li:first-child{border-left:none;}
  nav ul li:last-child{border-left:none;}
 </style>

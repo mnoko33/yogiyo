@@ -1,9 +1,6 @@
 import axios from 'axios'
 
 const apiUrl = 'http://13.124.8.90:3000';
-const headers = {
-  'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTcxNzA0MDk1LCJleHAiOjE1NzUzMDQwOTV9.WFPbwyhOKJa6r9jmlJE4Pq1VPG3lVDq4daMTiFH2yQs'
-};
 
 export default {
   // user 관련
@@ -42,10 +39,18 @@ export default {
   
   // restaurant
   async getCategoryList(idx) {
-    return await axios.get(`${apiUrl}/api/restaurants/categories/${idx}/`, {headers: headers})
+    return await axios.get(`${apiUrl}/api/restaurants/categories/${idx}/`, {
+      headers: {
+        "x-access-token": localStorage.getItem('token')
+      }
+    })
   },
   async getDetailRestaurant(id) {
-    return await axios.get(`${apiUrl}/api/restaurants/${id}/menuss/`, {headers: headers})
+    return await axios.get(`${apiUrl}/api/restaurants/${id}/menuss/`, {
+      headers: {
+        "x-access-token": localStorage.getItem('token')
+      }
+    })
   },
   async getCategory() {
     return await axios.get(`${apiUrl}/api/restaurants/categories/`)

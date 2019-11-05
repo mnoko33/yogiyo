@@ -5,11 +5,11 @@
 </template>
 <script>
   export default {
-      name: "404",
+    name: "404",
     data: () => ({
     }),
-      methods: {
-      }
+    methods: {
+    }
   }
 </script>
 <style>

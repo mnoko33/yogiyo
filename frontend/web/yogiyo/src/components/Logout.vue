@@ -20,29 +20,28 @@
       currentUser: ''
     }),
     mounted() {
-        this.getUser()
+      this.getUser()
     },
     methods: {
-        getUser () {
-            const User = JSON.parse(this.$store.state.currentUser);
-            if (User.username) {
-                this.currentUser = User.username
-            } else {this.currentUser = User}
-        },
-        logout () {
-          this.$session.start();
-          //if (this.$session.has("token")) {
-          // this.$session.remove("token")
-          this.$session.destroy();
-          this.$store.state.currentUser = '';
-          this.$store.state.token = '';
-          localStorage.removeItem('currentUser');
-          localStorage.removeItem('token');
-          return this.$router.push({name:'MainPage'});
-      //}
-        }
+      getUser () {
+        const User = JSON.parse(this.$store.state.currentUser);
+        if (User.username) {
+          this.currentUser = User.username
+        } else {this.currentUser = User}
+      },
+      logout () {
+        this.$session.start();
+        this.$session.destroy();
+        this.$store.state.currentUser = '';
+        this.$store.state.token = '';
+        this.$store.state.temporary = '';
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('temporary');
+        localStorage.removeItem('token');
+        localStorage.removeItem('cartLength');
+        return this.$router.push({name:'MainPage'});
+      }
     }
-
   }
 </script>
 

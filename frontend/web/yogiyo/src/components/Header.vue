@@ -7,7 +7,7 @@
           <button v-if="!isUser" type="button" class="btn-login">로그인 | 회원가입</button>
           <button v-else type="button" class="btn-login">로그아웃</button>
         </router-link>
-        <button v-if="isUser" type="button" class="btn-cart"><router-link style="text-decoration: none; color: white;" :to="{name: 'DetailRestaurantPage' , params:{restaurantId:String(restaurantId)} }">주문표({{cart}})</router-link></button>
+        <button v-if="isUser" type="button" class="btn-cart" @click="goToDetail">주문표({{cart}})</button>
       </v-flex>
     </v-flex>
   </v-flex>
@@ -15,7 +15,9 @@
 
 <script>
   import { mapState } from 'vuex';
-  import api from '@/api'
+  import api from '@/api';
+  import router from "@/router";
+  
   export default {
     name: "Header",
     data() {
@@ -23,21 +25,26 @@
         isUser: false,
         cart: 0,
         restaurantId: 0,
+        cartLen: 0
       }
     },
     mounted() {
       this.isUser = this.$store.state.currentUser;
+      this.cartLen = this.$store.state.cartLength;
       this.getUserInfo()
     },
     watch: {
       currentUser() {
         this.isUser = this.$store.state.currentUser;
         this.getUserInfo();
-      }
+      },
+      temporary() {
+        this.getUserInfo();
+      },
     },
     computed: {
-      ... mapState(['currentUser'])
-
+      ... mapState(['currentUser']),
+      ... mapState(['temporary']),
     },
     methods: {
       async getUserInfo() {
@@ -49,6 +56,10 @@
             }
           })
         }
+      },
+      goToDetail() {
+        this.getUserInfo();
+        router.push({name: 'DetailRestaurantPage', params: {restaurantId: String(this.restaurantId)}})
       }
     }
   }

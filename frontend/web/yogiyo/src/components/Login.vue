@@ -37,6 +37,7 @@
 
 <script>
 import api from '@/api'
+import Swal from 'sweetalert2'
 
   export default {
     name: "login",
@@ -47,36 +48,41 @@ import api from '@/api'
     }),
     methods: {
       async login() {
-          const params = {
-              email : 'admin@admin.com',
-              // email : this.email,
-              password: 'password!1',
-              // password: this.password
-          }
+        const params = {
+          email : this.email,
+          password: this.password
+        };
         if (params) {
           await api.login(params).then(async res => {
-            // console.log(res.data.jwt)
-            this.$session.start();
-            this.$session.set('token', res.data.jwt);
-            this.getUser()
-            return this.$router.push({name:'MainPage'});
+            if (res.data.status === true) {
+              this.$session.start();
+              this.$session.set('token', res.data.jwt);
+              this.getUser();
+              return this.$router.push({name:'MainPage'});
+            } else {
+              Swal.fire({
+                text: res.data.message
+              });
+            }
           }).catch(e => {
             console.log(e);
           })
         }
       },
      async getUser() {
-      let token = this.$session.get("token")
+      let token = this.$session.get("token");
       // parseJwt
       let base64Url = token.split('.')[1];
       let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-        this.user = jsonPayload
+        this.user = jsonPayload;
          localStorage.setItem('currentUser', this.user);
+         localStorage.setItem('temporary', this.user);
          localStorage.setItem('token', token);
          this.$store.state.currentUser = localStorage.getItem('currentUser');
+         this.$store.state.temporary = localStorage.getItem('temporary');
          this.$store.state.token = localStorage.getItem('token');
       return JSON.parse(jsonPayload);
     },

@@ -6,17 +6,25 @@
 
 <script>
   import router from '@/router'
+  import api from '../../api'
 
   export default {
     name: "finishPage",
-    // props: {
-    //   finish: {type: Number, default: 0}
-    // },
-    // created() {
-    //   if (this.finish === 0) {
-    //     router.push({name: 'MainPage'})
-    //   }
-    // }
+    props: {
+      finish: {type: Number, default: 0}
+    },
+    created() {
+      if (this.finish === 0) {
+        router.push({name: 'MainPage'})
+      }
+      this.finishOrder();
+    },
+    methods: {
+      async finishOrder() {
+        await api.approvalPayment();
+        await api.getUserInfo();
+      }
+    }
   }
 </script>
 

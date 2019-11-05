@@ -24,7 +24,7 @@
   export default {
     name: "Restaurant",
     props: {
-      id: {type: Number},
+      id: {type: String},
       name: {type: String},
       category: {type: String},
       thumbnailUrl: {type: String},
