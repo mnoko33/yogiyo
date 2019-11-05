@@ -24,7 +24,7 @@
       </v-flex>
       <v-flex v-else xs12 sm6 class="restaurant" v-for="restaurant in restaurants" :key="restaurant.id">
         <Restaurant
-               :id="restaurant.id"
+               :id="String(restaurant.id)"
                :name="restaurant.name"
                :category="restaurant.category"
                :thumbnailUrl="restaurant.thumbnailUrl"

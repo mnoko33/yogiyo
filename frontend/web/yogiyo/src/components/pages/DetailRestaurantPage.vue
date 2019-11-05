@@ -1,5 +1,6 @@
 <template>
   <v-content>
+    <router-view :key="$route.fullPath"></router-view>
     <div class="category">
       <Category></Category>
     </div>
@@ -180,6 +181,9 @@
       if (this.$store.state.currentUser === null) {
         router.push({name: 'LoginPage'})
       }
+      var link = document.location.href;
+      var linkArray = link.split('/')
+      console.log(linkArray[linkArray.length - 1])
     },
     mounted() {
       this.getRestaurant();

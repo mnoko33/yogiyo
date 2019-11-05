@@ -7,7 +7,10 @@
           <button v-if="!isUser" type="button" class="btn-login">로그인 | 회원가입</button>
           <button v-else type="button" class="btn-login">로그아웃</button>
         </router-link>
-        <button v-if="isUser" type="button" class="btn-cart"><router-link style="text-decoration: none; color: white;" :to="{name: 'DetailRestaurantPage' , params:{restaurantId:String(restaurantId)} }">주문표({{cart}})</router-link></button>
+        <button v-if="isUser" type="button" class="btn-cart" @click="goToDetail">주문표({{cart}})
+<!--          <router-link style="text-decoration: none; color: white;" :to="{name: 'DetailRestaurantPage' , params:{restaurantId:String(restaurantId)} }">-->
+<!--            주문표({{cart}})</router-link>-->
+        </button>
       </v-flex>
     </v-flex>
   </v-flex>
@@ -15,7 +18,9 @@
 
 <script>
   import { mapState } from 'vuex';
-  import api from '@/api'
+  import api from '@/api';
+  import router from "@/router";
+  
   export default {
     name: "Header",
     data() {
@@ -49,6 +54,10 @@
             }
           })
         }
+      },
+      goToDetail() {
+        this.getUserInfo();
+        router.push({name: 'DetailRestaurantPage', params: {restaurantId: String(this.restaurantId)}})
       }
     }
   }
