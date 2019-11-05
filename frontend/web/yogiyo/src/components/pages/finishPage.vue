@@ -10,13 +10,7 @@
 
   export default {
     name: "finishPage",
-    props: {
-      finish: {type: Number, default: 0}
-    },
     created() {
-      if (this.finish === 0) {
-        router.push({name: 'MainPage'})
-      }
       this.finishOrder();
     },
     methods: {
