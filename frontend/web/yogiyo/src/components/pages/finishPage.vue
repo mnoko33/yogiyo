@@ -11,6 +11,10 @@
   export default {
     name: "finishPage",
     created() {
+      localStorage.removeItem('temporary');
+      this.$store.state.temporary = '';
+      localStorage.setItem('cartLength', cartLength);
+      localStorage.setItem('temporary', this.$store.state.currentUser);
       this.finishOrder();
     },
     methods: {
