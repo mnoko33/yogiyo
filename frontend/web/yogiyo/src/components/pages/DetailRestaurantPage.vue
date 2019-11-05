@@ -387,7 +387,7 @@
         const params = { restaurantId: this.restaurantId};
         await api.requestPayment(params).then(res => {
           window.location.href = res.data.next_redirect_pc_url;
-          console.log(res)
+          console.log('res', res)
           if (res.data.status) {
             console.log('주문이 완료되었습니다.')
             this.getUserInfo();
