@@ -10,18 +10,16 @@
 
   export default {
     name: "finishPage",
-    props: {
-      finish: {type: Number, default: 0}
-    },
-    created() {
-      if (this.finish === 0) {
-        router.push({name: 'MainPage'})
-      }
+    mounted() {
       this.finishOrder();
     },
     methods: {
       async finishOrder() {
         await api.approvalPayment();
+        localStorage.removeItem('temporary');
+        this.$store.state.temporary = '';
+        localStorage.setItem('cartLength', cartLength);
+        localStorage.setItem('temporary', this.$store.state.currentUser);
         await api.getUserInfo();
       }
     }
