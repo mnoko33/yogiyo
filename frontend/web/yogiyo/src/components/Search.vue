@@ -12,11 +12,12 @@
             v-model="address"
             id="location-search"
             class="address-input"
+            @keyup.enter="setAddress"
           />
          <button @click="clearAddress" class="clear-btn">지우기</button>
        </v-flex>
        <v-flex>
-         <v-btn v-if="isUser" @keyup.enter="setAddress" @click="setAddress" color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
+         <v-btn v-if="isUser" @click="setAddress" color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><span style="color:#ffffff; font-weight: bold">검색</span></v-btn>
          <v-btn v-else color="#ff9514" style="width: 60px; border-radius: 0 4px 4px 0;" height="40"><router-link style="text-decoration: none" :to="{name: 'LoginPage'}"><span style="color:#ffffff; font-weight: bold">검색</span></router-link></v-btn>
        </v-flex>
      </v-layout>
