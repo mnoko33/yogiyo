@@ -16,6 +16,10 @@
     methods: {
       async finishOrder() {
         await api.approvalPayment();
+        localStorage.removeItem('temporary');
+        this.$store.state.temporary = '';
+        localStorage.setItem('temporary', this.$store.state.currentUser);
+        this.$store.state.temporary = this.$store.state.currentUser;
         await api.getUserInfo();
       }
     }
