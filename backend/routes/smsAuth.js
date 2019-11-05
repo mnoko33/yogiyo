@@ -23,42 +23,42 @@ router.post('/certification', async function(req, res, next) {
 
     // sms api 사용
     try {
-        // const code = (() => {
-        //     let code = '';
-        //     for (let i = 0; i < 4; i++) {
-        //         code += Math.floor(Math.random() * 10);
-        //     }
-        //     return code
-        // })();
-        //
-        // const number = req.body.data.phone_num;
-        // const message = `[싸우디] 인증번호는 [${code}]입니다. 해당 인증번호를 입력해주세요.`;
-        //
-        // const msg = send({
-        //     to: number,
-        //     text: message,
-        //     type: conf.type,
-        //     from: conf.from
-        // });
-        //
-        // await models.Sms.findOne({
-        //     where: { phone_num: number }
-        // })
-        //     .then((sms) => {
-        //         // update
-        //         if (sms) return sms.update({ code: code });
-        //         return models.Sms.create({
-        //             phone_num: number,
-        //             code: code
-        //         })
-        //     })
-        //     .catch((err) => {
-        //         res.json({
-        //             "status": false,
-        //             "message": "다음과 같은 이유로 인증에 실패했습니다.",
-        //             "err": err
-        //         })
-        //     });
+        const code = (() => {
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += Math.floor(Math.random() * 10);
+            }
+            return code
+        })();
+
+        const number = req.body.data.phone_num;
+        const message = `[싸우디] 인증번호는 [${code}]입니다. 해당 인증번호를 입력해주세요.`;
+
+        const msg = send({
+            to: number,
+            text: message,
+            type: conf.type,
+            from: conf.from
+        });
+
+        await models.Sms.findOne({
+            where: { phone_num: number }
+        })
+            .then((sms) => {
+                // update
+                if (sms) return sms.update({ code: code });
+                return models.Sms.create({
+                    phone_num: number,
+                    code: code
+                })
+            })
+            .catch((err) => {
+                res.json({
+                    "status": false,
+                    "message": "다음과 같은 이유로 인증에 실패했습니다.",
+                    "err": err
+                })
+            });
         res.json({
             "status": true
         })
