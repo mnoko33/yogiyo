@@ -6,6 +6,7 @@
 
 <script>
   import router from '@/router'
+  import api from '../../api'
 
   export default {
     name: "finishPage",
@@ -15,6 +16,13 @@
     created() {
       if (this.finish === 0) {
         router.push({name: 'MainPage'})
+      }
+      this.finishOrder();
+    },
+    methods: {
+      async finishOrder() {
+        await api.approvalPayment();
+        await api.getUserInfo();
       }
     }
   }

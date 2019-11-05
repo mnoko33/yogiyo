@@ -47,15 +47,12 @@ import api from '@/api'
     }),
     methods: {
       async login() {
-          const params = {
-              email : 'admin@admin.com',
-              // email : this.email,
-              password: 'password!1',
-              // password: this.password
-          }
+        const params = {
+          email : this.email,
+          password: this.password
+        };
         if (params) {
           await api.login(params).then(async res => {
-            // console.log(res.data.jwt)
             this.$session.start();
             this.$session.set('token', res.data.jwt);
             this.getUser()
@@ -73,7 +70,7 @@ import api from '@/api'
       let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-        this.user = jsonPayload
+        this.user = jsonPayload;
          localStorage.setItem('currentUser', this.user);
          localStorage.setItem('temporary', this.user);
          localStorage.setItem('token', token);

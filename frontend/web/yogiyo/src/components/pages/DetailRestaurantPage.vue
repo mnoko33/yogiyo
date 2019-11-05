@@ -1,5 +1,6 @@
 <template>
   <v-content>
+    <Search></Search>
     <router-view :key="$route.fullPath"></router-view>
     <div class="category">
       <Category></Category>
@@ -132,17 +133,20 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import api from '../../api';
   import Category from "@/components/Category";
   import { SpinnerLoader } from 'vue-spinners-css';
   import Swal from 'sweetalert2'
   import router from '@/router';
+  import Search from "@/components/Search";
 
   export default {
     name: "DetailRestaurantPage",
     components: {
       Category,
-      SpinnerLoader
+      SpinnerLoader,
+      Search
     },
     props: {
       restaurantId: {type: String},
@@ -181,9 +185,6 @@
       if (this.$store.state.currentUser === null) {
         router.push({name: 'LoginPage'})
       }
-      var link = document.location.href;
-      var linkArray = link.split('/')
-      console.log(linkArray[linkArray.length - 1])
     },
     mounted() {
       this.getRestaurant();
@@ -191,6 +192,9 @@
       this.getThumbnailUrl();
       this.getDeliveryTime();
       this.getUserInfo();
+    },
+    computed: {
+      ... mapState(['cartRestaurantId']),
     },
     methods: {
       async getRestaurant() {
@@ -296,9 +300,9 @@
           "menus" : cartInfo
         };
         await api.postCart(data, this.resId).then(res =>  {
-          // console.log(res.data.status);
-            localStorage.removeItem('temporary');
-            this.$store.state.temporary = '';
+          console.log(res.data.status);
+          localStorage.removeItem('temporary');
+          this.$store.state.temporary = '';
           this.getUserInfo();
         })
       },
@@ -335,6 +339,7 @@
               if (result.value) {
                 this.carts = '';
                 this.frontCart = {};
+
                 await this.postCart();
                 this.addToCart(id);
               }
@@ -389,6 +394,9 @@
       },
     },
     watch: {
+      cartRestaurantId() {
+        this.getDetailRestaurant()
+      },
       thumbnail() {
         this.getThumbnailUrl();
       },

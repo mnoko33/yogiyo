@@ -11,15 +11,15 @@
   export default {
     name: "login",
     components: {
-        LoginPage,
-        LogoutPage
+      LoginPage,
+      LogoutPage
     },
     data: () => ({
-        isUser: false,
-        currentUser: ''
+      isUser: false,
+      currentUser: ''
     }),
     mounted() {
-        this.getUser()
+      this.getUser()
     },
     methods: {
       getUser() {
@@ -27,7 +27,6 @@
         return this.isUser = this.currentUser
       },
     }
-
   }
 </script>
 
