@@ -36,7 +36,9 @@
           this.$session.destroy();
           this.$store.state.currentUser = '';
           this.$store.state.token = '';
+          this.$store.state.temporary = '';
           localStorage.removeItem('currentUser');
+          localStorage.removeItem('temporary');
           localStorage.removeItem('token');
           localStorage.removeItem('cartLength');
           return this.$router.push({name:'MainPage'});

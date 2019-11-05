@@ -29,8 +29,6 @@
     mounted() {
       this.isUser = this.$store.state.currentUser;
       this.cartLen = this.$store.state.cartLength;
-      console.log(this.cartLen,'mounted')
-      console.log(this.cartLength,'store')
       this.getUserInfo()
     },
     watch: {
@@ -38,14 +36,13 @@
         this.isUser = this.$store.state.currentUser;
         this.getUserInfo();
       },
-      cartLength() {
-          console.log(this.$store.state.cartLength)
-          this.getUserInfo();
+      temporary() {
+        this.getUserInfo();
       },
     },
     computed: {
       ... mapState(['currentUser']),
-      ... mapState(['cartLength']),
+      ... mapState(['temporary']),
     },
     methods: {
       async getUserInfo() {

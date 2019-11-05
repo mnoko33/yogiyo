@@ -266,7 +266,8 @@
           this.carts = res.data.cart;
           const cartLength = String(this.carts.length);
           localStorage.setItem('cartLength', cartLength);
-          // console.log(localStorage.getItem('cartLength')
+          localStorage.setItem('temporary', this.$store.state.currentUser);
+          this.$store.state.temporary = this.$store.state.currentUser;
           this.totalPrice = this.comma(res.data.totalPrice);
           this.checkCanOrder();
           for (const cart in this.carts) {
@@ -292,6 +293,8 @@
         };
         await api.postCart(data, this.resId).then(res =>  {
           // console.log(res.data.status);
+            localStorage.removeItem('temporary');
+            this.$store.state.temporary = '';
           this.getUserInfo();
         })
       },
