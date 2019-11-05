@@ -10,6 +10,8 @@ export default new Vuex.Store({
   },
   state: {
     currentUser: localStorage.getItem('currentUser'),
+    temporary: localStorage.getItem('temporary'),
     token: localStorage.getItem('token'),
+    cartLength: localStorage.getItem('cartLength'),
   }
 })

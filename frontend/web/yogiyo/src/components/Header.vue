@@ -23,21 +23,26 @@
         isUser: false,
         cart: 0,
         restaurantId: 0,
+        cartLen: 0
       }
     },
     mounted() {
       this.isUser = this.$store.state.currentUser;
+      this.cartLen = this.$store.state.cartLength;
       this.getUserInfo()
     },
     watch: {
       currentUser() {
         this.isUser = this.$store.state.currentUser;
         this.getUserInfo();
-      }
+      },
+      temporary() {
+        this.getUserInfo();
+      },
     },
     computed: {
-      ... mapState(['currentUser'])
-
+      ... mapState(['currentUser']),
+      ... mapState(['temporary']),
     },
     methods: {
       async getUserInfo() {
