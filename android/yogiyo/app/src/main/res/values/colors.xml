@@ -3,13 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorGray">#666666</color>
-    <color name="colorLightGray">#E4E4E4</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorYellow">#FFC107</color>
     <color name="colorTranslucent">#80FFFFFF</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorDarkGray">#363636</color>
+    <color name="colorLightGray">#E4E4E4</color>
+    <color name="colorGray">#CECECE</color>
+    <color name="colorDarkGray">#4D4D4D</color>
+    <color name="colorRed">#FF1414</color>
 
 </resources>

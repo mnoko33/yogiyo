@@ -30,7 +30,8 @@ interface AutoScrollAdViewModel {
     }
 
     class ViewModelImpl @Inject constructor(
-        private val adRepository: AdRepository
+        private val adRepository: AdRepository,
+        stringMap: Map<String, String>
     ) : BaseViewModel(), Inputs, Outputs {
 
         private val itemClicked: PublishProcessor<BaseItem> = PublishProcessor.create()
@@ -44,6 +45,10 @@ interface AutoScrollAdViewModel {
         private val smoothScrollPosition: Flowable<Int>
         private val startAdActivity: Flowable<Ad>
 
+        private val token = stringMap["token"] ?: error("token is not provided") // TODO token 처리
+        private val baseUrl =
+            stringMap["baseUrl"] ?: error("baseUrl is not provided") // TODO baseUrl 처리
+
         val inputs: Inputs = this
         val outputs: Outputs = this
 
@@ -51,7 +56,7 @@ interface AutoScrollAdViewModel {
 
             adType
                 .flatMapSingle { type ->
-                    adRepository.getAds(type)
+                    adRepository.getAds(type, token, baseUrl)
                         .subscribeOn(Schedulers.io())
                 }
                 .map { it.toMutableList() }

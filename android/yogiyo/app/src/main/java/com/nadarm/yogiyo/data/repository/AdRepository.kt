@@ -5,9 +5,14 @@ import io.reactivex.Single
 
 interface AdRepository {
 
-    fun getAds(type: Ad.Type): Single<List<Ad>>
+    fun getAds(
+        type: Ad.Type,
+        token: String,
+        baseUrl: String
+    ): Single<List<Ad>>
 }
 
 interface AdDataSource : AdRepository {
     interface Cache : AdDataSource
+    interface Remote : AdDataSource
 }

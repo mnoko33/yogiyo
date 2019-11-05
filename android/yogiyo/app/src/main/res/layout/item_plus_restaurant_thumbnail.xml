@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.name}"
+                android:text="@{Long.toString(item.id)}"
                 android:textColor="@color/colorYellow"
                 android:textSize="13sp"
                 android:textStyle="bold" />

@@ -8,10 +8,12 @@ import javax.inject.Singleton
 
 @Singleton
 class FoodCategoryDataRepository @Inject constructor(
-    private val cache: FoodCategoryDataSource.Cache
+    private val cache: FoodCategoryDataSource.Cache,
+    private val remote: FoodCategoryDataSource.Remote
 ) : FoodCategoryRepository {
 
-    override fun getCategories(): Single<List<FoodCategory>> {
-        return cache.getCategories()
+    override fun getCategories(token: String, baseUrl: String): Single<List<FoodCategory>> {
+        // TODO FoodCategoryDataRepository - cache
+        return remote.getCategories(token, baseUrl)
     }
 }

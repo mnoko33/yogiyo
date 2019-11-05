@@ -252,7 +252,6 @@ class FoodHomeFragment @Inject constructor(
     private fun startAdActivity(ad: Ad) {
         val intent = Intent(context, AdActivity::class.java)
         intent.putExtra("adId", ad.id)
-        intent.putExtra("pageUrl", ad.pageUrl)
         startActivity(intent)
     }
 

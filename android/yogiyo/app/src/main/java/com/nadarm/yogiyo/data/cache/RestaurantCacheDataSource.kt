@@ -1,8 +1,7 @@
 package com.nadarm.yogiyo.data.cache
 
 import com.nadarm.yogiyo.data.repository.RestaurantDataSource
-import com.nadarm.yogiyo.ui.model.PlusRestaurant
-import com.nadarm.yogiyo.ui.model.Restaurant
+import com.nadarm.yogiyo.ui.model.*
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,6 +11,42 @@ class RestaurantCacheDataSource @Inject constructor() : RestaurantDataSource.Cac
 
     private val restaurants: MutableList<Restaurant> = ArrayList()
     private val plusRestaurants: MutableList<PlusRestaurant> = ArrayList()
+    private val restaurantDetail: RestaurantDetail = RestaurantDetail(
+        Restaurant(
+            1,
+            "카페마마스 잠실점",
+            "https://i.imgur.com/dlFdn4F.png",
+            "역삼동",
+            "11:00 - 01:00",
+            60,
+            "구이삼겹 1인, 구이삼겹 2인",
+            2000,
+            12000,
+            "creditcard::online",
+            true
+        ),
+        11,
+        listOf(
+            LabeledDishes(
+                "인기 메뉴", listOf(
+                    Dish(1, "국물 떡볶이", 1, "인기 메뉴", "사이즈 선택", 4500),
+                    Dish(2, "마라탕", 1, "인기 메뉴", "사이즈 선택", 4500)
+                )
+            ),
+            LabeledDishes(
+                "식사 메뉴", listOf(
+                    Dish(1, "국물 떡볶이", 1, "식사 메뉴", "사이즈 선택", 4500),
+                    Dish(2, "마라탕", 1, "식사 메뉴", "사이즈 선택", 4500)
+                )
+            ),
+            LabeledDishes(
+                "사이드 메뉴", listOf(
+                    Dish(1, "국물 떡볶이", 1, "사이드 메뉴", "사이즈 선택", 4500),
+                    Dish(2, "마라탕", 1, "사이드 메뉴", "사이즈 선택", 4500)
+                )
+            )
+        )
+    )
 
     init {
         //TODO restaurant 캐시 데이터
@@ -19,107 +54,40 @@ class RestaurantCacheDataSource @Inject constructor() : RestaurantDataSource.Cac
             Restaurant(
                 1,
                 "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
                 "https://i.imgur.com/dlFdn4F.png",
                 "역삼동",
-                127.029799209808,
-                37.4970170754811,
                 "11:00 - 01:00",
                 60,
                 "구이삼겹 1인, 구이삼겹 2인",
                 2000,
                 12000,
                 "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                true
-            ),
-            Restaurant(
-                2,
-                "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
-                "https://i.imgur.com/dlFdn4F.png",
-                "역삼동",
-                127.029799209808,
-                37.4970170754811,
-                "11:00 - 01:00",
-                60,
-                "구이삼겹 1인, 구이삼겹 2인",
-                2000,
-                12000,
-                "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                true
-            ), Restaurant(
-                3,
-                "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
-                "https://i.imgur.com/dlFdn4F.png",
-                "역삼동",
-                127.029799209808,
-                37.4970170754811,
-                "11:00 - 01:00",
-                60,
-                "구이삼겹 1인, 구이삼겹 2인",
-                2000,
-                12000,
-                "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                true
-            ),
-            Restaurant(
-                1,
-                "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
-                "https://i.imgur.com/dlFdn4F.png",
-                "역삼동",
-                127.029799209808,
-                37.4970170754811,
-                "11:00 - 01:00",
-                60,
-                "구이삼겹 1인, 구이삼겹 2인",
-                2000,
-                12000,
-                "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
                 false
             ),
             Restaurant(
                 2,
                 "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
                 "https://i.imgur.com/dlFdn4F.png",
                 "역삼동",
-                127.029799209808,
-                37.4970170754811,
                 "11:00 - 01:00",
                 60,
                 "구이삼겹 1인, 구이삼겹 2인",
                 2000,
                 12000,
                 "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
                 false
-            ), Restaurant(
+            ),
+            Restaurant(
                 3,
                 "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
                 "https://i.imgur.com/dlFdn4F.png",
                 "역삼동",
-                127.029799209808,
-                37.4970170754811,
                 "11:00 - 01:00",
                 60,
                 "구이삼겹 1인, 구이삼겹 2인",
                 2000,
                 12000,
                 "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
                 false
             )
         )
@@ -128,125 +96,69 @@ class RestaurantCacheDataSource @Inject constructor() : RestaurantDataSource.Cac
             PlusRestaurant(
                 1,
                 "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
                 "https://i.imgur.com/dlFdn4F.png",
                 "역삼동",
-                127.029799209808,
-                37.4970170754811,
                 "11:00 - 01:00",
                 60,
                 "구이삼겹 1인, 구이삼겹 2인",
                 2000,
                 12000,
                 "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
                 true
             ),
             PlusRestaurant(
                 2,
                 "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
                 "https://i.imgur.com/dlFdn4F.png",
                 "역삼동",
-                127.029799209808,
-                37.4970170754811,
                 "11:00 - 01:00",
                 60,
                 "구이삼겹 1인, 구이삼겹 2인",
                 2000,
                 12000,
                 "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                true
-            ), PlusRestaurant(
-                3,
-                "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
-                "https://i.imgur.com/dlFdn4F.png",
-                "역삼동",
-                127.029799209808,
-                37.4970170754811,
-                "11:00 - 01:00",
-                60,
-                "구이삼겹 1인, 구이삼겹 2인",
-                2000,
-                12000,
-                "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
                 true
             ),
             PlusRestaurant(
-                1,
-                "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
-                "https://i.imgur.com/dlFdn4F.png",
-                "역삼동",
-                127.029799209808,
-                37.4970170754811,
-                "11:00 - 01:00",
-                60,
-                "구이삼겹 1인, 구이삼겹 2인",
-                2000,
-                12000,
-                "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                false
-            ),
-            PlusRestaurant(
-                2,
-                "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
-                "https://i.imgur.com/dlFdn4F.png",
-                "역삼동",
-                127.029799209808,
-                37.4970170754811,
-                "11:00 - 01:00",
-                60,
-                "구이삼겹 1인, 구이삼겹 2인",
-                2000,
-                12000,
-                "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                false
-            ), PlusRestaurant(
                 3,
                 "카페마마스 잠실점",
-                arrayOf("야식", "프렌차이즈", "한식"),
                 "https://i.imgur.com/dlFdn4F.png",
                 "역삼동",
-                127.029799209808,
-                37.4970170754811,
                 "11:00 - 01:00",
                 60,
                 "구이삼겹 1인, 구이삼겹 2인",
                 2000,
                 12000,
                 "creditcard::online",
-                "2019-10-15T13:48:47.000Z",
-                "2019-10-15T13:48:47.000Z",
-                false
+                true
             )
         )
 
-        restaurants.addAll(items + items + items + items + items + items + items)
-        plusRestaurants.addAll(items2 + items2 + items2 + items2 + items2 + items2 + items2)
+        restaurants.addAll(items + items + items + items + items + items + items + items + items + items + items + items)
+        plusRestaurants.addAll(items2 + items2 + items2 + items2 + items2 + items2 + items2 + items2 + items2 + items2 + items2)
     }
 
-    override fun getRestaurants(isPlus: Boolean, category: Long): Single<List<Restaurant>> {
-//        val restaurants = this.restaurants
-//            .filter { it.isPlus == isPlus }
-//            .filter { it.categories.contains(category) }
-//        return Single.just(restaurants)
+    override fun getRestaurants(
+        isPlus: Boolean,
+        categoryId: Long,
+        token: String
+    ): Single<List<Restaurant>> {
         val result = if (isPlus) {
             plusRestaurants
         } else {
             restaurants
         }
         return Single.just(result)
+    }
+
+    override fun getRestaurantDetail(
+        restaurantId: Long,
+        token: String
+    ): Single<RestaurantDetail> {
+        return Single.just(restaurantDetail)
+    }
+
+    override fun requestPayment(restaurantId: Long, token: String): Single<String> {
+        return Single.just("https://google.com")
     }
 }
