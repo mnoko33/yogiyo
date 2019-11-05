@@ -11,6 +11,15 @@
   export default {
     name: "finishPage",
     created() {
+      console.log('created')
+      localStorage.removeItem('temporary');
+      this.$store.state.temporary = '';
+      localStorage.setItem('cartLength', cartLength);
+      localStorage.setItem('temporary', this.$store.state.currentUser);
+      this.finishOrder();
+    },
+    mounted() {
+      console.log('mounted')
       localStorage.removeItem('temporary');
       this.$store.state.temporary = '';
       localStorage.setItem('cartLength', cartLength);
