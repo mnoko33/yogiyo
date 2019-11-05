@@ -37,6 +37,7 @@
 
 <script>
 import api from '@/api'
+import Swal from 'sweetalert2'
 
   export default {
     name: "login",
@@ -53,17 +54,23 @@ import api from '@/api'
         };
         if (params) {
           await api.login(params).then(async res => {
-            this.$session.start();
-            this.$session.set('token', res.data.jwt);
-            this.getUser()
-            return this.$router.push({name:'MainPage'});
+            if (res.data.status === true) {
+              this.$session.start();
+              this.$session.set('token', res.data.jwt);
+              this.getUser();
+              return this.$router.push({name:'MainPage'});
+            } else {
+              Swal.fire({
+                text: res.data.message
+              });
+            }
           }).catch(e => {
             console.log(e);
           })
         }
       },
      async getUser() {
-      let token = this.$session.get("token")
+      let token = this.$session.get("token");
       // parseJwt
       let base64Url = token.split('.')[1];
       let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
