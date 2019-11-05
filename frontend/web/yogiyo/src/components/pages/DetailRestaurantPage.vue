@@ -388,6 +388,8 @@
         await api.requestPayment(params).then(res => {
           window.location.href = res.data.next_redirect_pc_url;
           if (res.data.status) {
+            localStorage.removeItem('temporary');
+            this.$store.state.temporary = '';
             this.getUserInfo();
           }
         })
