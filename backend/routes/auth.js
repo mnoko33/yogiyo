@@ -126,24 +126,24 @@ router.post('/login', async function(req, res, next) {
         });
     if (cart) {
         // 이미 있는 장바구니에 메뉴를 추가할 때
-        if (cart.restaurantId === restaurantId) {
+        if (cart.restaurantId === 1) {
             // 새로운 카트에 메뉴를 추가 또는 제거
             await cart.update({
-                menus: menus
+                menus: ""
             })
         } else {
             // 새로운 장바구니에 메뉴를 추가
             await cart.update({
-                restaurantId: restaurantId,
-                menus: menus
+                restaurantId: 1,
+                menus: ""
             })
         }
     } else {
         // 새로운 장바구니 생성
         await models.Cart.create({
             userId: userId,
-            restaurantId: restaurantId,
-            menus: menus
+            restaurantId: 1,
+            menus: ""
         })
     }
 
