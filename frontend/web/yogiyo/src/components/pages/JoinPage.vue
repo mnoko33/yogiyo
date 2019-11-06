@@ -61,8 +61,8 @@
 
     </v-layout>
     <v-layout>
-      <button v-if="email&&password&&passwordCheck&&phone_num" @click="join" class="login-btn">회원가입완료</button>
-      <button v-else disabled @click="join" class="login-btn-disable">회원가입완료</button>
+      <!--<button v-if="email&&password&&passwordCheck&&phone_num" @click="join" class="login-btn">회원가입완료</button>-->
+      <button disabled @click="join" class="login-btn-disable">회원가입완료</button>
     </v-layout>
   </v-container>
 </template>

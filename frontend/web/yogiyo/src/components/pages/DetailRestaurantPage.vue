@@ -1,9 +1,6 @@
 <template>
   <v-content>
     <Search></Search>
-    <div class="category">
-      <Category></Category>
-    </div>
     <div v-if="restaurantInformation === []" class="loader">
       <SpinnerLoader :color="'#9e9d99'"/>
     </div>
@@ -134,7 +131,6 @@
 <script>
   import { mapState } from 'vuex';
   import api from '../../api';
-  import Category from "@/components/Category";
   import { SpinnerLoader } from 'vue-spinners-css';
   import Swal from 'sweetalert2'
   import router from '@/router';
@@ -143,7 +139,6 @@
   export default {
     name: "DetailRestaurantPage",
     components: {
-      Category,
       SpinnerLoader,
       Search
     },
