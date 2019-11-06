@@ -146,20 +146,20 @@ router.get('/categories/:categoryId', async function (req, res, next) {
 
 // 가게 정보 보기
 router.get('/:restaurantId', async function (req, res, next) {
-   const restaurantId = req.params.restaurantId * 1;
-   const restaurant = await models.Restaurant.findOne({
-       where: { id: restaurantId }
-   })
-       .then((result) => {
-           return result
-       })
-       .catch((err) => {
-           return res.json({
-               "status": false,
-               "message": "다음과 같은 이유로 음식점 정보를 불러오는데 실패했습니다.",
-               "err": err
-           })
-       });
+    const restaurantId = req.params.restaurantId * 1;
+    const restaurant = await models.Restaurant.findOne({
+        where: { id: restaurantId }
+    })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "다음과 같은 이유로 음식점 정보를 불러오는데 실패했습니다.",
+                "err": err
+            })
+        });
     if (restaurant) {
         res.json({
             "status": true,
@@ -474,17 +474,17 @@ router.post('/payment-approval', async function(req, res, next) {
         await models.Cart.update(
             { menus: null },
             { where: { userId: userId }}
-            )
-                    .then(result => {
-                        console.log('cart is updated')
-                    })
-                    .catch(err => {
-                       res.json({
-                           "status": false,
-                           "message": '장바구니를 초기화하는데 실패했습니다.',
-                           "err": err
-                       })
-                    });
+        )
+            .then(result => {
+                console.log('cart is updated')
+            })
+            .catch(err => {
+                res.json({
+                    "status": false,
+                    "message": '장바구니를 초기화하는데 실패했습니다.',
+                    "err": err
+                })
+            });
 
         res.json({
             "status": true,

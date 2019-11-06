@@ -65,7 +65,11 @@ router.post('/signup', async function(req, res, next) {
         email: email,
         password: bcrypt.hashSync(password, 8),
         phone_num: phone_num
-    }).then((user) => {
+    }).then(async user => {
+        const cart = await models.Cart.create({
+            userId: user.id,
+            restaurantId: 1,
+        })
         return jwt.createJWT(user)
             .then((token) => {
                 res.json({
