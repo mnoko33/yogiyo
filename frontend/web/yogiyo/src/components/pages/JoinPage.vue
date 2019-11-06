@@ -129,16 +129,16 @@
           // Todo 회원가입 하자마자 로그인 (완료!)
           await api.join(data).then(async res => {
             console.log(res);
-            if (res.data.status) {
-              this.$session.start();
-              this.$session.set('token', res.data.token);
-              this.getUser()
-              return this.$router.push({name:'MainPage'});
-            } else {
-              Swal.fire({
-                text: res.data.message
-              })
-            }
+            // if (res.data.status) {
+            //   this.$session.start();
+            //   this.$session.set('token', res.data.token);
+            //   this.getUser()
+            //   return this.$router.push({name:'MainPage'});
+            // } else {
+            //   Swal.fire({
+            //     text: res.data.message
+            //   })
+            // }
           }).catch(e => {
             console.log(e);
           })

@@ -108,6 +108,16 @@ router.post('/login', async function(req, res, next) {
     const user = await models.User.findOne({
         where: {email: email}
     });
+    const cart = await models.Cart.findOne({
+        where: {userId: user.id}
+    });
+    if (!cart) {
+        await models.Cart.create({
+            userId: userId,
+            restaurantId: restaurantId,
+            menus: menus
+        })
+    }
 
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = await jwt.createJWT(user);
