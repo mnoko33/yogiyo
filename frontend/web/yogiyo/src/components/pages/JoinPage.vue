@@ -126,6 +126,16 @@
             //     text: res.data.message
             //   })
             // }
+              if (res.data.status) {
+              Swal.fire({
+                  text:"회원가입이 완료되었습니다."
+              })
+              return this.$router.push({name:'MainPage'});
+            } else {
+              Swal.fire({
+                text: res.data.message
+              })
+            }
           }).catch(e => {
             console.log(e);
           })
