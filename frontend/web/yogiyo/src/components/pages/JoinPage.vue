@@ -61,8 +61,8 @@
 
     </v-layout>
     <v-layout>
-<!--      <button v-if="email&&password&&passwordCheck&&phone_num" @click="join" class="login-btn">회원가입완료</button>-->
-      <button disabled @click="join" class="login-btn-disable">회원가입완료</button>
+      <button v-if="email&&password&&passwordCheck&&phone_num" @click="join" class="login-btn">회원가입완료</button>
+      <button v-else disabled @click="join" class="login-btn-disable">회원가입완료</button>
     </v-layout>
   </v-container>
 </template>
@@ -79,20 +79,9 @@
       username: '',
       phone_num:'',
       code:'',
-      joinCheck: false,
+      joinCheck: true,
       message: '',
     }),
-    watch: {
-      // email() {
-      //   this.check()
-      // },
-      // password() {
-      //   this.check()
-      // },
-      // phone_num() {
-      //   this.check()
-      // }
-    },
     methods: {
       check() {
         const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -107,8 +96,6 @@
           this.joinCheck = false;
           this.message = '올바른 이메일 형식과 비밀번호 형식을 지켜주세요. 비밀번호 형식은 특수문자 / 문자 / 숫자를 포함 형태의 8~15자리입니다.'
         } if (this.password !== this.passwordCheck) {
-          console.log(this.password)
-          console.log(this.passwordCheck)
           this.joinCheck = false;
           this.message = '비밀번호가 일치하지않습니다.'
         }
@@ -161,6 +148,7 @@
         const data = {
           "phone_num": this.phone_num,
         };
+        this.verification();
         await api.certificationPhoneNum(data).then(res => {
           if(res.data.status) {
             this.verification()
@@ -192,7 +180,6 @@
                   await Swal.fire({
                     text: res.data.message,
                   })
-                  console.log(res)
                   clearInterval(timerInterval)
                 }
                 else {
