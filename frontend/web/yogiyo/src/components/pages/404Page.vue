@@ -15,5 +15,6 @@
 <style>
   .center {
     text-align: center;
+    margin: 4% 0;
   }
 </style>
