@@ -96,6 +96,9 @@ router.post('/signup', async function(req, res, next) {
 router.post('/login', async function(req, res, next) {
     const email = req.body.data.email;
     const password = req.body.data.password;
+    const token = req.headers['x-access-token'];
+    const userInfo = await jwt.decodeJWT(token);
+    const userId = userInfo.id;
 
     if (!email || !password) {
         res.json({
@@ -109,9 +112,34 @@ router.post('/login', async function(req, res, next) {
         where: {email: email}
     });
     const cart = await models.Cart.findOne({
-        where: {userId: user.id}
-    });
-    if (!cart) {
+        where: { userId: userId }
+    })
+        .then((cartInstance) => {
+            return cartInstance
+        })
+        .catch((err) => {
+            return res.json({
+                "status": false,
+                "message": "다음과 같은 이유로 장바구니를 생성하는데 실패했습니다.",
+                "err": err
+            })
+        });
+    if (cart) {
+        // 이미 있는 장바구니에 메뉴를 추가할 때
+        if (cart.restaurantId === restaurantId) {
+            // 새로운 카트에 메뉴를 추가 또는 제거
+            await cart.update({
+                menus: menus
+            })
+        } else {
+            // 새로운 장바구니에 메뉴를 추가
+            await cart.update({
+                restaurantId: restaurantId,
+                menus: menus
+            })
+        }
+    } else {
+        // 새로운 장바구니 생성
         await models.Cart.create({
             userId: userId,
             restaurantId: restaurantId,
