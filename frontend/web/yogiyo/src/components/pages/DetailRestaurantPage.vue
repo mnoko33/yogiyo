@@ -271,6 +271,7 @@
       async getUserInfo() {
         await api.getUserInfo().then(res => {
           this.carts = res.data.cart;
+          console.log(this.carts)
           const cartLength = String(this.carts.length);
           localStorage.setItem('cartLength', cartLength);
           localStorage.setItem('temporary', this.$store.state.currentUser);
