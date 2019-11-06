@@ -48,12 +48,12 @@
     <v-layout>
       <p class="info-text">휴대폰 인증</p>
     </v-layout>
-    <v-layout mt-2>
-      <div class="in-line">
-        <input class="inputt" type="text" name="phonenumber" v-model="phone_num" placeholder="(필수)휴대폰 전화번호 입력(-제외)" required>
-        <input class="inputt" type="button" name="name" @click="certification" value="인증">
-      </div>
-    </v-layout>
+    <!--<v-layout mt-2>-->
+      <!--<div class="in-line">-->
+        <!--<input class="inputt" type="text" name="phonenumber" v-model="phone_num" placeholder="(필수)휴대폰 전화번호 입력(-제외)" required>-->
+        <!--<input class="inputt" type="button" name="name" @click="certification" value="인증">-->
+      <!--</div>-->
+    <!--</v-layout>-->
     <v-layout>
       <p class="info-text">약관동의</p>
     </v-layout>
