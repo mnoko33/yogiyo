@@ -1,7 +1,6 @@
 <template>
   <v-content>
     <Search></Search>
-    <router-view :key="$route.fullPath"></router-view>
     <div class="category">
       <Category></Category>
     </div>
@@ -304,6 +303,7 @@
           localStorage.removeItem('temporary');
           this.$store.state.temporary = '';
           this.getUserInfo();
+
         })
       },
       countPlus(id, count) {

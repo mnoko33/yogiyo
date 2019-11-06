@@ -2,10 +2,18 @@
   <v-content>
     <div class="sms category-btn">
       <v-btn-toggle tile class="category ml-auto">
-        <v-btn class="toggle-btn" depressed color="white"><v-icon>mdi-magnify</v-icon></v-btn>
-        <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx, categoryName: category.category}}">
-          <v-btn class="toggle-btn" depressed outlined color="black"><span style="font-size: 12px">{{category.category}}</span></v-btn>
-        </router-link>
+        <div v-if="isUser">
+          <v-btn class="toggle-btn" depressed color="white"><v-icon>mdi-magnify</v-icon></v-btn>
+          <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx, categoryName: category.category}}">
+            <v-btn class="toggle-btn" depressed outlined color="black"><span style="font-size: 12px">{{category.category}}</span></v-btn>
+          </router-link>
+        </div>
+        <div v-else>
+          <v-btn class="toggle-btn" depressed color="white"><v-icon>mdi-magnify</v-icon></v-btn>
+          <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'LoginPage'}">
+            <v-btn class="toggle-btn" depressed outlined color="black"><span style="font-size: 12px">{{category.category}}</span></v-btn>
+          </router-link>
+        </div>
       </v-btn-toggle>
     </div>
 
@@ -16,8 +24,14 @@
     <v-list v-if="selectBtn" class="mt-2 mx-3 select-btn-list" >
       <v-row>
         <v-col style="padding-top: 0; padding-bottom: 0">
-          <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx, categoryName: category.category}}">
-            <v-btn outlined @click="clickSelectButton" class="select-btn"><v-img class="mr-2" :src="category.icon" style="max-width: 18px; max-height:18px"></v-img>{{category.category}}</v-btn></router-link>
+          <div v-if="isUser">
+            <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'RestaurantListPage', params: {categoryIdx: category.categoryIdx, categoryName: category.category}}">
+              <v-btn outlined @click="clickSelectButton" class="select-btn"><v-img class="mr-2" :src="category.icon" style="max-width: 18px; max-height:18px"></v-img>{{category.category}}</v-btn></router-link>
+          </div>
+          <div v-else>
+            <router-link v-for="category in categoryList" :key="category.categoryIdx" class="router" :to="{name: 'LoginPage'}">
+              <v-btn outlined @click="clickSelectButton" class="select-btn"><v-img class="mr-2" :src="category.icon" style="max-width: 18px; max-height:18px"></v-img>{{category.category}}</v-btn></router-link>
+          </div>
         </v-col>
       </v-row>
     </v-list>
@@ -25,6 +39,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   export default {
     name: "Category",
     props: {
@@ -48,11 +63,16 @@
             {category: '편의점', categoryIdx: '13', icon: require('../assets/categoryIcon/13.jpg')},
         ],
         categoryName: '',
-        selectBtn: false
+        selectBtn: false,
+        isUser: false,
       }
     },
     mounted() {
       this.setCategoryName();
+      this.isUser = this.$store.state.currentUser;
+    },
+    computed: {
+      ... mapState(['currentUser'])
     },
     methods: {
       clickSelectButton() {
@@ -65,8 +85,11 @@
     watch: {
       categoryIdx() {
         this.setCategoryName();
+      },
+      currentUser() {
+        this.isUser = this.$store.state.currentUser;
       }
-    }
+    },
   }
 </script>
 
