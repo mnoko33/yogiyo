@@ -12,7 +12,7 @@
     "coolsms-sdk-v4": "^4.0.13",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "~4.18.2",
     "http-errors": "~1.6.3",
     "iamport": "^0.3.4",
     "jade": "~1.11.0",
